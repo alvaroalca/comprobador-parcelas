@@ -1,0 +1,148 @@
+{
+  "fuente": {
+    "nombre": "Reglamento de Urbanismo de Castilla y León (Decreto 22/2004), texto consolidado",
+    "url": "https://www.boe.es/buscar/act.php?id=BOCL-h-2004-90152",
+    "pdf": "https://www.boe.es/buscar/pdf/2004/BOCL-h-2004-90152-consolidado.pdf"
+  },
+  "niveles": {
+    "prohibida": { "titulo": "No", "tono": "no" },
+    "vinculada": { "titulo": "Solo ligada a una explotación", "tono": "condicion" },
+    "segun_plan": { "titulo": "Depende del plan municipal", "tono": "depende" },
+    "solar": { "titulo": "Sí, si la parcela es solar", "tono": "si" },
+    "sin_urbanizar": { "titulo": "Todavía no", "tono": "condicion" },
+    "sin_dato": { "titulo": "Sin dato", "tono": "depende" }
+  },
+  "orden": ["solar", "segun_plan", "vinculada", "sin_urbanizar", "sin_dato", "prohibida"],
+  "proteccion": ["SR-PN", "SR-PC", "SR-PE", "SR-PI", "SR-PA", "SR-AE", "SR-EU", "SR-AI", "SR-AT", "SR-C", "SIN", "SUR", "SU-NC", "SU-C"],
+  "concurrencia": {
+    "articulo": "39",
+    "explicacion": "Parte de la parcela tiene varias categorías a la vez. Sus regímenes se aplican juntos y prevalece el que más protege: en cada trozo cuenta la categoría más protectora.",
+    "cita": "si se produce contradicción entre los mismos, deben prevalecer los regímenes establecidos para la protección de los valores naturales y culturales, y en último extremo aquél que otorgue una mayor protección."
+  },
+  "art57e": {
+    "articulo": "57",
+    "cita": "e) Construcciones destinadas a vivienda unifamiliar aislada que resulten necesarias para el funcionamiento de alguno de los demás usos citados en este artículo."
+  },
+  "categorias": {
+    "SR-C": {
+      "articulo": "59",
+      "vivienda": "vinculada",
+      "explicacion": "En rústico común la vivienda nueva es un uso excepcional: solo cabe si es necesaria para una explotación agraria u otro uso del art. 57, y con autorización previa a la licencia.",
+      "cita": "b) Son usos sujetos a autorización todos los demás citados en el artículo 57.",
+      "rehabilitar": "autorizable",
+      "cita_rehabilitar": "b) Son usos sujetos a autorización todos los demás citados en el artículo 57."
+    },
+    "SR-EU": {
+      "articulo": "60",
+      "vivienda": "prohibida",
+      "explicacion": "En rústico de entorno urbano la vivienda unifamiliar aislada (art. 57.e) está prohibida.",
+      "cita": "c) Son usos prohibidos todos los no citados en los artículos 56 y 57, y además los citados en las letras b), b bis) y e) del artículo 57.",
+      "rehabilitar": "autorizable",
+      "cita_rehabilitar": "1.º Los citados en las letras a), d), f) y g) del artículo 57."
+    },
+    "SR-AT": {
+      "articulo": "61",
+      "vivienda": "segun_plan",
+      "explicacion": "En un asentamiento tradicional el Reglamento deja el régimen al plan municipal: suele admitir los usos tradicionales del núcleo, vivienda incluida, con sus condiciones.",
+      "cita": "b) Como usos sujetos a autorización, los que guarden relación directa con las necesidades de la población permanente o estacional del asentamiento",
+      "rehabilitar": "segun_plan",
+      "cita_rehabilitar": "a) Como usos permitidos, los que sean característicos y tradicionales del asentamiento."
+    },
+    "SR-AI": {
+      "articulo": "61 bis",
+      "vivienda": "segun_plan",
+      "explicacion": "En un asentamiento irregular todos los usos del art. 57 son autorizables, y la edificación residencial solo cuando sirva para regularizar el asentamiento.",
+      "cita": "a) Son usos sujetos a autorización los citados en el artículo 57, entre los cuales podrá incluirse la edificación en uso residencial cuando responda al supuesto previsto en el apartado 4.º del artículo 57.g).",
+      "rehabilitar": "autorizable",
+      "cita_rehabilitar": "a) Son usos sujetos a autorización los citados en el artículo 57"
+    },
+    "SR-AE": {
+      "articulo": "61 ter",
+      "vivienda": "prohibida",
+      "explicacion": "En rústico de actividades extractivas la vivienda unifamiliar aislada (art. 57.e) está prohibida.",
+      "cita": "c) Son usos prohibidos los no citados en los artículos 56 y 57, y además los citados en las letras d), e) y g) del artículo 57.",
+      "rehabilitar": "autorizable",
+      "cita_rehabilitar": "b) Son usos sujetos a autorización los citados en las letras a), c) y f) del artículo 57."
+    },
+    "SR-PA": {
+      "articulo": "62",
+      "vivienda": "prohibida",
+      "explicacion": "En rústico con protección agropecuaria la vivienda unifamiliar aislada (art. 57.e) está prohibida, aunque esté ligada a una explotación.",
+      "cita": "1.º Los citados en las letras b bis) y e) del artículo 57.",
+      "rehabilitar": "autorizable",
+      "cita_rehabilitar": "1.º Los citados en las letras b), d) y f) del artículo 57."
+    },
+    "SR-PI": {
+      "articulo": "63",
+      "vivienda": "prohibida",
+      "explicacion": "En rústico con protección de infraestructuras la vivienda unifamiliar aislada (art. 57.e) está prohibida. Además manda la legislación sectorial de la infraestructura.",
+      "cita": "1.º Los citados en las letras b bis), d) y e) del artículo 57.",
+      "rehabilitar": "autorizable",
+      "cita_rehabilitar": "1.º Los citados en las letras a), b) y f) del artículo 57."
+    },
+    "SR-PN": {
+      "articulo": "64",
+      "vivienda": "prohibida",
+      "explicacion": "En rústico con protección natural la vivienda unifamiliar aislada (art. 57.e) está prohibida. Si hay espacio natural, monte o vía pecuaria, manda además su legislación.",
+      "cita": "1.º Los citados en las letras b bis) y e) del artículo 57.",
+      "rehabilitar": "autorizable",
+      "cita_rehabilitar": "Los citados en las letras a), b), c), d) y f) del artículo 57, salvo cuando manifiestamente puedan producir un deterioro ambiental o paisajístico relevante."
+    },
+    "SR-PC": {
+      "articulo": "64 bis",
+      "vivienda": "prohibida",
+      "explicacion": "En rústico con protección cultural la vivienda unifamiliar aislada (art. 57.e) está prohibida.",
+      "cita": "1.º Los citados en las letras b bis) y e) del artículo 57.",
+      "rehabilitar": "autorizable",
+      "cita_rehabilitar": "Los citados en las letras a), b), c), d) y f) del artículo 57, salvo cuando manifiestamente puedan producir un deterioro relevante del patrimonio cultural o del paisaje."
+    },
+    "SR-PE": {
+      "articulo": "65",
+      "vivienda": "prohibida",
+      "explicacion": "En rústico con protección especial la vivienda unifamiliar aislada (art. 57.e) está prohibida.",
+      "cita": "b) Son usos prohibidos todos los no citados en los artículos 56 y 57, y además los citados en las letras b bis) y e) del artículo 57.",
+      "rehabilitar": "autorizable",
+      "cita_rehabilitar": "a) Son usos sujetos a autorización los citados en las letras a), b), c), d), f) y g) del artículo 57."
+    },
+    "SU-C": {
+      "articulo": "40",
+      "vivienda": "solar",
+      "explicacion": "En urbano consolidado se puede edificar la parcela que sea solar (acceso y servicios urbanos), con las condiciones del plan municipal: usos, alturas, retranqueos y estética.",
+      "cita": "b) A edificar las parcelas que hayan alcanzado o recuperado la condición de solar, con las condiciones que señale en cada caso el planeamiento urbanístico.",
+      "rehabilitar": "permitida",
+      "cita_rehabilitar": null
+    },
+    "SU-NC": {
+      "articulo": "42",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "En urbano no consolidado primero hay que urbanizar la unidad de actuación entre todos los propietarios. Solo después se edifica cada solar.",
+      "cita": "a) A participar en la ejecución de una actuación urbanística cuyo objeto sea completar la urbanización de la unidad de actuación",
+      "rehabilitar": null,
+      "cita_rehabilitar": null
+    },
+    "SUR": {
+      "articulo": "44",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "En urbanizable primero hay que ordenar y urbanizar el sector entre todos los propietarios. Solo después se edifica cada solar.",
+      "cita": "a) A participar en la ejecución de una actuación urbanística cuyo objeto sea completar la urbanización de la unidad de actuación en la que estén incluidos sus terrenos",
+      "rehabilitar": null,
+      "cita_rehabilitar": null
+    }
+  },
+  "sin_planeamiento": {
+    "articulo": "67",
+    "cita": "deben considerarse incluidos en suelo urbano consolidado o en suelo rústico",
+    "rustico": {
+      "articulo": "73",
+      "vivienda": "vinculada",
+      "explicacion": "El municipio no tiene planeamiento que clasifique esta parcela. Si es rústica, se le aplica como mínimo el régimen del rústico común: vivienda nueva solo ligada a una explotación y con autorización.",
+      "cita": "c) Los deberes señalados para el suelo rústico común en el artículo 59, salvo que los terrenos tengan la consideración de suelo rústico con protección"
+    },
+    "urbano": {
+      "articulo": "67",
+      "vivienda": "solar",
+      "explicacion": "El municipio no tiene planeamiento que clasifique esta parcela. Si está dentro del núcleo y tiene los servicios, cuenta como urbano consolidado y se edifica si es solar.",
+      "cita": "2. Tienen la condición de suelo urbano consolidado los terrenos que cumplan las siguientes condiciones:"
+    }
+  }
+}

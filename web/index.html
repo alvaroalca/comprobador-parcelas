@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Comprobador de parcelas</title>
+<meta name="description" content="Pincha una finca de Castilla y León y mira si se puede hacer una casa: categoría de suelo, veredicto y el artículo del Reglamento de Urbanismo que lo decide.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="vendor/maplibre-gl.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header id="barra">
+  <a id="marca" href="./"><b>¿Se puede construir?</b><span>Comprobador de parcelas · Castilla y León</span></a>
+  <form id="buscador" role="search" autocomplete="off">
+    <input id="q" type="search" placeholder="Calle, pueblo o ref. catastral" aria-label="Buscar dirección, pueblo o referencia catastral" role="combobox" aria-controls="lista" aria-expanded="false" aria-autocomplete="list">
+    <button type="submit">Comprobar</button>
+    <ul id="lista" role="listbox" hidden></ul>
+  </form>
+</header>
+
+<main>
+  <aside id="ficha" aria-live="polite">
+    <section id="inicio">
+      <h1>Antes de comprar una finca, mira qué dice el suelo</h1>
+      <p>Busca una dirección o pincha una finca en el mapa. Sale su categoría de suelo, si cabe una casa (también prefabricada) y el artículo del Reglamento de Urbanismo que lo decide.</p>
+      <p class="etq">Prueba con</p>
+      <div id="ejemplos">
+        <button data-lon="-5.5400" data-lat="42.6700">Prado en Quintanilla <small>Villaquilambre, León</small></button>
+        <button data-lon="-5.53855" data-lat="42.67365">Finca partida en Quintanilla <small>mitad rústico común, mitad protección agropecuaria</small></button>
+        <button data-lon="-5.53302" data-lat="42.624828">Finca en la vega del Torío <small>zona inundable y de policía del río</small></button>
+        <button data-lon="-6.6200" data-lat="42.0500">Finca en Puebla de Sanabria <small>Zamora</small></button>
+        <button data-lon="-6.2000" data-lat="41.0800">Monte en Tremedal de Tormes <small>Salamanca, solo delimitación de suelo urbano</small></button>
+        <button data-lon="-5.56806" data-lat="42.59862" data-portal="5">Calle Ancha 5 <small>León capital</small></button>
+      </div>
+      <p class="nota">Cubre los 2.248 municipios de Castilla y León con los datos públicos del Catastro y de la Junta. Es un cribado previo, no un certificado.</p>
+    </section>
+    <section id="resultado" hidden></section>
+  </aside>
+
+  <div id="mapa"></div>
+
+  <details id="capas">
+    <summary>Capas</summary>
+    <label><input type="checkbox" data-capa="orto"> Ortofoto</label>
+    <label><input type="checkbox" data-capa="suelo" checked> Categorías de suelo</label>
+    <label><input type="checkbox" data-capa="catastro" checked> Parcelas</label>
+  </details>
+</main>
+
+<script src="vendor/maplibre-gl-csp.js"></script>
+<script src="vendor/polygon-clipping.umd.min.js"></script>
+<script type="module" src="main.js"></script>
+</body>
+</html>

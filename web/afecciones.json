@@ -1,0 +1,70 @@
+{
+  "fuentes": {
+    "rdph": {
+      "nombre": "Reglamento del Dominio Público Hidráulico",
+      "url": "https://www.boe.es/buscar/act.php?id=BOE-A-1986-10638",
+      "pdf": "https://www.boe.es/buscar/pdf/1986/BOE-A-1986-10638-consolidado.pdf"
+    },
+    "vvpp": {
+      "nombre": "Ley 3/1995 de Vías Pecuarias",
+      "url": "https://www.boe.es/buscar/act.php?id=BOE-A-1995-7241",
+      "pdf": "https://www.boe.es/buscar/pdf/1995/BOE-A-1995-7241-consolidado.pdf"
+    },
+    "montes": {
+      "nombre": "Ley 43/2003 de Montes",
+      "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2003-21339",
+      "pdf": "https://www.boe.es/buscar/pdf/2003/BOE-A-2003-21339-consolidado.pdf"
+    }
+  },
+  "tipos": {
+    "zfp": {
+      "titulo": "Zona de flujo preferente",
+      "tono": "no",
+      "texto": "Por aquí corre el agua en las avenidas. En suelo rural no se permiten edificaciones nuevas.",
+      "fuente": "rdph",
+      "articulo": "9 bis",
+      "cita": "b) Edificaciones, obras de reparación o rehabilitación que supongan un incremento de la ocupación en planta o del volumen de edificaciones existentes"
+    },
+    "dph": {
+      "titulo": "Cauce y servidumbre del río",
+      "tono": "no",
+      "texto": "Parte de la parcela es cauce público o su franja de servidumbre de 5 m. Ahí no se puede construir.",
+      "fuente": "rdph",
+      "articulo": "7",
+      "cita": "Con carácter general no se podrá realizar ningún tipo de construcción en esta zona salvo que resulte conveniente o necesaria para el uso del dominio público hidráulico o para su conservación y restauración."
+    },
+    "mup": {
+      "titulo": "Monte de utilidad pública",
+      "tono": "no",
+      "texto": "Parte de la parcela está dentro de un monte público catalogado. Es dominio público forestal: esa parte no puede ser de propiedad privada.",
+      "fuente": "montes",
+      "articulo": "14",
+      "cita": "Los montes del dominio público forestal son inalienables, imprescriptibles e inembargables"
+    },
+    "vvpp": {
+      "titulo": "Vía pecuaria",
+      "tono": "no",
+      "texto": "Una vía pecuaria cruza o roza la parcela dentro de su anchura legal. Esa franja es dominio público: no se puede comprar ni ocupar.",
+      "fuente": "vvpp",
+      "articulo": "2",
+      "cita": "Las vías pecuarias son bienes de dominio público de las Comunidades Autónomas"
+    },
+    "inundable": {
+      "titulo": "Zona inundable",
+      "tono": "condicion",
+      "texto": "Se inunda en la avenida de 500 años, que es la que define la zona inundable. Una vivienda nueva tendría que quedar por encima de esa cota.",
+      "fuente": "rdph",
+      "articulo": "14 bis",
+      "cita": "los nuevos usos residenciales se dispondrán a una cota tal que no se vean afectados por la avenida con periodo de retorno de 500 años"
+    },
+    "policia": {
+      "titulo": "Zona de policía del río",
+      "tono": "condicion",
+      "texto": "A menos de 100 m del cauce. Cualquier obra necesita autorización o declaración responsable ante la Confederación Hidrográfica.",
+      "fuente": "rdph",
+      "articulo": "9",
+      "cita": "La ejecución de cualquier obra o trabajo en la zona de policía, de acuerdo con lo dispuesto en el apartado 1, deberá contar con la correspondiente autorización administrativa previa o declaración responsable ante el organismo de cuenca"
+    }
+  },
+  "consultadas": "Zonas inundables y dominio público hidráulico (Ministerio para la Transición Ecológica, SNCZI), montes de utilidad pública y vías pecuarias (Junta de Castilla y León)."
+}
