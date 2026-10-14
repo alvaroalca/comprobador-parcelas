@@ -1,4 +1,5 @@
-// Afecciones sectoriales de una parcela: agua (Ministerio), montes públicos y vías pecuarias (Junta).
+// Afecciones sectoriales de una parcela: las del agua (Ministerio, toda España) y las que aporta
+// cada comunidad (montes, vías pecuarias, espacios protegidos) desde su adaptador.
 //
 // Agua, medido el 13/10/2026: los recintos del Ministerio son ríos enteros (130 km en una entidad).
 // - INTERSECTS exacto tarda 3-9 s por capa en su servidor y, con varias a la vez, corta conexiones.
@@ -6,55 +7,13 @@
 // Así que: BBOX sin geometría para sacar candidatos y, por cada candidato, su dibujo WMS recortado a la
 // caja de la parcela (1 px ≈ 1 m, relleno sólido) para contar qué parte de la parcela pinta (~0,2 s).
 
+import { caja, conReintento, wfs } from './geo.js';
+
 // El Ministerio manda la cabecera CORS duplicada («*, *») y el navegador rechaza sus respuestas
 // (curl no se queja). Se le llega por un proxy del mismo origen: el Worker del portfolio en
 // producción y tools/servir.py en local. Solo deja pasar estas dos rutas.
 const MITECO_WFS = '/api/miteco/geoserver/agua/wfs';
 const MITECO_WMS = '/api/miteco/geoserver/agua/wms';
-const MONTES = 'https://idecyl.jcyl.es/geoserver/montes/wfs';
-
-// Área plana de un MultiPolygon en metros (EPSG:25830)
-function area(multi) {
-  let total = 0;
-  for (const poligono of multi) {
-    poligono.forEach((anillo, i) => {
-      let s = 0;
-      for (let k = 0; k < anillo.length - 1; k++) s += anillo[k][0] * anillo[k + 1][1] - anillo[k + 1][0] * anillo[k][1];
-      total += (i ? -1 : 1) * Math.abs(s / 2);
-    });
-  }
-  return total;
-}
-
-const pausa = (ms) => new Promise((ok) => setTimeout(ok, ms));
-
-// Un reintento: el servidor del Ministerio corta conexiones (ECONNRESET) a ráfagas.
-async function conReintento(f) {
-  try { return await f(); } catch { await pausa(1500); return f(); }
-}
-
-// POST de formulario: petición «simple» (sin preflight) que admite polígonos largos.
-function wfs(base, capa, filtro, propiedades, srs) {
-  return conReintento(async () => {
-    const cuerpo = new URLSearchParams({
-      service: 'WFS', version: '2.0.0', request: 'GetFeature', typeNames: capa,
-      outputFormat: 'application/json', propertyName: propiedades, CQL_FILTER: filtro,
-    });
-    if (srs) cuerpo.set('srsName', srs);
-    const r = await fetch(base, { method: 'POST', body: cuerpo });
-    if (!r.ok) throw new Error(`${new URL(base).host} respondió ${r.status}`);
-    return (await r.json()).features;
-  });
-}
-
-const wkt = (multi, decimales) =>
-  `MULTIPOLYGON(${multi.map((p) => `(${p.map((a) => `(${a.map(([x, y]) => `${x.toFixed(decimales)} ${y.toFixed(decimales)}`).join(',')})`).join(',')})`).join(',')})`;
-
-function caja(multi) {
-  const ps = multi.flat(2);
-  const xs = ps.map((p) => p[0]), ys = ps.map((p) => p[1]);
-  return [Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys)];
-}
 
 const relleno = (capa) => '<StyledLayerDescriptor version="1.0.0" xmlns="http://www.opengis.net/sld">' +
   `<NamedLayer><Name>${capa}</Name><UserStyle><FeatureTypeStyle><Rule><PolygonSymbolizer><Fill>` +
@@ -116,72 +75,31 @@ async function aguaEnParcela(capa, lonlat, utm) {
   return tocan;
 }
 
-// Distancia mínima entre el polígono (metros) y una polilínea; 0 si la línea entra en él.
-function distancia(multi, lineas) {
-  const seg = (p, a, b) => {
-    const dx = b[0] - a[0], dy = b[1] - a[1];
-    const t = Math.max(0, Math.min(1, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / (dx * dx + dy * dy || 1)));
-    return Math.hypot(p[0] - a[0] - t * dx, p[1] - a[1] - t * dy);
-  };
-  const dentro = (p, anillo) => {
-    let c = false;
-    for (let i = 0, j = anillo.length - 1; i < anillo.length; j = i++) {
-      const [xi, yi] = anillo[i], [xj, yj] = anillo[j];
-      if ((yi > p[1]) !== (yj > p[1]) && p[0] < ((xj - xi) * (p[1] - yi)) / (yj - yi) + xi) c = !c;
-    }
-    return c;
-  };
-  const giro = (a, b, c) => Math.sign((b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]));
-  const cruzan = (a, b, c, d) => giro(a, b, c) !== giro(a, b, d) && giro(c, d, a) !== giro(c, d, b);
-  const bordes = multi.flat();
-  let min = Infinity;
-  for (const linea of lineas) {
-    for (const p of linea) if (multi.some((pol) => dentro(p, pol[0]) && !pol.slice(1).some((h) => dentro(p, h)))) return 0;
-    for (let i = 0; i < linea.length - 1; i++) {
-      for (const anillo of bordes) {
-        for (const q of anillo) min = Math.min(min, seg(q, linea[i], linea[i + 1]));
-        for (let k = 0; k < anillo.length - 1; k++) {
-          // Un tramo largo puede atravesar la parcela sin dejar ningún vértice dentro
-          if (cruzan(linea[i], linea[i + 1], anillo[k], anillo[k + 1])) return 0;
-          min = Math.min(min, seg(linea[i], anillo[k], anillo[k + 1]), seg(linea[i + 1], anillo[k], anillo[k + 1]));
-        }
-      }
-    }
-  }
-  return min;
-}
-
 const unicos = (xs) => [...new Set(xs.filter(Boolean))];
 
-// Devuelve { halladas: [{tipo, detalle}], fallidas: [nombre de la fuente] }.
-export async function afecciones(lonlat, utm) {
-  const enMetros = `SRID=25830;${wkt(utm, 2)}`;
-
+// Devuelve { halladas: [{tipo, detalle}], fallidas: [nombre de la fuente] }. Cada comunidad aporta
+// con `comunidad.afecciones(lonlat, utm)` un mapa { clave: { nombre, consulta } } cuya consulta
+// devuelve ya sus hallazgos [{tipo, detalle}].
+export async function afecciones(lonlat, utm, comunidad) {
   // Las del Ministerio van en serie: en paralelo su servidor corta conexiones.
   let cola = Promise.resolve();
   const enSerie = (f) => { const p = cola.then(f); cola = p.catch(() => {}); return p; };
-  const consultas = {
-    zfp: () => enSerie(() => aguaEnParcela('agua:ZI_Laminas_ZFP', lonlat, utm)),
-    q500: () => enSerie(() => aguaEnParcela('agua:Zi_laminas_q500', lonlat, utm)),
-    dphEstimado: () => enSerie(() => aguaEnParcela('agua:DPH_Estimado', lonlat, utm)),
-    dphDeslindado: () => enSerie(() => aguaEnParcela('agua:DPH_Deslindado', lonlat, utm)),
-    // Con geometría: monte y parcela se digitalizaron por separado y en los bordes se pisan unos metros.
-    // Solo cuenta un monte que ocupe al menos el 0,5 % de la parcela (como con las categorías de suelo).
-    mup: () => wfs(MONTES, 'montes:montes_cyl_mup_vw', `INTERSECTS(geometry,${enMetros})`, 'geometry,n_monte,v_mup', 'EPSG:25830'),
-    // La anchura legal llega con cada vía (hasta 75 m en una cañada): se traen las que pasan a menos
-    // de 40 m y se mide aquí la distancia contra la mitad de su anchura.
-    vvpp: () => wfs(MONTES, 'montes:znie_cyl_vvpp_ejes', `DWITHIN(geometry,${enMetros},40,meters)`,
-      'geometry,nombre,categoria,ancho_m', 'EPSG:25830'),
+  const agua = {
+    zfp: { nombre: 'flujo preferente', consulta: () => enSerie(() => aguaEnParcela('agua:ZI_Laminas_ZFP', lonlat, utm)) },
+    q500: { nombre: 'zona inundable', consulta: () => enSerie(() => aguaEnParcela('agua:Zi_laminas_q500', lonlat, utm)) },
+    dphEstimado: { nombre: 'dominio público hidráulico', consulta: () => enSerie(() => aguaEnParcela('agua:DPH_Estimado', lonlat, utm)) },
+    dphDeslindado: { nombre: 'dominio público hidráulico', consulta: () => enSerie(() => aguaEnParcela('agua:DPH_Deslindado', lonlat, utm)) },
   };
-  const nombres = { zfp: 'flujo preferente', q500: 'zona inundable', dphEstimado: 'dominio público hidráulico', dphDeslindado: 'dominio público hidráulico', mup: 'montes de utilidad pública', vvpp: 'vías pecuarias' };
+  const propias = comunidad.afecciones?.(lonlat, utm) ?? {};
+  const consultas = { ...agua, ...propias };
 
   const claves = Object.keys(consultas);
-  const resultados = await Promise.allSettled(claves.map((k) => consultas[k]()));
+  const resultados = await Promise.allSettled(claves.map((k) => consultas[k].consulta()));
   const r = {};
   const fallidas = new Set();
   resultados.forEach((res, i) => {
     if (res.status === 'fulfilled') r[claves[i]] = res.value;
-    else { console.error(claves[i], res.reason); fallidas.add(nombres[claves[i]]); r[claves[i]] = []; }
+    else { console.error(claves[i], res.reason); fallidas.add(consultas[claves[i]].nombre); r[claves[i]] = []; }
   });
 
   const halladas = [];
@@ -202,26 +120,7 @@ export async function afecciones(lonlat, utm) {
   const policia = dph.filter((x) => /polic/i.test(x.tipo_zona ?? ''));
   if (cauce.length) halladas.push({ tipo: 'dph', detalle: await rios(cauce) });
 
-  const total = area(utm);
-  const montes = r.mup
-    .map((f) => {
-      const g = f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates;
-      return { ...f.properties, cuota: area(globalThis.polygonClipping.intersection(utm, g)) / total };
-    })
-    .filter((m) => m.cuota >= 0.005)
-    .sort((a, b) => b.cuota - a.cuota);
-  if (montes.length) {
-    halladas.push({ tipo: 'mup', detalle: montes.map((m) => `nº ${m.v_mup} «${m.n_monte}»: ${Math.round(m.cuota * 100)} %`).join(', ') });
-  }
-
-  const vias = r.vvpp.filter((f) => {
-    const g = f.geometry;
-    const lineas = g.type === 'LineString' ? [g.coordinates] : g.coordinates;
-    return distancia(utm, lineas) <= (Number(f.properties.ancho_m) || 0) / 2;
-  });
-  if (vias.length) {
-    halladas.push({ tipo: 'vvpp', detalle: unicos(vias.map((f) => `${f.properties.nombre}${f.properties.ancho_m ? ` (${Math.round(f.properties.ancho_m)} m de ancho)` : ''}`)).join(', ') });
-  }
+  for (const k of Object.keys(propias)) halladas.push(...r[k]);
 
   if (r.q500.length) halladas.push({ tipo: 'inundable', detalle: await rios(r.q500) });
   if (policia.length) halladas.push({ tipo: 'policia', detalle: await rios(policia) });

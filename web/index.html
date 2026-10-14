@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Comprobador de parcelas</title>
-<meta name="description" content="Pincha una finca de Castilla y León y mira si se puede hacer una casa: categoría de suelo, veredicto y el artículo del Reglamento de Urbanismo que lo decide.">
+<meta name="description" content="Busca o pincha una finca de Castilla y León, Madrid, Cantabria o Cataluña y mira si se puede hacer una casa: clase de suelo, veredicto y el artículo de la norma urbanística que lo decide.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -14,9 +14,9 @@
 </head>
 <body>
 <header id="barra">
-  <a id="marca" href="./"><b>¿Se puede construir?</b><span>Comprobador de parcelas · Castilla y León</span></a>
+  <a id="marca" href="./"><b>¿Se puede construir?</b><span>Comprobador de parcelas · Castilla y León, Madrid, Cantabria y Cataluña</span></a>
   <form id="buscador" role="search" autocomplete="off">
-    <input id="q" type="search" placeholder="Calle, pueblo o ref. catastral" aria-label="Buscar dirección, pueblo o referencia catastral" role="combobox" aria-controls="lista" aria-expanded="false" aria-autocomplete="list">
+    <input id="q" type="search" placeholder="Calle, pueblo, ref. catastral o polígono y parcela" aria-label="Buscar dirección, pueblo, referencia catastral o polígono y parcela" role="combobox" aria-controls="lista" aria-expanded="false" aria-autocomplete="list">
     <button type="submit">Comprobar</button>
     <ul id="lista" role="listbox" hidden></ul>
   </form>
@@ -26,7 +26,7 @@
   <aside id="ficha" aria-live="polite">
     <section id="inicio">
       <h1>Antes de comprar una finca, mira qué dice el suelo</h1>
-      <p>Busca una dirección o pincha una finca en el mapa. Sale su categoría de suelo, si cabe una casa (también prefabricada) y el artículo del Reglamento de Urbanismo que lo decide.</p>
+      <p>Busca una dirección, una referencia catastral o el polígono y la parcela de una finca rústica, o pínchala en el mapa. Sale su clase de suelo, si cabe una casa (también prefabricada) y el artículo de la norma urbanística que lo decide.</p>
       <p class="etq">Prueba con</p>
       <div id="ejemplos">
         <button data-lon="-5.5400" data-lat="42.6700">Prado en Quintanilla <small>Villaquilambre, León</small></button>
@@ -35,8 +35,17 @@
         <button data-lon="-6.6200" data-lat="42.0500">Finca en Puebla de Sanabria <small>Zamora</small></button>
         <button data-lon="-6.2000" data-lat="41.0800">Monte en Tremedal de Tormes <small>Salamanca, solo delimitación de suelo urbano</small></button>
         <button data-lon="-5.56806" data-lat="42.59862" data-portal="5">Calle Ancha 5 <small>León capital</small></button>
+        <button data-q="polígono 1 parcela 71 Corpa">Polígono 1, parcela 71 de Corpa <small>Madrid, antiguo no urbanizable común</small></button>
+        <button data-rc="28096A03000251">Finca en Navalcarnero <small>Madrid, no urbanizable de protección</small></button>
+        <button data-rc="28156A00100265">Finca en Valdeavero <small>Madrid, partida y en Red Natura 2000</small></button>
+        <button data-rc="39062A51700010">Finca en Ribamontán al Monte <small>Cantabria, rústico ordinario a 76 m del pueblo</small></button>
+        <button data-rc="39900A00100025">Finca en Santander <small>Cantabria, rústico ordinario a más de 200 m</small></button>
+        <button data-rc="39027A06300010">Finca en Campoo de Enmedio <small>Cantabria, rústico de especial protección</small></button>
+        <button data-rc="17083A00400055">Viña en Garriguella <small>Girona, no urbanizable ordinario</small></button>
+        <button data-rc="08255A01400012">Finca en Santa Maria de Merlès <small>Barcelona, protección reglada y Red Natura 2000</small></button>
+        <button data-rc="6812019CH4061S">Calle Raval 61 <small>Rialp, Lleida, suelo urbano</small></button>
       </div>
-      <p class="nota">Cubre los 2.248 municipios de Castilla y León con los datos públicos del Catastro y de la Junta. Es un cribado previo, no un certificado.</p>
+      <p class="nota">Cubre los 2.248 municipios de Castilla y León, los 179 de la Comunidad de Madrid, los 102 de Cantabria y los 947 de Cataluña con los datos públicos del Catastro y de cada comunidad. Es un cribado previo, no un certificado.</p>
     </section>
     <section id="resultado" hidden></section>
   </aside>
@@ -46,7 +55,7 @@
   <details id="capas">
     <summary>Capas</summary>
     <label><input type="checkbox" data-capa="orto"> Ortofoto</label>
-    <label><input type="checkbox" data-capa="suelo" checked> Categorías de suelo</label>
+    <label><input type="checkbox" data-capa="suelo" checked> Clases de suelo</label>
     <label><input type="checkbox" data-capa="catastro" checked> Parcelas</label>
   </details>
 </main>

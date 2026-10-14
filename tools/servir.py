@@ -19,7 +19,7 @@ CSP = '; '.join([
     "style-src 'self' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
     "img-src 'self' data: blob:",
-    "connect-src 'self' https://ovc.catastro.meh.es https://idecyl.jcyl.es https://www.cartociudad.es https://www.ign.es",
+    "connect-src 'self' https://ovc.catastro.meh.es https://idecyl.jcyl.es https://idem.comunidad.madrid https://geoservicios.cantabria.es https://sig.gencat.cat https://www.cartociudad.es https://www.ign.es",
     "worker-src 'self'",
     "object-src 'none'",
     "frame-ancestors 'none'",
@@ -70,4 +70,5 @@ class ConCSP(http.server.SimpleHTTPRequestHandler):
 
 ConCSP.extensions_map['.js'] = 'text/javascript'
 puerto = int(sys.argv[1]) if len(sys.argv) > 1 else 8765
+print(f'Sirviendo en http://localhost:{puerto} (Ctrl+C para parar)', flush=True)
 http.server.ThreadingHTTPServer(('127.0.0.1', puerto), functools.partial(ConCSP, directory=str(WEB))).serve_forever()

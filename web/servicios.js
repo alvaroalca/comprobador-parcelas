@@ -1,12 +1,8 @@
-// Llamadas a los servicios públicos. Todos responden con CORS abierto, así que
-// la página habla con ellos directamente, sin servidor propio.
+// Llamadas a los servicios públicos de toda España (CartoCiudad y Catastro). Responden con CORS
+// abierto, así que la página habla con ellos directamente. Lo de cada comunidad está en comunidades/.
 
 const CATASTRO = 'https://ovc.catastro.meh.es';
-const IDECYL = 'https://idecyl.jcyl.es/geoserver/urbanismo/wfs';
 const CARTOCIUDAD = 'https://www.cartociudad.es/geocoder/api/geocoder';
-
-// Provincias de Castilla y León (código INE)
-export const PROVINCIAS_CYL = new Set(['05', '09', '24', '34', '37', '40', '42', '47', '49']);
 
 async function pedir(url, tipo = 'json') {
   const r = await fetch(url);
@@ -22,6 +18,25 @@ const etiqueta = (doc, nombre) => doc.getElementsByTagName(nombre)[0]?.textConte
 export async function sugerencias(texto) {
   const q = new URLSearchParams({ q: texto, limit: '6' });
   return pedir(`${CARTOCIUDAD}/candidates?${q}`);
+}
+
+// Municipios que casan con un texto, con su código INE (provincia + municipio, 5 cifras).
+// Los de tipo «poblacion» también lo traen; se queda uno por código.
+export async function municipios(texto) {
+  const vistos = new Map();
+  for (const c of await sugerencias(texto)) {
+    if (['Municipio', 'poblacion'].includes(c.type) && c.muniCode && !vistos.has(c.muniCode)) {
+      vistos.set(c.muniCode, { muni: c.muni, provincia: c.province, muniCode: c.muniCode });
+    }
+  }
+  return [...vistos.values()];
+}
+
+// «polígono 4 parcela 376 Villaquilambre», «pol. 4 parc. 376, Villaquilambre»: así sale una finca
+// rústica en anuncios y escrituras, que no tiene portal. Devuelve null si el texto no es eso.
+export function leerPoligonoParcela(texto) {
+  const m = texto.match(/\bpol(?:[ií]gono)?\.?\s*(\d+)\s*[,;-]?\s*(?:y\s+)?parc?(?:ela)?\.?\s*(\d+)\s*[,.]?\s*(?:(?:de|en)\s+)?(.*)$/i);
+  return m ? { poligono: m[1], parcela: m[2], municipio: m[3].trim() || null } : null;
 }
 
 // Los candidatos de tipo calle o municipio llegan sin coordenadas: se piden aparte.
@@ -60,6 +75,19 @@ export async function referenciaEnPunto(lon, lat, { tolerancia = 0, portal = nul
   return { rc: elegida.rc, aproximada: !exacta, direccion: elegida.direccion };
 }
 
+// Referencia de una finca rústica por polígono y parcela. Se pide con el código INE del municipio
+// (el de CartoCiudad) para no depender de cómo escriba el nombre cada servicio. null si no existe.
+export async function referenciaPorPoligono(muniCode, poligono, parcela) {
+  const q = new URLSearchParams({
+    CodigoProvincia: muniCode.slice(0, 2), CodigoMunicipio: '', CodigoMunicipioINE: muniCode.slice(2),
+    Poligono: poligono, Parcela: parcela,
+  });
+  const doc = await pedir(`${CATASTRO}/ovcservweb/OVCSWLocalizacionRC/OVCCallejeroCodigos.asmx/Consulta_DNPPP_Codigos?${q}`, 'xml');
+  if (etiqueta(doc, 'cuerr') && etiqueta(doc, 'cuerr') !== '0') return null;
+  const rc = (etiqueta(doc, 'pc1') ?? '') + (etiqueta(doc, 'pc2') ?? '');
+  return rc.length === 14 ? rc : null;
+}
+
 // Centroide de una referencia (Catastro). null si la referencia no existe.
 export async function centroDeReferencia(rc) {
   const q = new URLSearchParams({ Provincia: '', Municipio: '', SRS: 'EPSG:4326', RC: rc });
@@ -69,11 +97,13 @@ export async function centroDeReferencia(rc) {
 }
 
 // Referencia catastral escrita por una persona: sin espacios ni guiones y en mayúsculas.
-// Rústica: 5 cifras + letra + 8 cifras; urbana: 7 cifras + 2 letras + 4 cifras + letra.
-// Admite los 20 caracteres (con inmueble y control) y se queda con los 14 de la parcela.
+// Rústica: 5 cifras + letra + 8 cifras; urbana: empieza por 5 cifras y acaba en letra, con cifras y
+// letras mezcladas en medio (0034940VP2193D, diseminados 000300500VP70A, 26830B0CF2928S). Exigir las
+// 5 cifras evita tomar por referencia una palabra de 14 letras («Villaquilambre»). Admite los 20 caracteres (con inmueble y
+// control) y se queda con los 14 de la parcela.
 export function normalizarReferencia(texto) {
   const t = texto.replace(/[\s.-]/g, '').toUpperCase();
-  const m = t.match(/^(\d{5}[A-Z]\d{8}|\d{7}[A-Z]{2}\d{4}[A-Z])(\d{4}[A-Z]{2})?$/);
+  const m = t.match(/^(\d{5}[A-Z]\d{8}|\d{5}[A-Z0-9]{8}[A-Z])(\d{4}[A-Z]{2})?$/);
   return m ? m[1] : null;
 }
 
@@ -123,28 +153,4 @@ async function poligonoCatastro(rc, srs) {
 export async function geometriaParcela(rc) {
   const [lonlat, utm] = await Promise.all([poligonoCatastro(rc, '4326'), poligonoCatastro(rc, '25830')]);
   return { lonlat: lonlat.poligonos, utm: utm.poligonos, superficie: utm.superficie };
-}
-
-// ---------- Junta de Castilla y León ----------
-
-function wfs(capa, filtro, propiedades, srs) {
-  const q = new URLSearchParams({
-    service: 'WFS', version: '2.0.0', request: 'GetFeature',
-    typeNames: `urbanismo:${capa}`, outputFormat: 'application/json',
-    srsName: srs, propertyName: propiedades, CQL_FILTER: filtro,
-  });
-  return pedir(`${IDECYL}?${q}`);
-}
-
-// Recintos de categoría de suelo que tocan la caja de la parcela (EPSG:25830). El recorte exacto se hace en el navegador.
-export async function categoriasEnCaja([oeste, sur, este, norte]) {
-  const r = await wfs('plau_cyl_categorias_desagrupa',
-    `BBOX(geom,${oeste},${sur},${este},${norte},'EPSG:25830')`, 'geom,c_categ_sue,n_categ_sue', 'EPSG:25830');
-  return r.features;
-}
-
-export async function instrumentoEnPunto(lon, lat) {
-  const r = await wfs('plau_cyl_instrumentos_ambito', `INTERSECTS(geometry,SRID=4326;POINT(${lon} ${lat}))`,
-    'c_instrum,n_instrum,n_mun,f_aprob,url_doc_info', 'EPSG:4326');
-  return r.features[0]?.properties ?? null;
 }

@@ -130,6 +130,9 @@ main { flex: 1; min-height: 0; display: grid; grid-template-columns: var(--ancho
 .pregunta { margin: 0; font-size: 13px; color: var(--tinta-suave); }
 .respuesta { margin: 2px 0 4px; font-size: 30px; line-height: 1.15; font-weight: 700; color: var(--tono); }
 .categoria { margin: 0 0 12px; font-weight: 500; }
+.categoria:has(+ .detalle-plan) { margin-bottom: 2px; }
+.detalle-plan { margin: 0 0 12px; font-size: 14px; color: var(--tinta-suave); }
+.nota-medida { margin: 0 0 12px; font-weight: 500; }
 .explicacion { margin: 0 0 12px; }
 .cita { margin: 12px 0 0; }
 .cita blockquote { margin: 0; padding-left: 12px; border-left: 2px solid var(--linea); font-size: 14px; color: var(--tinta-suave); font-style: italic; }

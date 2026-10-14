@@ -1,0 +1,135 @@
+{
+  "fuente": {
+    "nombre": "Texto refundido de la Ley de urbanismo de Cataluña (Decreto Legislativo 1/2010), texto consolidado",
+    "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2010-13883",
+    "pdf": "https://www.boe.es/buscar/pdf/2010/BOE-A-2010-13883-consolidado.pdf",
+    "de": "del Texto refundido de la Ley de urbanismo de Cataluña"
+  },
+  "niveles": {
+    "prohibida": { "titulo": "No", "tono": "no" },
+    "vinculada": { "titulo": "Solo ligada a una explotación", "tono": "condicion" },
+    "solar": { "titulo": "Sí, si la parcela es solar", "tono": "si" },
+    "sin_urbanizar": { "titulo": "Todavía no", "tono": "condicion" },
+    "sin_dato": { "titulo": "Sin dato", "tono": "depende" }
+  },
+  "orden": ["solar", "vinculada", "sin_urbanizar", "sin_dato", "prohibida"],
+  "proteccion": ["SIS", "N3", "N2", "N1", "N4", "SND", "SUD", "SNC", "SUC"],
+  "rehabilitar": {
+    "catalogo": "Solo si es una masía o casa rural (u otra construcción tradicional) incluida en el catálogo del plan municipal. Entonces puede rehabilitarse, también como vivienda."
+  },
+  "sin_datos": "El Mapa Urbanístic de Catalunya no clasifica esta parcela. Pregunta en el ayuntamiento qué clasificación tiene.",
+  "categorias": {
+    "SUC": {
+      "nombre": "Suelo urbano consolidado",
+      "articulo": "41",
+      "vivienda": "solar",
+      "explicacion": "En urbano consolidado se puede edificar la parcela que sea solar, con las condiciones del plan municipal: zona, alturas, retranqueos y estética.",
+      "cita": "El suelo urbano puede ser edificado, de acuerdo con las determinaciones del planeamiento urbanístico, y mediante el otorgamiento de la licencia de edificación correspondiente, si alcanza la condición de solar."
+    },
+    "SNC": {
+      "nombre": "Suelo urbano no consolidado",
+      "articulo": "31",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "En urbano no consolidado primero hay que aprobar el plan de mejora urbana o el polígono de actuación y repartir cargas entre los propietarios (reparcelación). Solo después se edifica cada solar.",
+      "cita": "Para la transformación urbanística de un sector de suelo urbano no consolidado sujeto a un plan de mejora urbana, se precisa la formulación, la tramitación y la aprobación definitiva de un plan de mejora urbana",
+      "mas": [
+        { "articulo": "41", "cita": "Si para la edificación de suelo urbano es necesaria la reparcelación del suelo, ésta tiene que haber sido aprobada por acuerdo que haya ganado firmeza en vía administrativa." }
+      ]
+    },
+    "SUD": {
+      "nombre": "Suelo urbanizable delimitado",
+      "articulo": "52",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "En urbanizable delimitado primero hay que aprobar el plan parcial y urbanizar el sector. Mientras tanto no cabe ni siquiera lo que se permite en no urbanizable.",
+      "cita": "En suelo urbanizable delimitado no es posible autorizar los usos y obras regulados por el artículo 47 para el suelo no urbanizable.",
+      "mas": [
+        { "articulo": "33", "cita": "Para la transformación urbanística de un sector de suelo urbanizable delimitado, se precisa la formulación, la tramitación y la aprobación definitiva de un plan parcial urbanístico" }
+      ]
+    },
+    "SND": {
+      "nombre": "Suelo urbanizable no delimitado",
+      "articulo": "52",
+      "vivienda": "vinculada",
+      "explicacion": "Mientras no se delimite y desarrolle, el urbanizable no delimitado sigue el régimen del no urbanizable: vivienda nueva solo asociada a una explotación agraria o rústica.",
+      "cita": "El régimen de uso del suelo urbanizable no delimitado, mientras no se realice su transformación, se ajusta al régimen de utilización, disfrute y disposición establecido por el presente capítulo para el suelo no urbanizable",
+      "mas": [
+        { "articulo": "47", "cita": "b) Las construcciones destinadas a vivienda familiar que estén, directa y justificadamente, asociadas a una de las actividades de explotación a las que hace referencia la letra a." }
+      ],
+      "rehabilitar": "catalogo",
+      "articulo_rehabilitar": "47",
+      "cita_rehabilitar": "Las construcciones a las que se refiere el apartado 3 deben haber sido incluidas por el planeamiento urbanístico en el catálogo establecido en el artículo 50.2.",
+      "mas_rehabilitar": [
+        { "articulo": "47", "cita": "a) De vivienda, cuando se trate de masías o casas rurales." }
+      ]
+    },
+    "N1": {
+      "nombre": "Suelo no urbanizable ordinario",
+      "articulo": "47",
+      "vivienda": "vinculada",
+      "explicacion": "En no urbanizable la vivienda nueva solo cabe si está directa y justificadamente asociada a una explotación agrícola, ganadera, forestal o rústica, con un proyecto que se somete a información pública. En municipios rurales de menos de 5.000 habitantes se presume esa relación para el descendiente del titular que trabaja en la explotación familiar.",
+      "cita": "b) Las construcciones destinadas a vivienda familiar que estén, directa y justificadamente, asociadas a una de las actividades de explotación a las que hace referencia la letra a.",
+      "mas": [
+        { "articulo": "47", "cita": "a) Que la nueva vivienda familiar se sitúe en un municipio rural con una población inferior a cinco mil habitantes." },
+        { "articulo": "47", "cita": "b) Que la persona promotora de la vivienda familiar sea un descendiente de la persona titular de una explotación rústica familiar situada en el municipio." }
+      ],
+      "rehabilitar": "catalogo",
+      "articulo_rehabilitar": "47",
+      "cita_rehabilitar": "Las construcciones a las que se refiere el apartado 3 deben haber sido incluidas por el planeamiento urbanístico en el catálogo establecido en el artículo 50.2.",
+      "mas_rehabilitar": [
+        { "articulo": "47", "cita": "a) De vivienda, cuando se trate de masías o casas rurales." }
+      ]
+    },
+    "N2": {
+      "nombre": "Suelo no urbanizable de protección local",
+      "articulo": "47",
+      "vivienda": "vinculada",
+      "explicacion": "Es no urbanizable protegido por el plan municipal (agrícola de valor, paisaje, conectores). Como mucho cabe la vivienda asociada a una explotación, y el plan puede ser más restrictivo y no admitirla en esta zona.",
+      "cita": "b) Las construcciones destinadas a vivienda familiar que estén, directa y justificadamente, asociadas a una de las actividades de explotación a las que hace referencia la letra a.",
+      "mas": [
+        { "articulo": "47", "cita": "El suelo no urbanizable no puede ser dedicado a usos que, atendiendo los valores que el plan de ordenación urbanística municipal protege o preserva y las finalidades que persigue, transformen la destinación o la naturaleza o bien lesionen o impidan la realización de dichos valores y la consecución de dichas finalidades." }
+      ],
+      "rehabilitar": "catalogo",
+      "articulo_rehabilitar": "47",
+      "cita_rehabilitar": "Las construcciones a las que se refiere el apartado 3 deben haber sido incluidas por el planeamiento urbanístico en el catálogo establecido en el artículo 50.2.",
+      "mas_rehabilitar": [
+        { "articulo": "47", "cita": "a) De vivienda, cuando se trate de masías o casas rurales." }
+      ]
+    },
+    "N3": {
+      "nombre": "Suelo no urbanizable de protección reglada",
+      "articulo": "47",
+      "vivienda": "vinculada",
+      "explicacion": "Es no urbanizable protegido por una ley sectorial o un plan territorial (espacios del PEIN, Red Natura, riesgos, dominio público). Manda ese régimen especial, que normalmente no admite vivienda nueva; en el mejor caso, solo la asociada a una explotación.",
+      "cita": "b) Las construcciones destinadas a vivienda familiar que estén, directa y justificadamente, asociadas a una de las actividades de explotación a las que hace referencia la letra a.",
+      "mas": [
+        { "articulo": "47", "cita": "debe justificar debidamente que el ámbito de actuación no está sometido a un régimen especial de protección con el cual sean incompatibles" }
+      ],
+      "rehabilitar": "catalogo",
+      "articulo_rehabilitar": "47",
+      "cita_rehabilitar": "Las construcciones a las que se refiere el apartado 3 deben haber sido incluidas por el planeamiento urbanístico en el catálogo establecido en el artículo 50.2.",
+      "mas_rehabilitar": [
+        { "articulo": "47", "cita": "a) De vivienda, cuando se trate de masías o casas rurales." }
+      ]
+    },
+    "N4": {
+      "nombre": "Suelo no urbanizable con actividad autorizada",
+      "articulo": "47",
+      "vivienda": "vinculada",
+      "explicacion": "Es no urbanizable donde el plan reconoce una actividad ya autorizada. Para vivienda nueva rige lo mismo que en el resto del no urbanizable: solo asociada a una explotación.",
+      "cita": "b) Las construcciones destinadas a vivienda familiar que estén, directa y justificadamente, asociadas a una de las actividades de explotación a las que hace referencia la letra a.",
+      "rehabilitar": "catalogo",
+      "articulo_rehabilitar": "47",
+      "cita_rehabilitar": "Las construcciones a las que se refiere el apartado 3 deben haber sido incluidas por el planeamiento urbanístico en el catálogo establecido en el artículo 50.2.",
+      "mas_rehabilitar": [
+        { "articulo": "47", "cita": "a) De vivienda, cuando se trate de masías o casas rurales." }
+      ]
+    },
+    "SIS": {
+      "nombre": "Sistema urbanístico",
+      "articulo": "34",
+      "vivienda": "prohibida",
+      "explicacion": "Es suelo que el plan reserva a un sistema público (viario, espacios libres, equipamientos, servicios técnicos). No es para vivienda privada.",
+      "cita": "Integran los sistemas urbanísticos generales los terrenos que el planeamiento urbanístico reserva para las comunicaciones, para los equipamientos comunitarios y para los espacios libres públicos"
+    }
+  }
+}

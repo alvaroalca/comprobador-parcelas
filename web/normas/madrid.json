@@ -1,0 +1,93 @@
+{
+  "fuente": {
+    "nombre": "Ley 9/2001 del Suelo de la Comunidad de Madrid, texto consolidado",
+    "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2001-18984",
+    "pdf": "https://www.boe.es/buscar/pdf/2001/BOE-A-2001-18984-consolidado.pdf",
+    "de": "de la Ley 9/2001 del Suelo de la Comunidad de Madrid"
+  },
+  "niveles": {
+    "prohibida": { "titulo": "No", "tono": "no" },
+    "vinculada": { "titulo": "Solo ligada a una explotación", "tono": "condicion" },
+    "aislada": { "titulo": "Con condiciones: vivienda aislada", "tono": "condicion" },
+    "solar": { "titulo": "Sí, si la parcela es solar", "tono": "si" },
+    "sin_urbanizar": { "titulo": "Todavía no", "tono": "condicion" },
+    "sin_dato": { "titulo": "Sin dato", "tono": "depende" }
+  },
+  "orden": ["solar", "aislada", "vinculada", "sin_urbanizar", "sin_dato", "prohibida"],
+  "proteccion": ["SNUP", "SG", "APLAZADO", "SUBNS", "SUBS", "SUNC", "SU", "SUC", "SD"],
+  "rehabilitar": {
+    "autorizable": "Con calificación urbanística se puede rehabilitar lo existente para conservarlo, también como vivienda y aunque esté fuera de ordenación, con la ampliación indispensable para que sea habitable.",
+    "autorizable_snup": "Si la protección no es sectorial, con calificación urbanística se puede rehabilitar lo existente para conservarlo, también como vivienda y aunque esté fuera de ordenación, con la ampliación indispensable para que sea habitable."
+  },
+  "sin_datos": "La capa de la Comunidad de Madrid no clasifica esta parcela. Pregunta en el ayuntamiento qué clasificación tiene.",
+  "categorias": {
+    "SUC": {
+      "nombre": "Suelo urbano consolidado",
+      "articulo": "17",
+      "vivienda": "solar",
+      "explicacion": "En urbano consolidado se puede edificar la parcela que sea solar (acceso y servicios urbanos), con las condiciones del plan municipal: usos, alturas, retranqueos y estética.",
+      "cita": "b) Edificar en el solar en las condiciones y, en su caso, plazos establecidos por el planeamiento."
+    },
+    "SU": {
+      "nombre": "Suelo urbano",
+      "articulo": "disposición transitoria primera",
+      "vivienda": "solar",
+      "explicacion": "El plan municipal no distingue urbano consolidado y no consolidado. Si la parcela ya está urbanizada cuenta como consolidado y se edifica si es solar; si está dentro de una unidad de ejecución, primero hay que urbanizarla.",
+      "cita": "A los terrenos clasificados como suelo urbano que se encuentren en la situación de urbanización prevista por el artículo 14.2.a), se les aplicará el régimen establecido en la presente Ley para el suelo urbano consolidado."
+    },
+    "SUNC": {
+      "nombre": "Suelo urbano no consolidado",
+      "articulo": "20",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "En urbano no consolidado primero hay que urbanizar el ámbito o la unidad de ejecución entre todos los propietarios. Solo después se edifica cada solar, o a la vez que se terminan las obras de urbanización.",
+      "cita": "Antes de la finalización de las obras de urbanización no es posible, con carácter general, la realización de otros actos edificatorios o de implantación de usos que los provisionales"
+    },
+    "SUBS": {
+      "nombre": "Suelo urbanizable sectorizado",
+      "articulo": "23",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "En urbanizable sectorizado (aquí entran el antiguo urbanizable programado y el apto para urbanizar) rige lo mismo que en urbano no consolidado: primero se ordena y urbaniza el sector, después se edifica cada solar.",
+      "cita": "En el suelo urbanizable sectorizado será de aplicación el mismo régimen que se establece para el suelo urbano no consolidado en el artículo 20 de la presente Ley"
+    },
+    "SUBNS": {
+      "nombre": "Suelo urbanizable no sectorizado",
+      "articulo": "26",
+      "vivienda": "aislada",
+      "explicacion": "En urbanizable no sectorizado (aquí entran el antiguo no urbanizable común y el urbanizable no programado) cabe una vivienda familiar con calificación urbanística: aislada, sin servicios que hagan pensar en urbanizar y en una finca con la superficie mínima que la legislación forestal y agraria fija para los montes. También cabe la vivienda ligada a una explotación agraria.",
+      "cita": "Para que se autorice el uso de vivienda familiar será necesario que se disponga aislada en el interior de la unidad, que por su localización no pueda presumirse finalidad urbanizadora por no existir instalaciones o servicios necesarios para la finalidad de aprovechamiento urbanístico, y que la finca cuente, cualquiera que sea su naturaleza, con la superficie mínima que se establece en la legislación forestal y agraria para los terrenos considerados monte.",
+      "mas": [
+        { "articulo": "26", "cita": "La calificación a que se refiere esta letra podrá legitimar también el uso accesorio de vivienda cuando ésta sea necesaria para el funcionamiento de cada explotación e instalación." },
+        { "articulo": "disposición transitoria primera", "cita": "c) Al suelo urbanizable no programado y al suelo no urbanizable común se les aplicará el régimen establecido en la presente Ley para el suelo urbanizable no sectorizado." }
+      ],
+      "rehabilitar": "autorizable",
+      "cita_rehabilitar": "La rehabilitación para su conservación, incluso con destino residencial, de edificios existentes aun cuando se encontraran en situación de fuera de ordenación"
+    },
+    "SNUP": {
+      "nombre": "Suelo no urbanizable de protección",
+      "articulo": "29",
+      "vivienda": "vinculada",
+      "explicacion": "En no urbanizable de protección la vivienda solo cabe como accesoria de una explotación agraria, con calificación urbanística, y solo si la protección la pone el planeamiento. Si viene de una ley sectorial (espacio natural, cauce, vía pecuaria, monte), solo cabe lo que esa ley prevea, y normalmente no es una vivienda.",
+      "cita": "comprenderán las actividades, construcciones o instalaciones necesarias para las explotaciones de tal carácter, incluidas las de elaboración de productos del sector primario, así como el accesorio de vivienda.",
+      "mas": [
+        { "articulo": "29", "cita": "En el suelo no urbanizable con algún tipo de protección sectorial, excepcionalmente, a través del procedimiento de calificación previsto en la presente ley, podrán autorizarse actuaciones específicas siempre que estén previstas en la legislación sectorial correspondiente" }
+      ],
+      "rehabilitar": "autorizable_snup",
+      "cita_rehabilitar": "La rehabilitación para su conservación, incluso con destino residencial y hostelero, de edificios existentes aun cuando se encontrarán en situación de fuera de ordenación"
+    },
+    "SG": {
+      "nombre": "Sistemas generales (redes públicas)",
+      "articulo": "36",
+      "vivienda": "prohibida",
+      "explicacion": "Es suelo que el plan reserva a redes públicas (viario, equipamientos, zonas verdes, infraestructuras). No es para vivienda privada: se obtiene para uso público por cesión o expropiación.",
+      "cita": "Se entiende por red pública el conjunto de los elementos de las redes de infraestructuras, equipamientos y servicios públicos"
+    },
+    "APLAZADO": {
+      "vivienda": "sin_dato",
+      "explicacion": "La Comunidad aplazó la aprobación del plan en esta zona, así que la clasificación que muestra el mapa no está en vigor. Pregunta en el ayuntamiento qué rige mientras tanto."
+    },
+    "SD": {
+      "vivienda": "sin_dato",
+      "explicacion": "El refundido de la Comunidad de Madrid no tiene clasificación para este recinto. Pregunta en el ayuntamiento."
+    }
+  }
+}

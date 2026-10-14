@@ -1,15 +1,15 @@
 import {
-  PROVINCIAS_CYL, sugerencias, coordenadas, referenciaEnPunto, datosParcela,
-  geometriaParcela, categoriasEnCaja, instrumentoEnPunto, centroDeReferencia, normalizarReferencia,
+  sugerencias, coordenadas, referenciaEnPunto, datosParcela, geometriaParcela, centroDeReferencia, normalizarReferencia,
+  municipios, leerPoligonoParcela, referenciaPorPoligono,
 } from './servicios.js';
 import { caja, reparto, veredicto } from './veredicto.js';
 import { afecciones } from './afecciones.js';
+import { COMUNIDADES, comunidadDe, normasDe } from './comunidades/index.js';
 
 /* global maplibregl */
 maplibregl.setWorkerUrl('vendor/maplibre-gl-csp-worker.js');
 
-const [reglamento, normasAfecciones] = await Promise.all(
-  ['reglamento.json', 'afecciones.json'].map(async (f) => (await fetch(f)).json()));
+const normasAfecciones = await (await fetch('normas/afecciones.json')).json();
 const $ = (sel) => document.querySelector(sel);
 const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 
@@ -23,24 +23,30 @@ const wms = (base, capa) =>
   '&transparent=true&srs=EPSG:3857&width=256&height=256&bbox={bbox-epsg-3857}';
 const VACIO = { type: 'FeatureCollection', features: [] };
 
+// Una capa de suelo por comunidad, limitada a su caja para no pedir teselas fuera de ella
+const fuentesSuelo = Object.fromEntries(COMUNIDADES.map((c) => [`suelo-${c.id}`, {
+  type: 'raster', tiles: [wms(c.capaSuelo.wms, c.capaSuelo.capa)], tileSize: 256, bounds: c.capaSuelo.limites, attribution: c.capaSuelo.atribucion,
+}]));
+const capasSuelo = COMUNIDADES.map((c) => ({ id: `suelo-${c.id}`, type: 'raster', source: `suelo-${c.id}`, minzoom: 11, paint: { 'raster-opacity': 0.5 } }));
+
 const mapa = new maplibregl.Map({
   container: 'mapa',
-  center: [-4.75, 41.8],
-  zoom: 6.4,
-  attributionControl: { compact: true },
+  center: [-4.5, 41.3],
+  zoom: 6.2,
+  attributionControl: false,
   style: {
     version: 8,
     sources: {
       base: { type: 'raster', tiles: [wmts('ign-base', 'IGNBaseTodo', 'image/png')], tileSize: 256, maxzoom: 19, attribution: 'CC BY 4.0 <a href="https://www.ign.es">IGN</a>' },
       orto: { type: 'raster', tiles: [wmts('pnoa-ma', 'OI.OrthoimageCoverage', 'image/jpeg')], tileSize: 256, maxzoom: 20, attribution: 'PNOA CC BY 4.0 <a href="https://www.ign.es">IGN</a>' },
-      suelo: { type: 'raster', tiles: [wms('https://idecyl.jcyl.es/geoserver/urbanismo/wms', 'plau_cyl_categorias_desagrupa')], tileSize: 256, attribution: '© Junta de Castilla y León' },
+      ...fuentesSuelo,
       catastro: { type: 'raster', tiles: [wms('https://ovc.catastro.meh.es/cartografia/INSPIRE/spadgcwms.aspx', 'CP.CadastralParcel')], tileSize: 256, attribution: 'Dirección General del Catastro' },
       parcela: { type: 'geojson', data: VACIO },
     },
     layers: [
       { id: 'base', type: 'raster', source: 'base' },
       { id: 'orto', type: 'raster', source: 'orto', layout: { visibility: 'none' } },
-      { id: 'suelo', type: 'raster', source: 'suelo', minzoom: 11, paint: { 'raster-opacity': 0.5 } },
+      ...capasSuelo,
       { id: 'catastro', type: 'raster', source: 'catastro', minzoom: 15 },
       { id: 'parcela-relleno', type: 'fill', source: 'parcela', paint: { 'fill-color': css('--rojo'), 'fill-opacity': 0.12 } },
       { id: 'parcela-borde', type: 'line', source: 'parcela', paint: { 'line-color': css('--rojo'), 'line-width': 3 } },
@@ -48,14 +54,21 @@ const mapa = new maplibregl.Map({
   },
 });
 mapa.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+// Con una fuente por comunidad las atribuciones ya ocupan dos líneas: abajo a la izquierda no tapan el panel de capas
+mapa.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-left');
+// Plegadas desde el principio: el botón «i» las despliega
+mapa.on('load', () => document.querySelector('.maplibregl-ctrl-attrib')?.classList.remove('maplibregl-compact-show'));
 mapa.getCanvas().style.cursor = 'crosshair';
 mapa.on('click', (e) => analizar(e.lngLat.lng, e.lngLat.lat));
 
 // En móvil el panel de capas empieza plegado: abierto tapa un tercio del mapa
 $('#capas').open = !matchMedia('(max-width: 820px)').matches;
+// La casilla «suelo» enciende y apaga las capas de todas las comunidades
 document.querySelectorAll('#capas input').forEach((casilla) => {
-  casilla.addEventListener('change', () =>
-    mapa.setLayoutProperty(casilla.dataset.capa, 'visibility', casilla.checked ? 'visible' : 'none'));
+  casilla.addEventListener('change', () => {
+    const ids = casilla.dataset.capa === 'suelo' ? capasSuelo.map((c) => c.id) : [casilla.dataset.capa];
+    for (const id of ids) mapa.setLayoutProperty(id, 'visibility', casilla.checked ? 'visible' : 'none');
+  });
 });
 
 // ---------- Buscador ----------
@@ -63,10 +76,28 @@ document.querySelectorAll('#capas input').forEach((casilla) => {
 const entrada = $('#q');
 const lista = $('#lista');
 let opciones = [];
+let opcionesDe = ''; // texto para el que se pidieron: Enter solo las usa si sigue siendo el mismo
 let activa = -1;
 let espera;
 
-const TIPOS = { portal: 'Portal', callejero: 'Calle', Municipio: 'Municipio', poblacion: 'Población', toponimo: 'Lugar', refcatastral: 'Ref. catastral', carretera: 'Carretera', Codpost: 'Código postal' };
+const TIPOS = { portal: 'Portal', callejero: 'Calle', Municipio: 'Municipio', poblacion: 'Población', toponimo: 'Lugar', refcatastral: 'Ref. catastral', carretera: 'Carretera', Codpost: 'Código postal', poligono: 'Rústica' };
+
+// «Polígono 4, parcela 376» en cada municipio que case con el texto y donde el Catastro tenga esa finca
+// (se pregunta a la vez por todos): la lista no ofrece fincas que no existen. Si el Catastro no
+// responde para un municipio, se ofrece igual y se comprueba al elegirlo.
+async function opcionesPoligono({ poligono, parcela, municipio }) {
+  const munis = await municipios(municipio);
+  const rcs = await Promise.all(munis.map((m) => referenciaPorPoligono(m.muniCode, poligono, parcela).catch(() => undefined)));
+  return munis
+    .map((m, i) => ({
+      type: 'poligono', address: `Polígono ${poligono}, parcela ${parcela}`, muni: `${m.muni} (${m.provincia})`,
+      muniCode: m.muniCode, poligono, parcela, rc: rcs[i],
+    }))
+    .filter((o) => o.rc !== null);
+}
+
+// Lo que se ve en la lista y lo que queda en la caja al elegir es lo mismo
+const etiqueta = (o) => (o.type === 'refcatastral' ? o.address : `${o.address}${o.muni && !o.address.includes(o.muni) ? `, ${o.muni}` : ''}`);
 
 function cerrarLista() {
   lista.hidden = true;
@@ -83,7 +114,7 @@ function pintarLista() {
     const tipo = document.createElement('small');
     tipo.textContent = TIPOS[o.type] ?? o.type;
     const texto = document.createElement('span');
-    texto.textContent = o.type === 'refcatastral' ? o.address : `${o.address}${o.muni && !o.address.includes(o.muni) ? `, ${o.muni}` : ''}`;
+    texto.textContent = etiqueta(o);
     li.append(texto, tipo);
     li.addEventListener('mousedown', (e) => { e.preventDefault(); elegir(o); });
     return li;
@@ -96,16 +127,20 @@ function pintarLista() {
 entrada.addEventListener('input', () => {
   clearTimeout(espera);
   const texto = entrada.value.trim();
-  if (texto.length < 3) { opciones = []; cerrarLista(); return; }
+  if (texto.length < 3) { opciones = []; opcionesDe = ''; cerrarLista(); return; }
   // Una referencia catastral se reconoce aquí mismo: CartoCiudad no entiende minúsculas ni espacios
   const rc = normalizarReferencia(texto);
-  if (rc) { opciones = [{ type: 'refcatastral', address: rc }]; activa = -1; pintarLista(); return; }
+  if (rc) { opciones = [{ type: 'refcatastral', address: rc }]; opcionesDe = texto; activa = -1; pintarLista(); return; }
+  const pp = leerPoligonoParcela(texto);
+  if (pp && !pp.municipio) { opciones = []; opcionesDe = ''; cerrarLista(); return; }
   espera = setTimeout(async () => {
     try {
-      opciones = await sugerencias(texto);
-      activa = -1;
-      if (entrada.value.trim() === texto) pintarLista();
-    } catch { opciones = []; cerrarLista(); }
+      const nuevas = pp ? await opcionesPoligono(pp) : await sugerencias(texto);
+      // Una respuesta lenta de un texto anterior no pisa la del actual
+      if (entrada.value.trim() !== texto) return;
+      opciones = nuevas; opcionesDe = texto; activa = -1;
+      pintarLista();
+    } catch { opciones = []; opcionesDe = ''; cerrarLista(); }
   }, 250);
 });
 
@@ -127,7 +162,28 @@ $('#buscador').addEventListener('submit', async (e) => {
   if (!texto) return;
   const rc = normalizarReferencia(texto);
   if (rc) { cerrarLista(); return analizarReferencia(rc); }
-  let o = opciones[activa] ?? opciones[0];
+  const pp = leerPoligonoParcela(texto);
+  if (pp && !pp.municipio) {
+    return pintarAviso('Falta el municipio', `Escríbelo detrás: «polígono ${pp.poligono} parcela ${pp.parcela} Villaquilambre». Hay un polígono ${pp.poligono} en casi cada pueblo.`);
+  }
+  // Una opción marcada con las flechas se respeta: es lo que el usuario ha visto y elegido. Sin marcar,
+  // las sugerencias solo valen si son de este mismo texto (al pegar o teclear deprisa aún no han llegado).
+  let o = activa >= 0 ? opciones[activa] : null;
+  const frescas = opcionesDe === texto ? opciones : [];
+  if (!o && pp) {
+    // Con polígono y parcela, el municipio equivocado es otra finca: si el nombre no casa con uno solo, se pregunta
+    let ops = frescas;
+    if (!ops.length) { try { ops = await opcionesPoligono(pp); } catch (err) { return pintarError(err); } }
+    if (!ops.length) return pintarAviso(`No encuentro el polígono ${pp.poligono}, parcela ${pp.parcela} en «${pp.municipio}»`, 'Revisa el nombre del pueblo (completo, sin abreviar) y los números de la escritura, la nota simple o el anuncio.');
+    const plano = (t) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+    const exactos = ops.filter((x) => plano(x.muni.replace(/ \(.*\)$/, '')) === plano(pp.municipio));
+    o = exactos.length === 1 ? exactos[0] : ops.length === 1 ? ops[0] : null;
+    if (!o) {
+      opciones = ops; opcionesDe = texto; activa = -1; pintarLista(); entrada.focus();
+      return pintarAviso(`Hay varios municipios «${pp.municipio}»`, 'Elige el tuyo en la lista del buscador. Si no está, escribe el nombre completo.');
+    }
+  }
+  o ??= frescas[0];
   if (!o) {
     try {
       [o] = await sugerencias(texto);
@@ -143,8 +199,9 @@ $('#buscador').addEventListener('submit', async (e) => {
 // Portal y referencia catastral caen dentro de una finca; calle o pueblo, no: ahí se acerca el mapa y se pide pinchar.
 async function elegir(o) {
   cerrarLista();
-  entrada.value = o.address;
+  entrada.value = etiqueta(o);
   if (o.type === 'refcatastral') return analizarReferencia(normalizarReferencia(o.address) ?? o.address);
+  if (o.type === 'poligono') return analizarPoligono(o);
   try {
     const { lon, lat } = await coordenadas(o);
     if (o.type === 'portal') return analizar(lon, lat, { tolerancia: 15, portal: o.portalNumber, buscado: o.address });
@@ -153,9 +210,12 @@ async function elegir(o) {
   } catch (err) { pintarError(err); }
 }
 
-document.querySelectorAll('#ejemplos button').forEach((b) =>
-  b.addEventListener('click', () => analizar(Number(b.dataset.lon), Number(b.dataset.lat),
-    b.dataset.portal ? { tolerancia: 15, portal: b.dataset.portal } : {})));
+// Ejemplos: por punto, por referencia o como una búsqueda escrita (data-q)
+document.querySelectorAll('#ejemplos button').forEach((b) => b.addEventListener('click', () => {
+  if (b.dataset.q) { entrada.value = b.dataset.q; opciones = []; opcionesDe = ''; return $('#buscador').requestSubmit(); }
+  if (b.dataset.rc) return analizarReferencia(b.dataset.rc);
+  analizar(Number(b.dataset.lon), Number(b.dataset.lat), b.dataset.portal ? { tolerancia: 15, portal: b.dataset.portal } : {});
+}));
 
 // ---------- Análisis ----------
 
@@ -178,19 +238,37 @@ async function analizar(lon, lat, busqueda = {}) {
   }
 }
 
+// Por polígono y parcela: el Catastro da la referencia y se sigue como con ella.
+async function analizarPoligono(o) {
+  const mio = ++turno;
+  pintarCargando();
+  try {
+    const rc = o.rc ?? await referenciaPorPoligono(o.muniCode, o.poligono, o.parcela);
+    if (mio !== turno) return;
+    if (!rc) return pintarAviso(`No existe el polígono ${o.poligono}, parcela ${o.parcela} en ${o.muni}`, 'Revisa los números en la escritura, la nota simple o el anuncio. También puedes pinchar la finca en el mapa.');
+    await porReferencia(mio, rc);
+  } catch (err) {
+    if (mio === turno) pintarError(err);
+  }
+}
+
 // Por referencia (enlace, referencia tecleada): no hace falta buscar el punto. El centroide del
 // Catastro solo sirve para saber qué plan municipal rige.
 async function analizarReferencia(rc) {
   const mio = ++turno;
   pintarCargando();
   try {
-    const centro = await centroDeReferencia(rc);
-    if (mio !== turno) return;
-    if (!centro) return pintarAviso(`La referencia ${rc} no existe`, 'Revisa que esté bien copiada: son 14 caracteres (o 20, con el inmueble).');
-    await completar(mio, rc, centro.lon, centro.lat, false);
+    await porReferencia(mio, rc);
   } catch (err) {
     if (mio === turno) pintarError(err);
   }
+}
+
+async function porReferencia(mio, rc) {
+  const centro = await centroDeReferencia(rc);
+  if (mio !== turno) return;
+  if (!centro) return pintarAviso(`La referencia ${rc} no existe`, 'Revisa que esté bien copiada: son 14 caracteres (o 20, con el inmueble).');
+  await completar(mio, rc, centro.lon, centro.lat, false);
 }
 
 async function completar(mio, rc, lon, lat, aproximada) {
@@ -202,13 +280,19 @@ async function completar(mio, rc, lon, lat, aproximada) {
   const limites = caja(geo.lonlat);
   mapa.fitBounds([[limites[0], limites[1]], [limites[2], limites[3]]], { padding: 80, maxZoom: 18, duration: 900 });
   history.replaceState(null, '', `#${rc}`);
+  // Buscador y mapa son la misma herramienta: lo que se pincha queda escrito en la caja
+  if (document.activeElement !== entrada) entrada.value = datos.localizacion ?? rc;
 
-  if (datos.publica || !PROVINCIAS_CYL.has(datos.provincia)) return pintarResultado(datos, geo, null, null);
+  const comunidad = comunidadDe(datos.provincia);
+  if (datos.publica || !comunidad) return pintarResultado(datos, geo, {});
   // Las afecciones del agua tardan 2-3 s cerca de un río: el veredicto se pinta antes y ellas llegan después
-  const af = afecciones(geo.lonlat, geo.utm);
-  const [recintos, instrumento] = await Promise.all([categoriasEnCaja(caja(geo.utm)), instrumentoEnPunto(lon, lat)]);
+  const af = afecciones(geo.lonlat, geo.utm, comunidad);
+  const [normas, suelo, plan] = await Promise.all([
+    normasDe(comunidad), comunidad.suelo(caja(geo.utm), geo.utm), comunidad.planeamiento?.(lon, lat) ?? null,
+  ]);
   if (!vigente()) return;
-  pintarResultado(datos, geo, veredicto(reglamento, reparto(geo.utm, recintos, reglamento.proteccion), datos), instrumento, af, vigente);
+  const v = veredicto(normas, reparto(geo.utm, suelo.recintos, normas.proteccion), datos);
+  pintarResultado(datos, geo, { v, comunidad, normas, suelo, plan, af, vigente });
 }
 
 // Enlace compartible: #referencia catastral
@@ -252,7 +336,7 @@ const volver = () => {
 };
 
 function pintarCargando() {
-  mostrar(el('p', 'cargando', 'Consultando Catastro y Junta de Castilla y León…'));
+  mostrar(el('p', 'cargando', 'Consultando Catastro y planeamiento…'));
 }
 
 function pintarAviso(titulo, texto) {
@@ -267,19 +351,19 @@ function pintarError(err) {
 const m2 = (n) => n >= 10000
   ? `${(n / 10000).toLocaleString('es-ES', { maximumFractionDigits: 2 })} ha (${Math.round(n).toLocaleString('es-ES')} m²)`
   : `${Math.round(n).toLocaleString('es-ES')} m²`;
-const fecha = (iso) => iso && new Date(iso.replace('Z', '')).toLocaleDateString('es-ES');
-const articulo = (n) => `Art. ${n} del Reglamento de Urbanismo de Castilla y León`;
+// «Art. 59 del Reglamento…» o «Disposición transitoria primera de la Ley…»
+const articulo = (n, fuente) => (/^\d/.test(n) ? `Art. ${n}` : n[0].toUpperCase() + n.slice(1)) + ` ${fuente.de}`;
 
-function bloqueCita(cita, art, norma = null) {
+function bloqueCita(cita, art, fuente) {
   const f = el('figure', 'cita');
   f.append(el('blockquote', null, `«${cita}»`));
-  const pie = el('figcaption', null, norma ? `Art. ${art} del ${norma.nombre} · ` : `${articulo(art)} · `);
-  pie.append(enlace(norma?.url ?? reglamento.fuente.url, 'texto en el BOE'));
+  const pie = el('figcaption', null, `${articulo(art, fuente)} · `);
+  pie.append(enlace(fuente.url, 'texto en el BOE'));
   f.append(pie);
   return f;
 }
 
-function pintarAfecciones(secAf, bloque, t, af) {
+function pintarAfecciones(secAf, bloque, t, af, comunidad) {
   const graves = af.halladas.filter((a) => normasAfecciones.tipos[a.tipo].tono === 'no');
   if (graves.length && t.vivienda !== 'prohibida') {
     bloque.append(el('p', 'ojo', `Ojo: además hay ${graves.length === 1 ? 'una afección que limita' : `${graves.length} afecciones que limitan`} más. Míralas abajo.`));
@@ -298,12 +382,16 @@ function pintarAfecciones(secAf, bloque, t, af) {
   if (af.fallidas.length) {
     nodos.push(el('p', 'fallo', `No se pudo consultar: ${af.fallidas.join(', ')}. Que no salga no quiere decir que no haya. Prueba de nuevo en un rato.`));
   }
-  nodos.push(el('p', 'consultadas', `Consultado: ${normasAfecciones.consultadas} Aún no: Red Natura 2000, carreteras ni patrimonio.`));
+  nodos.push(el('p', 'consultadas', `Consultado: ${normasAfecciones.consultadas}, ${comunidad.consultadas}. Aún no: ${comunidad.pendientes}.`));
   secAf.replaceChildren(...nodos);
   secAf.dataset.listo = '';
 }
 
-function pintarResultado(datos, geo, v, instrumento, af, vigente) {
+const cubiertas = new Intl.ListFormat('es').format(COMUNIDADES.map((c) => c.nombre));
+const ref = (art) => (!art ? '' : /^\d/.test(art) ? `art. ${art}` : art);
+const mismo = (a, b) => a?.toLowerCase().trim() === b?.toLowerCase().trim();
+
+function pintarResultado(datos, geo, { v, comunidad, normas, suelo, plan, af, vigente }) {
   const nodos = [volver()];
 
   const cab = el('header', 'parcela');
@@ -325,26 +413,37 @@ function pintarResultado(datos, geo, v, instrumento, af, vigente) {
     return mostrar(...nodos);
   }
   if (!v) {
-    nodos.push(el('p', 'fuera', `Por ahora el veredicto solo cubre Castilla y León. Esta parcela está en ${datos.provinciaNombre}.`));
+    nodos.push(el('p', 'fuera', `Por ahora el veredicto cubre ${cubiertas}. Esta parcela está en ${datos.provinciaNombre}.`));
     return mostrar(...nodos);
   }
 
   // Veredicto principal
   const t = v.titular;
+  const fuente = normas.fuente;
   const bloque = el('section', `veredicto tono-${v.nivel.tono}`);
   bloque.append(el('p', 'pregunta', '¿Casa nueva, también prefabricada?'), el('p', 'respuesta', v.nivel.titulo));
-  if (v.partes.length === 1) bloque.append(el('p', 'categoria', t.codigo ? `${t.nombre} (${t.codigo})` : t.nombre));
+  // La sigla visible puede no ser el código interno (Cantabria separa SRPO cerca y lejos del suelo urbano)
+  const sigla = t.sigla ?? t.codigo;
+  const nombre = sigla && !t.nombre.toUpperCase().includes(sigla) ? `${t.nombre} (${sigla})` : t.nombre;
+  if (v.partes.length === 1) bloque.append(el('p', 'categoria', nombre));
   else bloque.append(el('p', 'categoria', `En la parte de ${t.nombre.toLowerCase()}: ${Math.round(t.cuota * 100)} % de la parcela`));
-  bloque.append(el('p', 'explicacion', t.explicacion), bloqueCita(t.cita, t.articulo));
-  if (t.vivienda === 'vinculada') bloque.append(bloqueCita(reglamento.art57e.cita, reglamento.art57e.articulo));
+  // El nombre que usa el plan municipal, cuando dice más que la clase común
+  if (t.detalle && !mismo(t.detalle, t.nombre)) bloque.append(el('p', 'detalle-plan', `En el plan municipal: «${t.detalle}»`));
+  bloque.append(el('p', 'explicacion', t.explicacion));
+  // Lo que el adaptador ha medido para esta parcela (p. ej. la distancia al suelo urbano en Cantabria)
+  const nota = suelo.notas?.[t.codigo]?.trim();
+  if (nota) bloque.append(el('p', 'nota-medida', nota));
+  if (t.cita) bloque.append(bloqueCita(t.cita, t.articulo, fuente));
+  for (const extra of t.mas ?? []) bloque.append(bloqueCita(extra.cita, extra.articulo, fuente));
+  if (t.vivienda === 'vinculada' && normas.vinculada) bloque.append(bloqueCita(normas.vinculada.cita, normas.vinculada.articulo, fuente));
   nodos.push(bloque);
 
   // Afecciones sectoriales: llegan después; mientras, se dice que se están comprobando
   const secAf = el('section', 'afecciones');
   secAf.append(el('h3', null, 'Afecciones'), el('p', 'cargando-af', 'Comprobando ríos, montes públicos y vías pecuarias…'));
   nodos.push(secAf);
-  af.then((r) => { if (vigente()) pintarAfecciones(secAf, bloque, t, r); })
-    .catch((err) => { if (vigente()) pintarAfecciones(secAf, bloque, t, { halladas: [], fallidas: [err.message] }); });
+  af.then((r) => { if (vigente()) pintarAfecciones(secAf, bloque, t, r, comunidad); })
+    .catch((err) => { if (vigente()) pintarAfecciones(secAf, bloque, t, { halladas: [], fallidas: [err.message] }, comunidad); });
 
   // Parcela partida entre categorías
   if (v.partes.length > 1) {
@@ -352,50 +451,49 @@ function pintarResultado(datos, geo, v, instrumento, af, vigente) {
     sec.append(el('h3', null, 'La parcela está partida entre categorías'));
     const ul = el('ul');
     for (const p of v.partes) {
-      const li = el('li', `tono-${reglamento.niveles[p.vivienda].tono}`);
+      const nivel = normas.niveles[p.vivienda];
+      const li = el('li', `tono-${nivel.tono}`);
       const barra = el('span', 'barra');
       barra.style.setProperty('--cuota', p.cuota);
       li.append(el('span', 'pct', `${Math.round(p.cuota * 100)} %`), el('span', 'nombre', `${p.nombre}`),
-        el('span', 'nivel', `${reglamento.niveles[p.vivienda].titulo} · art. ${p.articulo}`), barra);
+        el('span', 'nivel', [nivel.titulo, ref(p.articulo)].filter(Boolean).join(' · ')), barra);
       ul.append(li);
     }
     sec.append(ul);
     nodos.push(sec);
   }
-  if (v.solape) {
+  if (v.solape && normas.concurrencia) {
     const sec = el('section', 'secundario');
-    sec.append(el('h3', null, 'Categorías superpuestas'), el('p', null, reglamento.concurrencia.explicacion),
-      bloqueCita(reglamento.concurrencia.cita, reglamento.concurrencia.articulo));
+    sec.append(el('h3', null, 'Categorías superpuestas'), el('p', null, normas.concurrencia.explicacion),
+      bloqueCita(normas.concurrencia.cita, normas.concurrencia.articulo, fuente));
     nodos.push(sec);
   }
 
   // Rehabilitar lo existente (solo rústico)
-  const rehab = { autorizable: 'Con autorización de uso excepcional, siempre que lo existente no esté fuera de ordenación.', segun_plan: 'Depende del plan municipal.' }[t.rehabilitar];
+  const rehab = normas.rehabilitar?.[t.rehabilitar];
   if (rehab) {
+    const art = t.articulo_rehabilitar ?? t.articulo;
     const sec = el('section', 'secundario');
-    sec.append(el('h3', null, '¿Y rehabilitar o ampliar lo que ya hay?'), el('p', null, `${rehab} ${articulo(t.articulo)} y art. 57.f.`));
+    sec.append(el('h3', null, '¿Y rehabilitar o ampliar lo que ya hay?'),
+      el('p', null, `${rehab} ${articulo(art, fuente)}${normas.rehabilitar.sufijo ?? ''}.`));
+    if (t.cita_rehabilitar) sec.append(bloqueCita(t.cita_rehabilitar, art, fuente));
+    for (const extra of t.mas_rehabilitar ?? []) sec.append(bloqueCita(extra.cita, extra.articulo, fuente));
     nodos.push(sec);
   }
 
   // Planeamiento municipal
-  if (instrumento) {
+  const planeamiento = comunidad.seccionPlaneamiento(plan, suelo, t, datos);
+  if (planeamiento) {
     const sec = el('section', 'secundario');
-    sec.append(el('h3', null, 'Planeamiento de ' + (instrumento.n_mun ?? datos.municipio)));
-    const nombre = instrumento.n_instrum ?? instrumento.c_instrum;
-    const p = el('p', null, instrumento.c_instrum === 'SPG'
-      ? `${nombre}: no hay plan municipal que clasifique el suelo, así que se aplica directamente el Reglamento.`
-      : instrumento.c_instrum === 'DSU' && t.sinPlaneamiento
-        ? `${nombre}${instrumento.f_aprob ? ` (${fecha(instrumento.f_aprob)})` : ''}: solo delimita el casco urbano. Fuera de él rige el régimen del rústico de los municipios sin planeamiento (Ley 5/1999 de Urbanismo de Castilla y León, disposición transitoria cuarta).`
-        : `${nombre}${instrumento.f_aprob ? `, aprobado el ${fecha(instrumento.f_aprob)}` : ''}. Sus normas pueden ser más estrictas que el Reglamento (parcela mínima, alturas, cubierta, materiales).`);
-    sec.append(p);
-    if (instrumento.url_doc_info) sec.append(enlace(instrumento.url_doc_info, 'Documentos del plan en la Junta'));
+    sec.append(el('h3', null, planeamiento.titulo), el('p', null, planeamiento.texto));
+    if (planeamiento.enlace) sec.append(enlace(planeamiento.enlace.href, planeamiento.enlace.texto));
     nodos.push(sec);
   }
 
   const aviso = el('p', 'aviso', `Esto es un cribado con datos públicos, no un certificado. Antes de comprar, pide la cédula urbanística al Ayuntamiento de ${datos.municipio ?? 'tu municipio'}.`);
   nodos.push(aviso);
 
-  const fuentes = el('p', 'fuentes', 'Fuentes: Catastro (Sede Electrónica), Junta de Castilla y León (información sin validez jurídica), Ministerio para la Transición Ecológica (SNCZI), CartoCiudad e IGN, BOE.');
+  const fuentes = el('p', 'fuentes', `Fuentes: Catastro (Sede Electrónica), ${comunidad.fuentes}, Ministerio para la Transición Ecológica (SNCZI), CartoCiudad e IGN, BOE.`);
   nodos.push(fuentes);
   mostrar(...nodos);
 }

@@ -2,18 +2,33 @@
   "fuentes": {
     "rdph": {
       "nombre": "Reglamento del Dominio Público Hidráulico",
+      "de": "del Reglamento del Dominio Público Hidráulico",
       "url": "https://www.boe.es/buscar/act.php?id=BOE-A-1986-10638",
       "pdf": "https://www.boe.es/buscar/pdf/1986/BOE-A-1986-10638-consolidado.pdf"
     },
     "vvpp": {
       "nombre": "Ley 3/1995 de Vías Pecuarias",
+      "de": "de la Ley 3/1995 de Vías Pecuarias",
       "url": "https://www.boe.es/buscar/act.php?id=BOE-A-1995-7241",
       "pdf": "https://www.boe.es/buscar/pdf/1995/BOE-A-1995-7241-consolidado.pdf"
     },
     "montes": {
       "nombre": "Ley 43/2003 de Montes",
+      "de": "de la Ley 43/2003 de Montes",
       "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2003-21339",
       "pdf": "https://www.boe.es/buscar/pdf/2003/BOE-A-2003-21339-consolidado.pdf"
+    },
+    "lfm": {
+      "nombre": "Ley 16/1995 Forestal y de Protección de la Naturaleza de la Comunidad de Madrid",
+      "de": "de la Ley 16/1995 Forestal y de Protección de la Naturaleza de la Comunidad de Madrid",
+      "url": "https://www.boe.es/buscar/act.php?id=BOE-A-1995-19108",
+      "pdf": "https://www.boe.es/buscar/pdf/1995/BOE-A-1995-19108-consolidado.pdf"
+    },
+    "lpn": {
+      "nombre": "Ley 42/2007 del Patrimonio Natural y de la Biodiversidad",
+      "de": "de la Ley 42/2007 del Patrimonio Natural y de la Biodiversidad",
+      "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2007-21490",
+      "pdf": "https://www.boe.es/buscar/pdf/2007/BOE-A-2007-21490-consolidado.pdf"
     }
   },
   "tipos": {
@@ -41,6 +56,14 @@
       "articulo": "14",
       "cita": "Los montes del dominio público forestal son inalienables, imprescriptibles e inembargables"
     },
+    "preservado": {
+      "titulo": "Monte preservado",
+      "tono": "no",
+      "texto": "Parte de la parcela es monte preservado por la ley forestal de Madrid (encinar, robledal, enebral y otras masas). Es una protección sectorial: el suelo es no urbanizable de protección y en él solo cabe lo que prevea la legislación forestal.",
+      "fuente": "lfm",
+      "articulo": "20",
+      "cita": "Se declaran Montes Preservados las masas arbóreas, arbustivas y subarbustivas de encinar, alcornocal, enebral, sabinar, coscojal y quejigal y las masas arbóreas de castañar, robledal y fresnedal de la Comunidad de Madrid"
+    },
     "vvpp": {
       "titulo": "Vía pecuaria",
       "tono": "no",
@@ -48,6 +71,14 @@
       "fuente": "vvpp",
       "articulo": "2",
       "cita": "Las vías pecuarias son bienes de dominio público de las Comunidades Autónomas"
+    },
+    "natura": {
+      "titulo": "Red Natura 2000",
+      "tono": "condicion",
+      "texto": "La parcela está dentro de un espacio de la Red Natura 2000. Cualquier proyecto que pueda afectarle necesita antes una evaluación de sus repercusiones sobre el espacio.",
+      "fuente": "lpn",
+      "articulo": "46",
+      "cita": "Cualquier plan, programa o proyecto que, sin tener relación directa con la gestión del lugar o sin ser necesario para la misma, pueda afectar de forma apreciable a las especies o hábitats de los citados espacios"
     },
     "inundable": {
       "titulo": "Zona inundable",
@@ -66,5 +97,5 @@
       "cita": "La ejecución de cualquier obra o trabajo en la zona de policía, de acuerdo con lo dispuesto en el apartado 1, deberá contar con la correspondiente autorización administrativa previa o declaración responsable ante el organismo de cuenca"
     }
   },
-  "consultadas": "Zonas inundables y dominio público hidráulico (Ministerio para la Transición Ecológica, SNCZI), montes de utilidad pública y vías pecuarias (Junta de Castilla y León)."
+  "consultadas": "Zonas inundables y dominio público hidráulico (Ministerio para la Transición Ecológica, SNCZI)"
 }

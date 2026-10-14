@@ -1,5 +1,5 @@
-"""Comprueba que cada cita de web/reglamento.json y web/afecciones.json está, literal, dentro
-de su artículo en el texto consolidado del BOE de su norma. Sale con código 1 si alguna no aparece.
+"""Comprueba que cada cita de web/normas/*.json está, literal, dentro de su artículo (o disposición)
+en el texto consolidado del BOE de su norma. Sale con código 1 si alguna no aparece.
 
 Uso: python -I tools/verificar_citas.py   (necesita pdftotext en el PATH)
 """
@@ -7,15 +7,20 @@ import json, re, subprocess, sys, urllib.request
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
+NORMAS = RAIZ / 'web' / 'normas'
 CACHE = RAIZ / 'tools' / '.cache'
-reglamento = json.loads((RAIZ / 'web' / 'reglamento.json').read_text(encoding='utf-8'))
-afecciones = json.loads((RAIZ / 'web' / 'afecciones.json').read_text(encoding='utf-8'))
-PDFS = {'rucyl': reglamento['fuente']['pdf'], **{k: f['pdf'] for k, f in afecciones['fuentes'].items()}}
+afecciones = json.loads((NORMAS / 'afecciones.json').read_text(encoding='utf-8'))
+# Una tabla por comunidad (cyl.json, madrid.json...): su clave es el nombre del archivo
+tablas = {p.stem: json.loads(p.read_text(encoding='utf-8')) for p in sorted(NORMAS.glob('*.json')) if p.stem != 'afecciones'}
+PDFS = {**{k: t['fuente']['pdf'] for k, t in tablas.items()}, **{k: f['pdf'] for k, f in afecciones['fuentes'].items()}}
+# La caché de antes se llamaba rucyl
+ALIAS = {'cyl': 'rucyl'}
 
 
-def texto_boe(norma='rucyl'):
+def texto_boe(norma):
     CACHE.mkdir(exist_ok=True)
-    pdf, txt = CACHE / f'{norma}.pdf', CACHE / f'{norma}.txt'
+    nombre = ALIAS.get(norma, norma)
+    pdf, txt = CACHE / f'{nombre}.pdf', CACHE / f'{nombre}.txt'
     if not txt.exists():
         if not pdf.exists():
             urllib.request.urlretrieve(PDFS[norma], pdf)
@@ -26,40 +31,51 @@ def texto_boe(norma='rucyl'):
     return re.sub(r'\s+', ' ', texto)
 
 
+CABECERA = r'Artículo (\d+(?: bis| ter)?)\. |(Disposición (?:adicional|transitoria|final|derogatoria) \w+)\. '
+
+
 def articulos(texto):
-    """Mapa 'número' -> texto del artículo, tomado de su última aparición (la primera es el índice)."""
-    trozos = re.split(r'(?=Artículo \d+(?: bis| ter)?\. )', texto)
+    """Mapa 'número' (o 'disposición transitoria primera') -> texto, tomado de su última aparición
+    (la primera es el índice)."""
+    trozos = re.split(r'(?=Artículo \d+(?: bis| ter)?\. |Disposición (?:adicional|transitoria|final|derogatoria) \w+\. )', texto)
     mapa = {}
     for t in trozos:
-        m = re.match(r'Artículo (\d+(?: bis| ter)?)\. ', t)
+        m = re.match(CABECERA, t)
         if m:
-            mapa[m.group(1)] = t
+            mapa[(m.group(1) or m.group(2)).lower()] = t
     return mapa
 
 
-def main():
-    comprobar = [('art57e', reglamento['art57e']['articulo'], reglamento['art57e']['cita']),
-                 ('concurrencia', reglamento['concurrencia']['articulo'], reglamento['concurrencia']['cita'])]
-    for cod, c in reglamento['categorias'].items():
-        comprobar.append((cod, c['articulo'], c['cita']))
+def citas_de_tabla(clave, t):
+    sueltas = [('vinculada', t.get('vinculada')), ('concurrencia', t.get('concurrencia'))]
+    if t.get('sin_planeamiento'):
+        sp = t['sin_planeamiento']
+        sueltas += [('sin_planeamiento', sp), ('sin_planeamiento rústico', sp['rustico']), ('sin_planeamiento urbano', sp['urbano'])]
+    salida = [(clave, nombre, c['articulo'], c['cita']) for nombre, c in sueltas if c]
+    for cod, c in t['categorias'].items():
+        if c.get('cita'):
+            salida.append((clave, cod, c['articulo'], c['cita']))
         if c.get('cita_rehabilitar'):
-            comprobar.append((cod + ' rehabilitar', c['articulo'], c['cita_rehabilitar']))
-    sp = reglamento['sin_planeamiento']
-    comprobar += [('sin_planeamiento', sp['articulo'], sp['cita']),
-                  ('sin_planeamiento rústico', sp['rustico']['articulo'], sp['rustico']['cita']),
-                  ('sin_planeamiento urbano', sp['urbano']['articulo'], sp['urbano']['cita'])]
+            salida.append((clave, cod + ' rehabilitar', c.get('articulo_rehabilitar', c['articulo']), c['cita_rehabilitar']))
+        for i, extra in enumerate(c.get('mas', [])):
+            salida.append((clave, f'{cod} más {i + 1}', extra['articulo'], extra['cita']))
+        for i, extra in enumerate(c.get('mas_rehabilitar', [])):
+            salida.append((clave, f'{cod} rehabilitar {i + 2}', extra['articulo'], extra['cita']))
+    return salida
 
-    comprobar = [('rucyl', *c) for c in comprobar]
+
+def main():
+    comprobar = [c for clave, t in tablas.items() for c in citas_de_tabla(clave, t)]
     for cod, t in afecciones['tipos'].items():
         comprobar.append((t['fuente'], 'afección ' + cod, t['articulo'], t['cita']))
 
     normas = {n: articulos(texto_boe(n)) for n in {c[0] for c in comprobar}}
     fallos = 0
     for norma, nombre, art, cita in comprobar:
-        cuerpo = normas[norma].get(art)
+        cuerpo = normas[norma].get(art.lower())
         ok = cuerpo is not None and re.sub(r'\s+', ' ', cita) in cuerpo
         fallos += not ok
-        print(f"{'ok   ' if ok else 'FALLA'} {nombre:28} {norma:7} art. {art}")
+        print(f"{'ok   ' if ok else 'FALLA'} {nombre:28} {norma:7} {art}")
     print(f'\n{len(comprobar) - fallos}/{len(comprobar)} citas encontradas en su artículo')
     sys.exit(1 if fallos else 0)
 

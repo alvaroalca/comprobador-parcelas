@@ -2,7 +2,8 @@
   "fuente": {
     "nombre": "Reglamento de Urbanismo de Castilla y León (Decreto 22/2004), texto consolidado",
     "url": "https://www.boe.es/buscar/act.php?id=BOCL-h-2004-90152",
-    "pdf": "https://www.boe.es/buscar/pdf/2004/BOCL-h-2004-90152-consolidado.pdf"
+    "pdf": "https://www.boe.es/buscar/pdf/2004/BOCL-h-2004-90152-consolidado.pdf",
+    "de": "del Reglamento de Urbanismo de Castilla y León"
   },
   "niveles": {
     "prohibida": { "titulo": "No", "tono": "no" },
@@ -19,9 +20,14 @@
     "explicacion": "Parte de la parcela tiene varias categorías a la vez. Sus regímenes se aplican juntos y prevalece el que más protege: en cada trozo cuenta la categoría más protectora.",
     "cita": "si se produce contradicción entre los mismos, deben prevalecer los regímenes establecidos para la protección de los valores naturales y culturales, y en último extremo aquél que otorgue una mayor protección."
   },
-  "art57e": {
+  "vinculada": {
     "articulo": "57",
     "cita": "e) Construcciones destinadas a vivienda unifamiliar aislada que resulten necesarias para el funcionamiento de alguno de los demás usos citados en este artículo."
+  },
+  "rehabilitar": {
+    "autorizable": "Con autorización de uso excepcional, siempre que lo existente no esté fuera de ordenación.",
+    "segun_plan": "Depende del plan municipal.",
+    "sufijo": " y art. 57.f"
   },
   "categorias": {
     "SR-C": {

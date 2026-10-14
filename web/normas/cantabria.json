@@ -1,0 +1,131 @@
+{
+  "fuente": {
+    "nombre": "Ley 5/2022 de Ordenación del Territorio y Urbanismo de Cantabria, texto consolidado",
+    "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2022-13844",
+    "pdf": "https://www.boe.es/buscar/pdf/2022/BOE-A-2022-13844-consolidado.pdf",
+    "de": "de la Ley 5/2022 de Ordenación del Territorio y Urbanismo de Cantabria"
+  },
+  "niveles": {
+    "prohibida": { "titulo": "No", "tono": "no" },
+    "vinculada": { "titulo": "Solo ligada a una explotación", "tono": "condicion" },
+    "aislada": { "titulo": "Con condiciones: vivienda aislada", "tono": "condicion" },
+    "segun_plan": { "titulo": "Depende del plan municipal", "tono": "depende" },
+    "solar": { "titulo": "Sí, si la parcela es solar", "tono": "si" },
+    "sin_urbanizar": { "titulo": "Todavía no", "tono": "condicion" },
+    "sin_dato": { "titulo": "Sin dato", "tono": "depende" }
+  },
+  "orden": ["solar", "segun_plan", "aislada", "vinculada", "sin_urbanizar", "sin_dato", "prohibida"],
+  "proteccion": ["SREP", "SG", "SRPO-LEJOS", "SRPO", "NR", "SUZBD", "SUZBR", "SUNC", "SUNT", "SUC", "PC", "SC", "NP"],
+  "rehabilitar": {
+    "autorizable": "Con carácter excepcional se puede reconstruir, restaurar o reformar lo que ya existe para vivienda u otros usos, aunque esté fuera de ordenación, con una ampliación limitada."
+  },
+  "sin_datos": "El Sistema de Información Urbanística de Cantabria no clasifica esta parcela. Pregunta en el ayuntamiento qué clasificación tiene.",
+  "categorias": {
+    "SUC": {
+      "nombre": "Suelo urbano consolidado",
+      "articulo": "39",
+      "vivienda": "solar",
+      "explicacion": "En urbano consolidado se puede edificar la parcela que sea solar (urbanizada, con alineaciones y rasantes), con las condiciones del plan municipal: usos, alturas, retranqueos y estética.",
+      "cita": "los terrenos clasificados como suelo urbano no podrán ser destinados a los usos permitidos por el planeamiento hasta que adquieran la condición de solar, salvo que se asegure la ejecución simultánea de la urbanización y la edificación mediante las correspondientes garantías."
+    },
+    "SUNT": {
+      "nombre": "Suelo urbano de núcleo tradicional",
+      "articulo": "39",
+      "vivienda": "solar",
+      "explicacion": "Es suelo urbano de un núcleo tradicional: se edifica la parcela que sea solar, con la tipología del núcleo que fije el plan municipal.",
+      "cita": "los terrenos clasificados como suelo urbano no podrán ser destinados a los usos permitidos por el planeamiento hasta que adquieran la condición de solar, salvo que se asegure la ejecución simultánea de la urbanización y la edificación mediante las correspondientes garantías."
+    },
+    "SUNC": {
+      "nombre": "Suelo urbano no consolidado",
+      "articulo": "39",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "En urbano no consolidado primero hay que aprobar la ordenación detallada y urbanizar la unidad de actuación entre todos los propietarios. Solo después se edifica cada solar, o a la vez que se urbaniza con garantías.",
+      "cita": "El ejercicio de los derechos definidos en este artículo requieren la previa aprobación del instrumento de planeamiento urbanístico que establezca la ordenación pormenorizada de los terrenos y, en su caso, del instrumento de gestión urbanística exigible"
+    },
+    "NR": {
+      "nombre": "Núcleo rural",
+      "articulo": "37",
+      "vivienda": "segun_plan",
+      "explicacion": "El núcleo rural cuenta como suelo urbano. Qué se puede construir lo fija el plan municipal: normalmente vivienda con la tipología tradicional del núcleo.",
+      "cita": "vengan clasificados en el Plan como núcleo rural, por servir de soporte a un asentamiento de población singularizado y diferenciado según los censos y padrones oficiales"
+    },
+    "SUZBD": {
+      "nombre": "Suelo urbanizable delimitado",
+      "articulo": "43",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "En urbanizable primero hay que aprobar el Plan Parcial y urbanizar el sector. Mientras tanto rige el régimen del rústico de protección ordinaria, pero sin la vivienda aislada del art. 51.",
+      "cita": "Durante ese tiempo, se aplicará para este tipo de suelo el régimen establecido en el artículo 50 de esta ley para el suelo rústico de protección ordinaria, con la excepción de las viviendas unifamiliares a que se refiere el artículo 51"
+    },
+    "SUZBR": {
+      "nombre": "Suelo urbanizable residual",
+      "articulo": "43",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "En urbanizable primero hay que aprobar el Plan Parcial y urbanizar el sector. Mientras tanto rige el régimen del rústico de protección ordinaria, pero sin la vivienda aislada del art. 51.",
+      "cita": "Durante ese tiempo, se aplicará para este tipo de suelo el régimen establecido en el artículo 50 de esta ley para el suelo rústico de protección ordinaria, con la excepción de las viviendas unifamiliares a que se refiere el artículo 51"
+    },
+    "SRPO": {
+      "nombre": "Suelo rústico de protección ordinaria",
+      "articulo": "51",
+      "vivienda": "aislada",
+      "explicacion": "En rústico de protección ordinaria se puede autorizar, de forma excepcional, una vivienda unifamiliar aislada a 200 m como mucho del suelo urbano o de un núcleo rural, en parcela de al menos 1.500 m² y con una casa de consumo casi nulo, autosuficiente al menos en un 60 %. Las Áreas de Desarrollo Rural, donde el municipio las delimite, fijan sus propias reglas.",
+      "cita": "se podrá autorizar con carácter excepcional, en todos los municipios de Cantabria, la construcción en suelo rústico de protección ordinaria, de viviendas aisladas de carácter unifamiliar",
+      "mas": [
+        { "articulo": "51", "cita": "se encuentren en la mayor parte de su superficie, a un máximo de doscientos metros del suelo urbano, medidos en proyección horizontal." },
+        { "articulo": "51", "cita": "Mil quinientos metros cuadrados en el resto de los casos" },
+        { "articulo": "51", "cita": "Las edificaciones que se pretendan llevar a cabo serán necesariamente de consumo casi nulo, autosuficiente energéticamente, al menos, en un 60 por ciento" }
+      ],
+      "rehabilitar": "autorizable",
+      "articulo_rehabilitar": "49",
+      "cita_rehabilitar": "Las obras de reconstrucción, restauración, renovación y reforma de edificaciones preexistentes, para ser destinadas a uso residencial"
+    },
+    "SRPO-LEJOS": {
+      "nombre": "Suelo rústico de protección ordinaria",
+      "sigla": "SRPO",
+      "articulo": "50",
+      "vivienda": "vinculada",
+      "explicacion": "Es rústico de protección ordinaria, pero la parcela está a más de 200 m del suelo urbano, así que la vivienda aislada del art. 51 no cabe. Queda la vivienda de quien viva de una explotación agraria de la finca, salvo que el municipio delimite un Área de Desarrollo Rural que la incluya.",
+      "cita": "a) Las mencionadas en el apartado 2 del artículo anterior.",
+      "mas": [
+        { "articulo": "49", "cita": "incluidas las viviendas de las personas que hayan de vivir y vivan real y permanentemente vinculadas a la correspondiente explotación." },
+        { "articulo": "51", "cita": "se encuentren en la mayor parte de su superficie, a un máximo de doscientos metros del suelo urbano, medidos en proyección horizontal." }
+      ],
+      "rehabilitar": "autorizable",
+      "articulo_rehabilitar": "49",
+      "cita_rehabilitar": "Las obras de reconstrucción, restauración, renovación y reforma de edificaciones preexistentes, para ser destinadas a uso residencial"
+    },
+    "SREP": {
+      "nombre": "Suelo rústico de especial protección",
+      "articulo": "49",
+      "vivienda": "vinculada",
+      "explicacion": "En rústico de especial protección la vivienda solo cabe para quien viva real y permanentemente de una explotación agraria de la finca, con autorización excepcional. Si la protección viene de una ley sectorial o de un plan territorial (espacio natural, costas, ríos), manda esa norma, y normalmente no admite vivienda.",
+      "cita": "incluidas las viviendas de las personas que hayan de vivir y vivan real y permanentemente vinculadas a la correspondiente explotación.",
+      "mas": [
+        { "articulo": "49", "cita": "En los suelos rústicos de especial protección derivada de lo previsto en legislación sectorial de protección o policía del dominio público, de la naturaleza o del patrimonio cultural o de lo regulado por un instrumento de planificación sectorial o territorial, el régimen de usos será el previsto en dicha legislación o instrumentos, respectivamente." }
+      ],
+      "rehabilitar": "autorizable",
+      "cita_rehabilitar": "Las obras de reconstrucción, restauración, renovación y reforma de edificaciones preexistentes, para ser destinadas a uso residencial"
+    },
+    "SG": {
+      "nombre": "Sistema general",
+      "articulo": "61",
+      "vivienda": "prohibida",
+      "explicacion": "Es suelo que el plan reserva a espacios libres o equipamientos públicos. No es para vivienda privada: se obtiene para uso público por expropiación, convenio o cesión.",
+      "cita": "se entiende por sistema general, el conjunto de espacios libres públicos y equipamientos que el planeamiento urbanístico municipal identifique en función de su estrategia global, y que estén destinados al servicio de la generalidad de los ciudadanos"
+    },
+    "PC": {
+      "nombre": "Pendiente de cartografiar",
+      "vivienda": "sin_dato",
+      "explicacion": "El Gobierno de Cantabria tiene esta zona pendiente de cartografiar por una actualización del deslinde municipal. Pregunta en el ayuntamiento qué clasificación tiene."
+    },
+    "SC": {
+      "nombre": "Sin clasificar o sin cartografiar",
+      "vivienda": "sin_dato",
+      "explicacion": "El Sistema de Información Urbanística de Cantabria no tiene clasificación para este recinto. Pregunta en el ayuntamiento."
+    },
+    "NP": {
+      "nombre": "Sin categoría",
+      "vivienda": "sin_dato",
+      "explicacion": "El Sistema de Información Urbanística de Cantabria no asigna categoría a este recinto. Pregunta en el ayuntamiento."
+    }
+  }
+}
