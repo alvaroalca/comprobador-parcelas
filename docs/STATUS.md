@@ -28,7 +28,8 @@
 - [x] Afecciones probadas en Chrome sin interfaz (puppeteer) contra `servir.py`: mismos resultados que en Node. Hizo falta un proxy porque el Ministerio duplica la cabecera CORS.
 - [ ] **Red Natura 2000**: buscar una fuente con los límites de los espacios (WFS). La de la Junta son hábitats; la del Ministerio, solo WMS de visualización.
 - [ ] Afecciones aún no miradas: carreteras (zona de afección y línea límite de edificación), patrimonio (BIC y su entorno).
-- [ ] Integrar en el portfolio (`public/parcelas/` + CSP en `_headers` + ruta `/api/miteco/` en el Worker), ficha y reel.
+- [x] Integrado en el portfolio (14/10, sin desplegar): `public/parcelas/` es copia de `web/` (al cambiar `web/`, volver a copiar), CSP en `_headers`, proxy `/api/miteco/` en el Worker y ficha en `public/projects/parcelas/` (05 · Webs, tras el juguete). Smoke test con `wrangler dev` superado.
+- [ ] Reel de la ficha.
 
 ## Ideas para después (no ahora: primero afinar el buscador)
 
