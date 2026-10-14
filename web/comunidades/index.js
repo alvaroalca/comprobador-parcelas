@@ -5,8 +5,12 @@ import cyl from './cyl.js';
 import madrid from './madrid.js';
 import cantabria from './cantabria.js';
 import cataluna from './cataluna.js';
+import baleares from './baleares.js';
+import valenciana from './valenciana.js';
+import murcia from './murcia.js';
+import aragon from './aragon.js';
 
-export const COMUNIDADES = [cyl, madrid, cantabria, cataluna];
+export const COMUNIDADES = [cyl, madrid, cantabria, cataluna, baleares, valenciana, murcia, aragon];
 
 export const comunidadDe = (provincia) => COMUNIDADES.find((c) => c.provincias.includes(provincia)) ?? null;
 

@@ -90,6 +90,8 @@ export async function afecciones(lonlat, utm, comunidad) {
     dphEstimado: { nombre: 'dominio público hidráulico', consulta: () => enSerie(() => aguaEnParcela('agua:DPH_Estimado', lonlat, utm)) },
     dphDeslindado: { nombre: 'dominio público hidráulico', consulta: () => enSerie(() => aguaEnParcela('agua:DPH_Deslindado', lonlat, utm)) },
   };
+  // Donde el Ministerio está incompleto la comunidad pone su propia capa (Baleares: la zona inundable)
+  for (const k of comunidad.aguaPropia ?? []) delete agua[k];
   const propias = comunidad.afecciones?.(lonlat, utm) ?? {};
   const consultas = { ...agua, ...propias };
 
@@ -113,16 +115,16 @@ export async function afecciones(lonlat, utm, comunidad) {
     return `${unicos(xs.map((x) => x.rio)).join(', ')}: ${pct < 1 ? 'menos del 1' : Math.round(pct)} % de la parcela`;
   };
 
-  if (r.zfp.length) halladas.push({ tipo: 'zfp', detalle: await rios(r.zfp) });
+  if (r.zfp?.length) halladas.push({ tipo: 'zfp', detalle: await rios(r.zfp) });
 
-  const dph = [...r.dphEstimado, ...r.dphDeslindado];
+  const dph = [...(r.dphEstimado ?? []), ...(r.dphDeslindado ?? [])];
   const cauce = dph.filter((x) => !/polic/i.test(x.tipo_zona ?? ''));
   const policia = dph.filter((x) => /polic/i.test(x.tipo_zona ?? ''));
   if (cauce.length) halladas.push({ tipo: 'dph', detalle: await rios(cauce) });
 
   for (const k of Object.keys(propias)) halladas.push(...r[k]);
 
-  if (r.q500.length) halladas.push({ tipo: 'inundable', detalle: await rios(r.q500) });
+  if (r.q500?.length) halladas.push({ tipo: 'inundable', detalle: await rios(r.q500) });
   if (policia.length) halladas.push({ tipo: 'policia', detalle: await rios(policia) });
 
   return { halladas, fallidas: [...fallidas] };

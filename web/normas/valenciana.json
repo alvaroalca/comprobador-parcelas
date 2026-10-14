@@ -1,0 +1,142 @@
+{
+  "fuente": {
+    "nombre": "Texto refundido de la Ley de ordenación del territorio, urbanismo y paisaje de la Comunitat Valenciana (Decreto Legislativo 1/2021), texto consolidado",
+    "url": "https://www.boe.es/buscar/act.php?id=DOGV-r-2021-90283",
+    "pdf": "https://www.boe.es/buscar/pdf/2021/DOGV-r-2021-90283-consolidado.pdf",
+    "de": "del Texto refundido de la Ley de ordenación del territorio, urbanismo y paisaje (Decreto Legislativo 1/2021)"
+  },
+  "niveles": {
+    "prohibida": { "titulo": "No", "tono": "no" },
+    "vinculada": { "titulo": "Solo ligada a una explotación", "tono": "condicion" },
+    "aislada": { "titulo": "Con condiciones: vivienda aislada", "tono": "condicion" },
+    "segun_plan": { "titulo": "Depende del plan municipal", "tono": "depende" },
+    "solar": { "titulo": "Sí, si la parcela es solar", "tono": "si" },
+    "sin_urbanizar": { "titulo": "Todavía no", "tono": "condicion" },
+    "sin_dato": { "titulo": "Sin dato", "tono": "depende" }
+  },
+  "orden": ["solar", "aislada", "segun_plan", "vinculada", "sin_urbanizar", "sin_dato", "prohibida"],
+  "proteccion": ["DOT", "ZRP-AF", "ZRP-NA-LG", "ZRP-RI", "ZRP-PC", "ZRP-NA-MU", "ZRP-AG", "ZRC-EX", "ZRC-PEQ", "ZRC-FO", "ZRC-AG", "ZND", "ZUR-IN", "ZUR-TR", "ZUR"],
+  "sin_datos": "El planeamiento que publica la Generalitat no clasifica esta parcela. Pregunta en el ayuntamiento qué clasificación tiene.",
+  "categorias": {
+    "ZUR": {
+      "nombre": "Zona urbanizada",
+      "articulo": "187",
+      "vivienda": "solar",
+      "explicacion": "En suelo urbano se edifica la parcela que sea solar: acceso rodado por vía pavimentada, agua, luz, alcantarillado, acera y alumbrado, y las alineaciones del plan. Si le falta algo, se puede edificar a la vez que se urbaniza, con garantía del coste de la urbanización. Lo que se puede construir lo fija el plan municipal.",
+      "cita": "Las parcelas que no tengan la condición de solar para ser edificadas requieren su previa conversión en solar o que se garantice suficientemente su urbanización simultánea a la edificación"
+    },
+    "ZUR-IN": {
+      "nombre": "Zona urbanizada industrial",
+      "articulo": "187",
+      "vivienda": "segun_plan",
+      "explicacion": "Es suelo urbano de uso industrial. Una vivienda solo cabe si la ordenanza de la zona la admite, y suele limitarse a la del guarda de la industria. Además la parcela tiene que ser solar.",
+      "cita": "Las parcelas que no tengan la condición de solar para ser edificadas requieren su previa conversión en solar o que se garantice suficientemente su urbanización simultánea a la edificación"
+    },
+    "ZUR-TR": {
+      "nombre": "Zona urbanizada terciaria",
+      "articulo": "187",
+      "vivienda": "segun_plan",
+      "explicacion": "Es suelo urbano de uso terciario (comercio, oficinas, hoteles). Una vivienda solo cabe si la ordenanza de la zona la admite como uso compatible. Además la parcela tiene que ser solar.",
+      "cita": "Las parcelas que no tengan la condición de solar para ser edificadas requieren su previa conversión en solar o que se garantice suficientemente su urbanización simultánea a la edificación"
+    },
+    "ZND": {
+      "nombre": "Zona de nuevo desarrollo",
+      "articulo": "28",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Es suelo urbanizable: el plan lo destina a crecer, pero primero hay que aprobar un programa de actuación y urbanizarlo. Hasta entonces no se edifica la casa.",
+      "cita": "La clasificación como suelo urbanizable por el plan supone la mera aptitud de los terrenos para su urbanización, previa su programación."
+    },
+    "ZRC-AG": {
+      "nombre": "Zona rural común agropecuaria",
+      "articulo": "211",
+      "vivienda": "aislada",
+      "explicacion": "En suelo no urbanizable común la ley permite, de forma excepcional, una vivienda aislada y familiar si la zonificación del plan municipal la prevé: parcela de al menos una hectárea (o la que pida el plan, si es mayor), edificación que no pase del 2 % de la finca, fuera de cursos de escorrentía, con agua potable y depuración a cargo del propietario, y sin formar núcleo de población.",
+      "cita": "Se permitirá, excepcionalmente, edificar en parcelas de perímetro ininterrumpido que, tanto en la forma como en la superficie, abarquen la mínima exigible según el planeamiento, que en ningún caso será inferior a una hectárea por vivienda.",
+      "mas": [
+        { "articulo": "211", "cita": "La zonificación del suelo no urbanizable podrá prever, en función de sus características y con carácter excepcional, los siguientes usos y aprovechamientos" },
+        { "articulo": "211", "cita": "La superficie ocupada por la edificación no excederá nunca del 2 % de la superficie de la finca rústica" }
+      ]
+    },
+    "ZRC-FO": {
+      "nombre": "Zona rural común forestal",
+      "articulo": "211",
+      "vivienda": "aislada",
+      "explicacion": "Es suelo no urbanizable común de monte. La ley permite, de forma excepcional, una vivienda aislada y familiar si la zonificación del plan municipal la prevé: parcela de al menos una hectárea, edificación que no pase del 2 % de la finca, respetando el arbolado, y con las medidas contra incendios forestales del anexo XI.",
+      "cita": "Se permitirá, excepcionalmente, edificar en parcelas de perímetro ininterrumpido que, tanto en la forma como en la superficie, abarquen la mínima exigible según el planeamiento, que en ningún caso será inferior a una hectárea por vivienda.",
+      "mas": [
+        { "articulo": "211", "cita": "La zonificación del suelo no urbanizable podrá prever, en función de sus características y con carácter excepcional, los siguientes usos y aprovechamientos" },
+        { "articulo": "211", "cita": "La edificación estará situada fuera de los cursos naturales de escorrentías y se respetarán las masas de arbolado existente y la topografía del terreno." }
+      ]
+    },
+    "ZRC-PEQ": {
+      "nombre": "Zona rural común",
+      "sigla": "ZRC",
+      "articulo": "211",
+      "vivienda": "vinculada",
+      "explicacion": "Es suelo no urbanizable común, pero la parcela no llega a la hectárea que la ley exige para una vivienda. Solo queda la vivienda ligada a una explotación agraria profesional: con informe favorable de Agricultura se la puede eximir de la hectárea y del 2 %, si el plan ha delimitado zonas para ello.",
+      "cita": "Se permitirá, excepcionalmente, edificar en parcelas de perímetro ininterrumpido que, tanto en la forma como en la superficie, abarquen la mínima exigible según el planeamiento, que en ningún caso será inferior a una hectárea por vivienda.",
+      "mas": [
+        { "articulo": "211", "cita": "se las podrá eximir justificadamente del cumplimiento de los requisitos regulados en el apartado b, 1.º y 2.º, debiendo en todo caso guardar proporción con su extensión y características y quedar directamente vinculadas a las correspondientes explotaciones agropecuarias." }
+      ]
+    },
+    "ZRC-EX": {
+      "nombre": "Zona rural común de explotación de recursos naturales",
+      "articulo": "211",
+      "vivienda": "prohibida",
+      "explicacion": "Es suelo destinado a canteras y extracciones. La ley prohíbe el uso residencial en el ámbito de la explotación y en una franja de al menos 500 m alrededor.",
+      "cita": "Será imprescindible el mantenimiento de una franja de al menos quinientos metros de ancho alrededor de todo el ámbito de la explotación con prohibición expresa del uso residencial"
+    },
+    "ZRP-AG": {
+      "nombre": "Zona rural protegida agrícola",
+      "articulo": "26",
+      "vivienda": "segun_plan",
+      "explicacion": "En suelo no urbanizable protegido solo caben los usos que el plan prevea por ser compatibles con lo que se protege. Algunos planes municipales admiten en el agrícola protegido la vivienda ligada a la explotación, con parcela grande; muchos no admiten ninguna. Lo dice la ficha de esta zona en el plan.",
+      "cita": "Los usos, obras, instalaciones y actividades que se implanten en estos suelos, conforme al título IV del libro II, deberán estar previstas en el planeamiento por ser compatibles con el mantenimiento, conservación, mejora, aprovechamiento y puesta en valor de los recursos protegidos"
+    },
+    "ZRP-NA-MU": {
+      "nombre": "Zona rural protegida por el plan municipal",
+      "articulo": "26",
+      "vivienda": "segun_plan",
+      "explicacion": "Es suelo no urbanizable que el propio municipio protege por sus valores forestales, paisajísticos o ambientales. Solo caben los usos que el plan prevea por ser compatibles con lo protegido: hay planes que admiten una vivienda aislada con parcela grande y muchos que no admiten ninguna. Lo dice la ficha de esta zona en el plan.",
+      "cita": "Los usos, obras, instalaciones y actividades que se implanten en estos suelos, conforme al título IV del libro II, deberán estar previstas en el planeamiento por ser compatibles con el mantenimiento, conservación, mejora, aprovechamiento y puesta en valor de los recursos protegidos"
+    },
+    "ZRP-NA-LG": {
+      "nombre": "Zona rural protegida por legislación ambiental",
+      "articulo": "26",
+      "vivienda": "prohibida",
+      "explicacion": "Está protegida por una ley o plan ambiental (espacio natural protegido, plan de acción territorial). Manda esa norma, y una vivienda nueva no es un uso compatible con lo que protege.",
+      "cita": "En el suelo rural de protección especial, por valores ambientales, paisajísticos, culturales o económicos, o por la presencia de riesgos naturales e inducidos, los planes aplicarán la legislación sectorial correspondiente a las materias afectadas"
+    },
+    "ZRP-RI": {
+      "nombre": "Zona rural protegida por riesgos",
+      "articulo": "26",
+      "vivienda": "prohibida",
+      "explicacion": "Está protegida por un riesgo natural (inundación, deslizamiento, erosión). Solo caben los usos compatibles con lo protegido y las obras para reducir el riesgo; una vivienda no.",
+      "cita": "también se permitirá la implantación de las que sean necesarias para limitar los riesgos"
+    },
+    "ZRP-PC": {
+      "nombre": "Zona rural protegida por patrimonio",
+      "articulo": "26",
+      "vivienda": "prohibida",
+      "explicacion": "Está protegida por su patrimonio cultural, arqueológico, paisajístico o etnológico. Manda la legislación de patrimonio y el catálogo municipal; una vivienda nueva no es un uso compatible con lo protegido.",
+      "cita": "En el suelo rural de protección especial, por valores ambientales, paisajísticos, culturales o económicos, o por la presencia de riesgos naturales e inducidos, los planes aplicarán la legislación sectorial correspondiente a las materias afectadas"
+    },
+    "ZRP-AF": {
+      "nombre": "Zona rural protegida por afecciones",
+      "articulo": "210",
+      "vivienda": "prohibida",
+      "explicacion": "Es la franja de protección de una carretera, un ferrocarril, un cauce, una vía pecuaria, una línea eléctrica o la costa. Ahí no se puede levantar una casa; manda la ley de cada dominio público.",
+      "cita": "No podrán levantarse construcciones en lugares próximos a carreteras, vías pecuarias u otros bienes de dominio público, sino de acuerdo con lo que establezca la legislación específicamente aplicable."
+    },
+    "DOT": {
+      "nombre": "Dotación pública",
+      "articulo": "24",
+      "vivienda": "prohibida",
+      "explicacion": "Es suelo que el plan reserva a la red de dotaciones: viales, zonas verdes, equipamientos o infraestructuras. No es para vivienda privada.",
+      "cita": "La red primaria es el conjunto de infraestructuras, dotaciones y equipamientos, públicos y privados, que tienen un carácter relevante en la estructura urbanística municipal.",
+      "mas": [
+        { "articulo": "36", "cita": "La red secundaria está integrada por las infraestructuras, espacios libres, jardines, equipamientos y otras dotaciones, que tienen un ámbito de influencia propio de un sector o ámbito equivalente." }
+      ]
+    }
+  }
+}

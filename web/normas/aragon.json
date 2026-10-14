@@ -1,0 +1,164 @@
+{
+  "fuente": {
+    "nombre": "Texto refundido de la Ley de Urbanismo de Aragón (Decreto Legislativo 1/2014), texto consolidado",
+    "url": "https://www.boe.es/buscar/act.php?id=BOA-d-2014-90410",
+    "pdf": "https://www.boe.es/buscar/pdf/2014/BOA-d-2014-90410-consolidado.pdf",
+    "de": "del Texto refundido de la Ley de Urbanismo de Aragón (Decreto Legislativo 1/2014)"
+  },
+  "niveles": {
+    "prohibida": {
+      "titulo": "No",
+      "tono": "no"
+    },
+    "vinculada": {
+      "titulo": "Solo ligada a una explotación",
+      "tono": "condicion"
+    },
+    "aislada": {
+      "titulo": "Con condiciones: vivienda aislada",
+      "tono": "condicion"
+    },
+    "solar": {
+      "titulo": "Sí, si la parcela es solar",
+      "tono": "si"
+    },
+    "sin_urbanizar": {
+      "titulo": "Todavía no",
+      "tono": "condicion"
+    },
+    "sin_dato": {
+      "titulo": "Sin dato",
+      "tono": "depende"
+    }
+  },
+  "orden": [
+    "solar",
+    "aislada",
+    "vinculada",
+    "sin_urbanizar",
+    "sin_dato",
+    "prohibida"
+  ],
+  "proteccion": [
+    "SG",
+    "SNU-E",
+    "NOAP",
+    "SNU-G-PEQ",
+    "SUZ-ND-PEQ",
+    "SNU-G",
+    "SUZ-ND",
+    "SUZ-D",
+    "SU-NC",
+    "SU-C"
+  ],
+  "sin_datos": "El Sistema de Información Urbanística de Aragón no clasifica esta parcela. Pregunta en el ayuntamiento qué clasificación tiene.",
+  "categorias": {
+    "SU-C": {
+      "nombre": "Suelo urbano consolidado",
+      "articulo": "29",
+      "vivienda": "solar",
+      "explicacion": "En suelo urbano se edifica la parcela que sea solar, o a la vez que se completa la urbanización con garantías. Lo que se puede construir (uso, alturas, ocupación) lo fija el plan municipal.",
+      "cita": "En suelo urbanizable y suelo urbano, no podrá ser edificado terreno alguno que no merezca la condición de solar conforme a las determinaciones establecidas en el artículo 14 de esta Ley, salvo que se asegure la ejecución simultánea de la urbanización precisa para ello y la edificación"
+    },
+    "SU-NC": {
+      "nombre": "Suelo urbano no consolidado",
+      "articulo": "29",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Está en un ámbito que todavía hay que urbanizar y repartir entre los propietarios. Hasta que la parcela sea solar, o se urbanice a la vez con garantías, no se edifica.",
+      "cita": "En suelo urbanizable y suelo urbano, no podrá ser edificado terreno alguno que no merezca la condición de solar conforme a las determinaciones establecidas en el artículo 14 de esta Ley, salvo que se asegure la ejecución simultánea de la urbanización precisa para ello y la edificación"
+    },
+    "SUZ-D": {
+      "nombre": "Suelo urbanizable delimitado",
+      "articulo": "29",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Es urbanizable con sector delimitado: primero hay que aprobar su plan parcial y urbanizarlo. Hasta que la parcela sea solar no se edifica.",
+      "cita": "En suelo urbanizable y suelo urbano, no podrá ser edificado terreno alguno que no merezca la condición de solar conforme a las determinaciones establecidas en el artículo 14 de esta Ley, salvo que se asegure la ejecución simultánea de la urbanización precisa para ello y la edificación"
+    },
+    "SUZ-ND": {
+      "nombre": "Suelo urbanizable no delimitado",
+      "articulo": "33",
+      "vivienda": "aislada",
+      "explicacion": "Mientras no tenga plan parcial se rige como el no urbanizable genérico: cabe una vivienda unifamiliar aislada si el plan general no la prohíbe, en parcela de al menos 10.000 m², de 300 m² construidos como mucho, una por parcela y donde no haya dos o más viviendas a menos de 150 m (formación de núcleo de población).",
+      "cita": "En el suelo urbanizable no delimitado, en tanto no se haya aprobado el correspondiente plan parcial, se aplicará el régimen establecido para el suelo no urbanizable genérico en los artículos 34 a 36",
+      "mas": [
+        {
+          "articulo": "34",
+          "cita": "Podrán autorizarse edificios aislados destinados a vivienda unifamiliar en municipios cuyo plan general no prohíba este tipo de construcciones y siempre en lugares donde no exista la posibilidad de formación de núcleo de población"
+        }
+      ]
+    },
+    "SNU-G": {
+      "nombre": "Suelo no urbanizable genérico",
+      "articulo": "34",
+      "vivienda": "aislada",
+      "explicacion": "Cabe una vivienda unifamiliar aislada si el plan general no la prohíbe: parcela de al menos 10.000 m² adscrita a la casa y que siga en uso agrario, un solo edificio de 300 m² construidos como mucho, y sin formar núcleo de población (no puede haber dos o más viviendas en un círculo de 150 m alrededor). El plan puede poner condiciones más duras. En municipios sin plan general hace falta autorización especial.",
+      "cita": "Podrán autorizarse edificios aislados destinados a vivienda unifamiliar en municipios cuyo plan general no prohíba este tipo de construcciones y siempre en lugares donde no exista la posibilidad de formación de núcleo de población",
+      "mas": [
+        {
+          "articulo": "34",
+          "cita": "se considera que existe la posibilidad de formación de núcleo de población cuando, dentro del área definida por un círculo de 150 metros de radio con origen en el centro de la edificación proyectada, existan dos o más edificaciones residenciales."
+        },
+        {
+          "articulo": "34",
+          "cita": "se exigirá que exista una sola edificación por parcela, que el edificio no rebase los trescientos metros cuadrados de superficie construida, así como que la parcela o parcelas tengan, al menos, diez mil metros cuadrados de superficie"
+        }
+      ],
+      "rehabilitar": "tradicional",
+      "articulo_rehabilitar": "35",
+      "cita_rehabilitar": "Obras de rehabilitación de construcciones en aldeas, barrios o pueblos deshabitados, así como de bordas, torres u otros edificios rurales tradicionalmente asociados a explotaciones agrarias o al medio rural, siempre que se mantengan las características tipológicas externas tradicionales propias de tales construcciones y su adaptación al paisaje."
+    },
+    "SNU-G-PEQ": {
+      "nombre": "Suelo no urbanizable genérico",
+      "sigla": "SNU-G",
+      "articulo": "34",
+      "vivienda": "vinculada",
+      "explicacion": "Es no urbanizable genérico, pero la parcela no llega a los 10.000 m² que pide la vivienda aislada. Queda la vivienda de quien tenga que vivir de forma permanente en una explotación agraria o ganadera, si el plan la admite.",
+      "cita": "Las destinadas a las explotaciones agrarias y/o ganaderas y, en general, a la explotación de los recursos naturales o relacionadas con la protección del medio ambiente, incluida la vivienda de personas que deban permanecer permanentemente en la correspondiente explotación.",
+      "mas": [
+        {
+          "articulo": "34",
+          "cita": "se exigirá que exista una sola edificación por parcela, que el edificio no rebase los trescientos metros cuadrados de superficie construida, así como que la parcela o parcelas tengan, al menos, diez mil metros cuadrados de superficie"
+        }
+      ],
+      "rehabilitar": "tradicional",
+      "articulo_rehabilitar": "35",
+      "cita_rehabilitar": "Obras de rehabilitación de construcciones en aldeas, barrios o pueblos deshabitados, así como de bordas, torres u otros edificios rurales tradicionalmente asociados a explotaciones agrarias o al medio rural, siempre que se mantengan las características tipológicas externas tradicionales propias de tales construcciones y su adaptación al paisaje."
+    },
+    "SUZ-ND-PEQ": {
+      "nombre": "Suelo urbanizable no delimitado",
+      "sigla": "SUZ-ND",
+      "articulo": "33",
+      "vivienda": "vinculada",
+      "explicacion": "Mientras no tenga plan parcial se rige como el no urbanizable genérico, y la parcela no llega a los 10.000 m² que pide la vivienda aislada. Queda la vivienda de quien tenga que vivir de forma permanente en una explotación agraria o ganadera, si el plan la admite.",
+      "cita": "En el suelo urbanizable no delimitado, en tanto no se haya aprobado el correspondiente plan parcial, se aplicará el régimen establecido para el suelo no urbanizable genérico en los artículos 34 a 36",
+      "mas": [
+        {
+          "articulo": "34",
+          "cita": "Las destinadas a las explotaciones agrarias y/o ganaderas y, en general, a la explotación de los recursos naturales o relacionadas con la protección del medio ambiente, incluida la vivienda de personas que deban permanecer permanentemente en la correspondiente explotación."
+        }
+      ]
+    },
+    "SNU-E": {
+      "nombre": "Suelo no urbanizable especial",
+      "articulo": "37",
+      "vivienda": "prohibida",
+      "explicacion": "Está protegido por sus valores (naturales, paisajísticos, culturales), por riesgos o por la protección de un dominio público. La ley prohíbe cualquier construcción que lesione lo que se protege; solo cabe lo que prevean expresamente el plan o la norma sectorial, y una vivienda nueva casi nunca lo es.",
+      "cita": "En el suelo no urbanizable especial está prohibida cualquier construcción, actividad o cualesquiera otros usos que impliquen transformación de su destino o naturaleza, lesionen el valor específico que se quiera proteger o infrinjan el concreto régimen limitativo establecido por los instrumentos de ordenación territorial, los planes de ordenación de los recursos naturales, la legislación sectorial o el planeamiento urbanístico."
+    },
+    "SG": {
+      "nombre": "Sistema general",
+      "articulo": "187",
+      "vivienda": "prohibida",
+      "explicacion": "Es suelo reservado a infraestructuras o equipamientos públicos (viales, zonas verdes, equipamientos). No es para vivienda privada.",
+      "cita": "Los sistemas generales comprenden las infraestructuras y equipamientos urbanísticos públicos al servicio de toda o gran parte de la población del municipio."
+    },
+    "NOAP": {
+      "nombre": "Plan no aprobado, denegado u obsoleto",
+      "vivienda": "sin_dato",
+      "explicacion": "El Sistema de Información Urbanística de Aragón solo tiene para esta zona un plan que figura como no aprobado, denegado u obsoleto. No sirve para decidir: pregunta en el ayuntamiento qué planeamiento rige."
+    }
+  },
+  "rehabilitar": {
+    "tradicional": "Con autorización especial se pueden rehabilitar, e incluso cambiar de uso a vivienda, bordas, torres y otros edificios rurales tradicionales, y casas de aldeas o pueblos deshabitados, si se mantiene su aspecto tradicional. Lo que el plan admita de ampliación no puede pasar del doble de lo existente."
+  }
+}

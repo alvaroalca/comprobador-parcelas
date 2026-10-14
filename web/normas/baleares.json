@@ -1,0 +1,314 @@
+{
+  "fuente": {
+    "nombre": "Ley 6/1999 de las Directrices de Ordenación Territorial de las Illes Balears, texto consolidado",
+    "url": "https://www.boe.es/buscar/act.php?id=BOE-A-1999-11707",
+    "pdf": "https://www.boe.es/buscar/pdf/1999/BOE-A-1999-11707-consolidado.pdf",
+    "de": "de la Ley 6/1999 de Directrices de Ordenación Territorial de las Illes Balears"
+  },
+  "otras_fuentes": {
+    "lsr-baleares": {
+      "nombre": "Ley 6/1997 del Suelo Rústico de las Illes Balears, texto consolidado",
+      "url": "https://www.boe.es/buscar/act.php?id=BOE-A-1997-18197",
+      "pdf": "https://www.boe.es/buscar/pdf/1997/BOE-A-1997-18197-consolidado.pdf",
+      "de": "de la Ley 6/1997 del Suelo Rústico de las Illes Balears"
+    },
+    "luib": {
+      "nombre": "Ley 12/2017 de urbanismo de las Illes Balears, texto consolidado",
+      "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2018-806",
+      "pdf": "https://www.boe.es/buscar/pdf/2018/BOE-A-2018-806-consolidado.pdf",
+      "de": "de la Ley 12/2017 de Urbanismo de las Illes Balears"
+    }
+  },
+  "niveles": {
+    "prohibida": { "titulo": "No", "tono": "no" },
+    "vinculada": { "titulo": "Solo ligada a una explotación", "tono": "condicion" },
+    "aislada": { "titulo": "Con condiciones: vivienda aislada", "tono": "condicion" },
+    "segun_pti": { "titulo": "Depende del plan territorial de la isla", "tono": "depende" },
+    "segun_plan": { "titulo": "Depende del plan municipal", "tono": "depende" },
+    "solar": { "titulo": "Sí, si la parcela es solar", "tono": "si" },
+    "sin_urbanizar": { "titulo": "Todavía no", "tono": "condicion" },
+    "sin_dato": { "titulo": "Sin dato", "tono": "depende" }
+  },
+  "orden": ["solar", "segun_plan", "aislada", "segun_pti", "vinculada", "sin_urbanizar", "sin_dato", "prohibida"],
+  "proteccion": ["SIS", "VIA", "AANP", "APT", "ANEI", "ANIT", "ARIP", "SRPMUN", "AIP", "SRP-PEQ", "AIA", "SRC-PEQ", "SRG-F", "SRG", "AT", "NUR", "SB", "SU", "SR"],
+  "rehabilitar": {
+    "existente": "Lo construido legalmente se puede conservar, mantener y mejorar aunque la categoría ya no admita ese uso. Convertir en vivienda un edificio que no lo era cuenta como vivienda nueva: solo cabe donde esta cabe, y con informe previo y vinculante del Consell Insular."
+  },
+  "sin_datos": "El Mapa Urbanístic de les Illes Balears no clasifica esta parcela. Pregunta en el ayuntamiento qué clasificación tiene.",
+  "categorias": {
+    "SU": {
+      "nombre": "Suelo urbano",
+      "norma": "luib",
+      "articulo": "25",
+      "vivienda": "solar",
+      "explicacion": "En suelo urbano se edifica la parcela que sea solar: que linde con vía pública, tenga los servicios básicos a pie de parcela y las alineaciones marcadas, y no esté dentro de una actuación urbanística pendiente. Qué se puede construir (uso, alturas, ocupación) lo fija el plan municipal.",
+      "cita": "Tener la condición de solar será requisito imprescindible para que se pueda otorgar la licencia de edificación.",
+      "mas": [
+        { "norma": "luib", "articulo": "25", "cita": "No hayan sido incluidos en un ámbito sujeto a actuaciones urbanísticas pendientes de desarrollo." }
+      ]
+    },
+    "SB": {
+      "nombre": "Suelo urbanizable",
+      "norma": "luib",
+      "articulo": "30",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "En urbanizable primero hay que aprobar el plan parcial del sector y urbanizarlo entre todos los propietarios. Mientras tanto la finca se usa como rústica.",
+      "cita": "Las personas propietarias del suelo clasificado como urbanizable tendrán derecho a usar los terrenos de su propiedad, a disfrutarlos y a disponer de ellos de conformidad con su naturaleza rústica."
+    },
+    "NUR": {
+      "nombre": "Núcleo rural",
+      "norma": "luib",
+      "articulo": "33",
+      "vivienda": "segun_plan",
+      "explicacion": "Es un asentamiento dentro del suelo rústico que el plan reconoce como núcleo rural. Admite vivienda con las condiciones del plan, como mucho de planta baja y piso. Si el núcleo no tiene todavía su ordenación detallada (un plan especial), no se puede edificar de nueva planta.",
+      "cita": "se destinarán a los usos característicos, complementarios o compatibles con la edificación residencial",
+      "mas": [
+        { "norma": "luib", "articulo": "33", "cita": "hasta que no se apruebe el planeamiento especial que los ordene no se podrán autorizar obras de implantación de servicios ni de edificación de nueva planta o de ampliación de las edificaciones existentes." }
+      ]
+    },
+    "AANP": {
+      "nombre": "Área natural de especial interés de alto nivel de protección",
+      "articulo": "anexo I",
+      "vivienda": "prohibida",
+      "explicacion": "Es la protección más alta del suelo rústico balear: parques, reservas, monumentos naturales y la parte más valiosa de las ANEI. La matriz de ordenación del suelo rústico marca la vivienda unifamiliar aislada con un 3 en esta categoría: prohibida.",
+      "cita": "3. Prohibido. Las determinaciones de los usos de esta matriz tienen el carácter de nivel de protección mínima del suelo rústico, y se pueden incrementar por los instrumentos de ordenación territorial y de planeamiento urbanístico.",
+      "mas": [
+        { "articulo": "19", "cita": "Las áreas naturales de especial interés de alto nivel de protección, definidas por la Ley 1/1991, de 30 de enero, de espacios naturales y de régimen urbanístico de las áreas de especial protección de las Illes Balears" }
+      ],
+      "rehabilitar": "existente",
+      "norma_rehabilitar": "lsr-baleares",
+      "articulo_rehabilitar": "19",
+      "cita_rehabilitar": "la prohibición de un uso no implica el cese de los ya existentes ni la prohibición de actuaciones tendentes recuperar, mantener o mejorar las edificaciones e instalaciones realizadas sin infracción de la normativa vigente a la fecha de su implantación.",
+      "mas_rehabilitar": [
+        { "norma": "lsr-baleares", "articulo": "36", "cita": "de nueva planta o de cambio de uso a vivienda en edificaciones existentes, una vez se haya completado el expediente, el ayuntamiento lo remitirá al consejo insular correspondiente, con el fin de que emita un informe con carácter previo y vinculante" }
+      ]
+    },
+    "ANEI": {
+      "nombre": "Área natural de especial interés",
+      "articulo": "anexo I",
+      "vivienda": "prohibida",
+      "explicacion": "Es suelo rústico protegido por sus valores naturales (Ley 1/1991 de espacios naturales). La matriz de ordenación del suelo rústico marca la vivienda unifamiliar aislada con un 3 en las ANEI: prohibida.",
+      "cita": "3. Prohibido. Las determinaciones de los usos de esta matriz tienen el carácter de nivel de protección mínima del suelo rústico, y se pueden incrementar por los instrumentos de ordenación territorial y de planeamiento urbanístico.",
+      "mas": [
+        { "articulo": "19", "cita": "Las áreas naturales de especial interés (ANEI), definidas por la Ley 1/1991, de 30 de enero, de Espacios Naturales y de Régimen Urbanístico de las Áreas de Especial Protección de las Illes Balears" }
+      ],
+      "rehabilitar": "existente",
+      "norma_rehabilitar": "lsr-baleares",
+      "articulo_rehabilitar": "19",
+      "cita_rehabilitar": "la prohibición de un uso no implica el cese de los ya existentes ni la prohibición de actuaciones tendentes recuperar, mantener o mejorar las edificaciones e instalaciones realizadas sin infracción de la normativa vigente a la fecha de su implantación.",
+      "mas_rehabilitar": [
+        { "norma": "lsr-baleares", "articulo": "36", "cita": "de nueva planta o de cambio de uso a vivienda en edificaciones existentes, una vez se haya completado el expediente, el ayuntamiento lo remitirá al consejo insular correspondiente, con el fin de que emita un informe con carácter previo y vinculante" }
+      ]
+    },
+    "APT": {
+      "nombre": "Área de protección territorial de costa",
+      "articulo": "19",
+      "vivienda": "prohibida",
+      "explicacion": "La franja de 500 m desde la ribera del mar (100 m en Formentera) es Área de protección territorial en todo el suelo rústico, sea cual sea su categoría. La matriz de ordenación del suelo rústico marca la vivienda unifamiliar aislada con un 3 en las APT: prohibida.",
+      "cita": "La franja de 500 metros para las islas de Mallorca, de Menorca y de Eivissa, y la de 100 metros para la de Formentera, medidas desde el límite interior de la ribera del mar.",
+      "mas": [
+        { "articulo": "anexo I", "cita": "3. Prohibido. Las determinaciones de los usos de esta matriz tienen el carácter de nivel de protección mínima del suelo rústico, y se pueden incrementar por los instrumentos de ordenación territorial y de planeamiento urbanístico." }
+      ],
+      "rehabilitar": "existente",
+      "norma_rehabilitar": "lsr-baleares",
+      "articulo_rehabilitar": "19",
+      "cita_rehabilitar": "la prohibición de un uso no implica el cese de los ya existentes ni la prohibición de actuaciones tendentes recuperar, mantener o mejorar las edificaciones e instalaciones realizadas sin infracción de la normativa vigente a la fecha de su implantación.",
+      "mas_rehabilitar": [
+        { "norma": "lsr-baleares", "articulo": "36", "cita": "de nueva planta o de cambio de uso a vivienda en edificaciones existentes, una vez se haya completado el expediente, el ayuntamiento lo remitirá al consejo insular correspondiente, con el fin de que emita un informe con carácter previo y vinculante" }
+      ]
+    },
+    "ARIP": {
+      "nombre": "Área rural de interés paisajístico",
+      "articulo": "anexo I",
+      "vivienda": "segun_pti",
+      "explicacion": "La matriz de ordenación del suelo rústico marca la vivienda con un 2-3 en las ARIP: prohibida salvo las excepciones que fije el Plan Territorial Insular de la isla. Si se admite, la parcela mínima la pone el plan y no puede bajar de los 14.000 m² del rústico común.",
+      "cita": "2-3 Prohibido con las excepciones que establece el Plan Territorial Insular. En el caso de vivienda unifamiliar aislada se entenderá que el uso es condicionado hasta que el Plan Territorial Insular establezca las excepciones correspondientes.",
+      "mas": [
+        { "norma": "lsr-baleares", "articulo": "25", "cita": "Para los terrenos calificados como suelo rústico protegido, el planeamiento municipal determinará las superficies mínimas aplicables, que deberán respetar o superar los parámetros mínimos fijados en esta Ley para el suelo rústico común" }
+      ],
+      "rehabilitar": "existente",
+      "norma_rehabilitar": "lsr-baleares",
+      "articulo_rehabilitar": "19",
+      "cita_rehabilitar": "la prohibición de un uso no implica el cese de los ya existentes ni la prohibición de actuaciones tendentes recuperar, mantener o mejorar las edificaciones e instalaciones realizadas sin infracción de la normativa vigente a la fecha de su implantación.",
+      "mas_rehabilitar": [
+        { "norma": "lsr-baleares", "articulo": "36", "cita": "de nueva planta o de cambio de uso a vivienda en edificaciones existentes, una vez se haya completado el expediente, el ayuntamiento lo remitirá al consejo insular correspondiente, con el fin de que emita un informe con carácter previo y vinculante" }
+      ]
+    },
+    "ANIT": {
+      "nombre": "Área natural de interés territorial",
+      "norma": "lsr-baleares",
+      "articulo": "25",
+      "vivienda": "segun_pti",
+      "explicacion": "Es una categoría de suelo rústico protegido propia del Plan Territorial Insular de Menorca. Si admite vivienda y con qué superficie lo dice ese plan; la parcela mínima no puede bajar de los 14.000 m² del rústico común.",
+      "cita": "Para los terrenos calificados como suelo rústico protegido, el planeamiento municipal determinará las superficies mínimas aplicables, que deberán respetar o superar los parámetros mínimos fijados en esta Ley para el suelo rústico común",
+      "rehabilitar": "existente",
+      "norma_rehabilitar": "lsr-baleares",
+      "articulo_rehabilitar": "19",
+      "cita_rehabilitar": "la prohibición de un uso no implica el cese de los ya existentes ni la prohibición de actuaciones tendentes recuperar, mantener o mejorar las edificaciones e instalaciones realizadas sin infracción de la normativa vigente a la fecha de su implantación.",
+      "mas_rehabilitar": [
+        { "norma": "lsr-baleares", "articulo": "36", "cita": "de nueva planta o de cambio de uso a vivienda en edificaciones existentes, una vez se haya completado el expediente, el ayuntamiento lo remitirá al consejo insular correspondiente, con el fin de que emita un informe con carácter previo y vinculante" }
+      ]
+    },
+    "SRPMUN": {
+      "nombre": "Suelo rústico protegido por el plan municipal",
+      "norma": "lsr-baleares",
+      "articulo": "25",
+      "vivienda": "segun_plan",
+      "explicacion": "Es suelo rústico que protege el propio municipio (forestal, paisaje, costa, encinares). Si admite vivienda lo decide su plan general, con una parcela mínima que no puede bajar de los 14.000 m² del rústico común.",
+      "cita": "Las actividades relacionadas con el uso de vivienda unifamiliar sólo podrán efectuarse en las zonas en que tal uso no esté declarado prohibido por los instrumentos de planeamiento general y las condiciones que en ellos se establezcan.",
+      "mas": [
+        { "norma": "lsr-baleares", "articulo": "25", "cita": "Para los terrenos calificados como suelo rústico protegido, el planeamiento municipal determinará las superficies mínimas aplicables, que deberán respetar o superar los parámetros mínimos fijados en esta Ley para el suelo rústico común" }
+      ],
+      "rehabilitar": "existente",
+      "norma_rehabilitar": "lsr-baleares",
+      "articulo_rehabilitar": "19",
+      "cita_rehabilitar": "la prohibición de un uso no implica el cese de los ya existentes ni la prohibición de actuaciones tendentes recuperar, mantener o mejorar las edificaciones e instalaciones realizadas sin infracción de la normativa vigente a la fecha de su implantación.",
+      "mas_rehabilitar": [
+        { "norma": "lsr-baleares", "articulo": "36", "cita": "de nueva planta o de cambio de uso a vivienda en edificaciones existentes, una vez se haya completado el expediente, el ayuntamiento lo remitirá al consejo insular correspondiente, con el fin de que emita un informe con carácter previo y vinculante" }
+      ]
+    },
+    "AIP": {
+      "nombre": "Área de interés paisajístico",
+      "norma": "lsr-baleares",
+      "articulo": "25",
+      "vivienda": "segun_plan",
+      "explicacion": "Es una categoría de protección del paisaje que pone el plan municipal. Si admite vivienda lo decide ese plan, con una parcela mínima que no puede bajar de los 14.000 m² del rústico común.",
+      "cita": "Las actividades relacionadas con el uso de vivienda unifamiliar sólo podrán efectuarse en las zonas en que tal uso no esté declarado prohibido por los instrumentos de planeamiento general y las condiciones que en ellos se establezcan.",
+      "rehabilitar": "existente",
+      "norma_rehabilitar": "lsr-baleares",
+      "articulo_rehabilitar": "19",
+      "cita_rehabilitar": "la prohibición de un uso no implica el cese de los ya existentes ni la prohibición de actuaciones tendentes recuperar, mantener o mejorar las edificaciones e instalaciones realizadas sin infracción de la normativa vigente a la fecha de su implantación."
+    },
+    "AIA": {
+      "nombre": "Área de interés agrario",
+      "articulo": "anexo I",
+      "vivienda": "vinculada",
+      "explicacion": "Es suelo rústico común de alto valor agrario. Solo cabe una vivienda nueva si es anexa a una explotación agraria, y con las condiciones generales del rústico: una por parcela y al menos 14.000 m² (el plan insular o el municipal pueden pedir más).",
+      "cita": "En las zonas de alto valor agrario, incluidas, por lo tanto, las AIA, el uso de vivienda unifamiliar aislada solo será autorizable cuando la vivienda sea anexa a explotación agraria.",
+      "mas": [
+        { "norma": "lsr-baleares", "articulo": "25", "cita": "Cuando estas actividades supongan la construcción de una nueva vivienda, sólo podrá resultar una vivienda unifamiliar por parcela, que deberá tener la superficie determinada por el instrumento de planeamiento general que, para los terrenos calificados como suelo rústico común, deberá ser superior o igual a 14.000 metros cuadrados." }
+      ],
+      "rehabilitar": "existente",
+      "norma_rehabilitar": "lsr-baleares",
+      "articulo_rehabilitar": "19",
+      "cita_rehabilitar": "la prohibición de un uso no implica el cese de los ya existentes ni la prohibición de actuaciones tendentes recuperar, mantener o mejorar las edificaciones e instalaciones realizadas sin infracción de la normativa vigente a la fecha de su implantación.",
+      "mas_rehabilitar": [
+        { "norma": "lsr-baleares", "articulo": "36", "cita": "de nueva planta o de cambio de uso a vivienda en edificaciones existentes, una vez se haya completado el expediente, el ayuntamiento lo remitirá al consejo insular correspondiente, con el fin de que emita un informe con carácter previo y vinculante" }
+      ]
+    },
+    "SRG": {
+      "nombre": "Suelo rústico de régimen general",
+      "norma": "lsr-baleares",
+      "articulo": "25",
+      "vivienda": "aislada",
+      "explicacion": "En suelo rústico común de régimen general la vivienda unifamiliar aislada es un uso condicionado: una sola vivienda por parcela, con la superficie mínima que fije el plan (nunca menos de 14.000 m²; el plan insular y el municipal pueden pedir más), una edificabilidad del 3 % de la parcela en Mallorca y Menorca y del 4 % en Ibiza y Formentera, y un informe previo y vinculante del Consell Insular.",
+      "cita": "Cuando estas actividades supongan la construcción de una nueva vivienda, sólo podrá resultar una vivienda unifamiliar por parcela, que deberá tener la superficie determinada por el instrumento de planeamiento general que, para los terrenos calificados como suelo rústico común, deberá ser superior o igual a 14.000 metros cuadrados.",
+      "mas": [
+        { "articulo": "anexo I", "cita": "2. Condicionado según establece el Plan Territorial Insular." },
+        { "norma": "lsr-baleares", "articulo": "28", "cita": "a) En las islas de Mallorca y de Menorca: El 3 por 100. b) En las islas de Ibiza y de Formentera: El 4 por 100." }
+      ],
+      "rehabilitar": "existente",
+      "norma_rehabilitar": "lsr-baleares",
+      "articulo_rehabilitar": "19",
+      "cita_rehabilitar": "la prohibición de un uso no implica el cese de los ya existentes ni la prohibición de actuaciones tendentes recuperar, mantener o mejorar las edificaciones e instalaciones realizadas sin infracción de la normativa vigente a la fecha de su implantación.",
+      "mas_rehabilitar": [
+        { "norma": "lsr-baleares", "articulo": "36", "cita": "de nueva planta o de cambio de uso a vivienda en edificaciones existentes, una vez se haya completado el expediente, el ayuntamiento lo remitirá al consejo insular correspondiente, con el fin de que emita un informe con carácter previo y vinculante" }
+      ]
+    },
+    "SRG-F": {
+      "nombre": "Suelo rústico de régimen general forestal",
+      "sigla": "SRG-F",
+      "norma": "lsr-baleares",
+      "articulo": "25",
+      "vivienda": "aislada",
+      "explicacion": "Es suelo rústico común ocupado por bosque o monte bajo. Admite la vivienda unifamiliar aislada como el resto del rústico común: una por parcela, con la superficie mínima del plan (nunca menos de 14.000 m²; en zona forestal el plan insular o el municipal suelen pedir más), edificabilidad del 3 % en Mallorca y Menorca y del 4 % en Ibiza y Formentera, e informe previo y vinculante del Consell Insular.",
+      "cita": "Cuando estas actividades supongan la construcción de una nueva vivienda, sólo podrá resultar una vivienda unifamiliar por parcela, que deberá tener la superficie determinada por el instrumento de planeamiento general que, para los terrenos calificados como suelo rústico común, deberá ser superior o igual a 14.000 metros cuadrados.",
+      "mas": [
+        { "articulo": "anexo I", "cita": "2. Condicionado según establece el Plan Territorial Insular." },
+        { "norma": "lsr-baleares", "articulo": "25", "cita": "Las superficies determinadas en el punto 2 anterior tendrán el carácter de mínimas y podrán ser incrementadas por el planeamiento de ámbito municipal de acuerdo con la estrategia territorial que adopte." }
+      ],
+      "rehabilitar": "existente",
+      "norma_rehabilitar": "lsr-baleares",
+      "articulo_rehabilitar": "19",
+      "cita_rehabilitar": "la prohibición de un uso no implica el cese de los ya existentes ni la prohibición de actuaciones tendentes recuperar, mantener o mejorar las edificaciones e instalaciones realizadas sin infracción de la normativa vigente a la fecha de su implantación.",
+      "mas_rehabilitar": [
+        { "norma": "lsr-baleares", "articulo": "36", "cita": "de nueva planta o de cambio de uso a vivienda en edificaciones existentes, una vez se haya completado el expediente, el ayuntamiento lo remitirá al consejo insular correspondiente, con el fin de que emita un informe con carácter previo y vinculante" }
+      ]
+    },
+    "AT": {
+      "nombre": "Área de transición",
+      "norma": "lsr-baleares",
+      "articulo": "25",
+      "vivienda": "aislada",
+      "explicacion": "Es la franja de suelo rústico común que rodea el suelo urbano y lo separa del resto. Admite la vivienda unifamiliar aislada como uso condicionado: una por parcela, con la superficie mínima del plan (nunca menos de 14.000 m²), edificabilidad del 3 % en Mallorca y Menorca y del 4 % en Ibiza y Formentera, e informe previo y vinculante del Consell Insular.",
+      "cita": "Cuando estas actividades supongan la construcción de una nueva vivienda, sólo podrá resultar una vivienda unifamiliar por parcela, que deberá tener la superficie determinada por el instrumento de planeamiento general que, para los terrenos calificados como suelo rústico común, deberá ser superior o igual a 14.000 metros cuadrados.",
+      "mas": [
+        { "articulo": "20", "cita": "Las áreas de transición (AT), que comprenderán una franja a definir por los planes territoriales parciales entre un mínimo de 100 metros y un máximo de 500 metros a partir del suelo clasificado como urbano, urbanizable o apto para la urbanización" },
+        { "articulo": "anexo I", "cita": "2. Condicionado según establece el Plan Territorial Insular." }
+      ],
+      "rehabilitar": "existente",
+      "norma_rehabilitar": "lsr-baleares",
+      "articulo_rehabilitar": "19",
+      "cita_rehabilitar": "la prohibición de un uso no implica el cese de los ya existentes ni la prohibición de actuaciones tendentes recuperar, mantener o mejorar las edificaciones e instalaciones realizadas sin infracción de la normativa vigente a la fecha de su implantación.",
+      "mas_rehabilitar": [
+        { "norma": "lsr-baleares", "articulo": "36", "cita": "de nueva planta o de cambio de uso a vivienda en edificaciones existentes, una vez se haya completado el expediente, el ayuntamiento lo remitirá al consejo insular correspondiente, con el fin de que emita un informe con carácter previo y vinculante" }
+      ]
+    },
+    "SRC-PEQ": {
+      "nombre": "Suelo rústico común",
+      "sigla": "SRC",
+      "norma": "lsr-baleares",
+      "articulo": "25",
+      "vivienda": "prohibida",
+      "explicacion": "Es suelo rústico común, donde cabe una vivienda aislada, pero la parcela no llega a los 14.000 m² que la ley exige como mínimo. Con esta finca sola no se puede; haría falta agruparla con otras hasta llegar a la superficie que pida el plan.",
+      "cita": "Cuando estas actividades supongan la construcción de una nueva vivienda, sólo podrá resultar una vivienda unifamiliar por parcela, que deberá tener la superficie determinada por el instrumento de planeamiento general que, para los terrenos calificados como suelo rústico común, deberá ser superior o igual a 14.000 metros cuadrados.",
+      "rehabilitar": "existente",
+      "norma_rehabilitar": "lsr-baleares",
+      "articulo_rehabilitar": "19",
+      "cita_rehabilitar": "la prohibición de un uso no implica el cese de los ya existentes ni la prohibición de actuaciones tendentes recuperar, mantener o mejorar las edificaciones e instalaciones realizadas sin infracción de la normativa vigente a la fecha de su implantación.",
+      "mas_rehabilitar": [
+        { "norma": "lsr-baleares", "articulo": "36", "cita": "de nueva planta o de cambio de uso a vivienda en edificaciones existentes, una vez se haya completado el expediente, el ayuntamiento lo remitirá al consejo insular correspondiente, con el fin de que emita un informe con carácter previo y vinculante" }
+      ]
+    },
+    "SRP-PEQ": {
+      "nombre": "Suelo rústico protegido",
+      "sigla": "SRP",
+      "norma": "lsr-baleares",
+      "articulo": "25",
+      "vivienda": "prohibida",
+      "explicacion": "Es suelo rústico protegido, donde la parcela mínima para una vivienda la fija el plan y no puede ser menor que la del rústico común: 14.000 m². La parcela no llega a esa superficie, así que con esta finca sola no cabe una casa nueva.",
+      "cita": "Para los terrenos calificados como suelo rústico protegido, el planeamiento municipal determinará las superficies mínimas aplicables, que deberán respetar o superar los parámetros mínimos fijados en esta Ley para el suelo rústico común",
+      "mas": [
+        { "norma": "lsr-baleares", "articulo": "25", "cita": "Cuando estas actividades supongan la construcción de una nueva vivienda, sólo podrá resultar una vivienda unifamiliar por parcela, que deberá tener la superficie determinada por el instrumento de planeamiento general que, para los terrenos calificados como suelo rústico común, deberá ser superior o igual a 14.000 metros cuadrados." }
+      ],
+      "rehabilitar": "existente",
+      "norma_rehabilitar": "lsr-baleares",
+      "articulo_rehabilitar": "19",
+      "cita_rehabilitar": "la prohibición de un uso no implica el cese de los ya existentes ni la prohibición de actuaciones tendentes recuperar, mantener o mejorar las edificaciones e instalaciones realizadas sin infracción de la normativa vigente a la fecha de su implantación.",
+      "mas_rehabilitar": [
+        { "norma": "lsr-baleares", "articulo": "36", "cita": "de nueva planta o de cambio de uso a vivienda en edificaciones existentes, una vez se haya completado el expediente, el ayuntamiento lo remitirá al consejo insular correspondiente, con el fin de que emita un informe con carácter previo y vinculante" }
+      ]
+    },
+    "SIS": {
+      "nombre": "Sistema urbanístico",
+      "norma": "luib",
+      "articulo": "37",
+      "vivienda": "prohibida",
+      "explicacion": "Es suelo que el plan reserva a viales, espacios libres, equipamientos o infraestructuras. No es para vivienda privada.",
+      "cita": "Definición de la estructura general y orgánica del territorio integrada por los sistemas generales viarios y de comunicaciones"
+    },
+    "VIA": {
+      "nombre": "Viario o reserva viaria",
+      "norma": "luib",
+      "articulo": "37",
+      "vivienda": "prohibida",
+      "explicacion": "Es un vial, un camino o una reserva para una carretera. No es suelo para vivienda.",
+      "cita": "Definición de la estructura general y orgánica del territorio integrada por los sistemas generales viarios y de comunicaciones"
+    },
+    "SR": {
+      "nombre": "Suelo rústico sin categoría en el mapa",
+      "vivienda": "sin_dato",
+      "explicacion": "El Mapa Urbanístic de les Illes Balears clasifica esta parte como rústico pero no le da categoría. Pregunta en el ayuntamiento cuál tiene: de ella depende si cabe vivienda."
+    }
+  }
+}

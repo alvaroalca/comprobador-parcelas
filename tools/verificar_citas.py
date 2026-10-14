@@ -12,7 +12,13 @@ CACHE = RAIZ / 'tools' / '.cache'
 afecciones = json.loads((NORMAS / 'afecciones.json').read_text(encoding='utf-8'))
 # Una tabla por comunidad (cyl.json, madrid.json...): su clave es el nombre del archivo
 tablas = {p.stem: json.loads(p.read_text(encoding='utf-8')) for p in sorted(NORMAS.glob('*.json')) if p.stem != 'afecciones'}
-PDFS = {**{k: t['fuente']['pdf'] for k, t in tablas.items()}, **{k: f['pdf'] for k, f in afecciones['fuentes'].items()}}
+# Una tabla puede citar más de una norma (Baleares: directrices, suelo rústico y urbanismo): las demás van
+# en `otras_fuentes` y cada cita que sale de ellas lo dice con `norma`
+PDFS = {
+    **{k: t['fuente']['pdf'] for k, t in tablas.items()},
+    **{k: f['pdf'] for t in tablas.values() for k, f in t.get('otras_fuentes', {}).items()},
+    **{k: f['pdf'] for k, f in afecciones['fuentes'].items()},
+}
 # La caché de antes se llamaba rucyl
 ALIAS = {'cyl': 'rucyl'}
 
@@ -26,23 +32,23 @@ def texto_boe(norma):
             urllib.request.urlretrieve(PDFS[norma], pdf)
         subprocess.run(['pdftotext', '-enc', 'UTF-8', str(pdf), str(txt)], check=True)
     texto = txt.read_text(encoding='utf-8')
-    # Fuera la paginación del BOE, que corta frases a mitad
-    texto = re.sub(r'(?m)^(LEGISLACIÓN CONSOLIDADA|BOLETÍN OFICIAL DEL ESTADO|Página \d+)\s*$', '', texto)
+    # Fuera la paginación del BOE, que corta frases a mitad (la cabecera puede llevar delante el salto de página)
+    texto = re.sub(r'(?m)^\f?(LEGISLACIÓN CONSOLIDADA|BOLETÍN OFICIAL DEL ESTADO|Página \d+)\s*$', '', texto)
     return re.sub(r'\s+', ' ', texto)
 
 
-CABECERA = r'Artículo (\d+(?: bis| ter)?)\. |(Disposición (?:adicional|transitoria|final|derogatoria) \w+)\. '
+CABECERA = r'Artículo (\d+(?: bis| ter)?)\. |(Disposición (?:adicional|transitoria|final|derogatoria) \w+)\. |(ANEXO [IVX]+)\b'
 
 
 def articulos(texto):
-    """Mapa 'número' (o 'disposición transitoria primera') -> texto, tomado de su última aparición
-    (la primera es el índice)."""
-    trozos = re.split(r'(?=Artículo \d+(?: bis| ter)?\. |Disposición (?:adicional|transitoria|final|derogatoria) \w+\. )', texto)
+    """Mapa 'número' (o 'disposición transitoria primera', o 'anexo i') -> texto, tomado de su última
+    aparición (la primera es el índice)."""
+    trozos = re.split(r'(?=Artículo \d+(?: bis| ter)?\. |Disposición (?:adicional|transitoria|final|derogatoria) \w+\. |ANEXO [IVX]+\b)', texto)
     mapa = {}
     for t in trozos:
         m = re.match(CABECERA, t)
         if m:
-            mapa[(m.group(1) or m.group(2)).lower()] = t
+            mapa[(m.group(1) or m.group(2) or m.group(3)).lower()] = t
     return mapa
 
 
@@ -51,16 +57,17 @@ def citas_de_tabla(clave, t):
     if t.get('sin_planeamiento'):
         sp = t['sin_planeamiento']
         sueltas += [('sin_planeamiento', sp), ('sin_planeamiento rústico', sp['rustico']), ('sin_planeamiento urbano', sp['urbano'])]
-    salida = [(clave, nombre, c['articulo'], c['cita']) for nombre, c in sueltas if c]
+    salida = [(c.get('norma', clave), nombre, c['articulo'], c['cita']) for nombre, c in sueltas if c]
     for cod, c in t['categorias'].items():
         if c.get('cita'):
-            salida.append((clave, cod, c['articulo'], c['cita']))
+            salida.append((c.get('norma', clave), cod, c['articulo'], c['cita']))
         if c.get('cita_rehabilitar'):
-            salida.append((clave, cod + ' rehabilitar', c.get('articulo_rehabilitar', c['articulo']), c['cita_rehabilitar']))
+            salida.append((c.get('norma_rehabilitar', c.get('norma', clave)), cod + ' rehabilitar',
+                           c.get('articulo_rehabilitar', c['articulo']), c['cita_rehabilitar']))
         for i, extra in enumerate(c.get('mas', [])):
-            salida.append((clave, f'{cod} más {i + 1}', extra['articulo'], extra['cita']))
+            salida.append((extra.get('norma', clave), f'{cod} más {i + 1}', extra['articulo'], extra['cita']))
         for i, extra in enumerate(c.get('mas_rehabilitar', [])):
-            salida.append((clave, f'{cod} rehabilitar {i + 2}', extra['articulo'], extra['cita']))
+            salida.append((extra.get('norma', clave), f'{cod} rehabilitar {i + 2}', extra['articulo'], extra['cita']))
     return salida
 
 

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Comprobador de parcelas</title>
-<meta name="description" content="Busca o pincha una finca de Castilla y León, Madrid, Cantabria o Cataluña y mira si se puede hacer una casa: clase de suelo, veredicto y el artículo de la norma urbanística que lo decide.">
+<meta name="description" content="Busca o pincha una finca de Castilla y León, Madrid, Cantabria, Cataluña, Baleares, la Comunitat Valenciana, Murcia o Aragón y mira si se puede hacer una casa: clase de suelo, veredicto y el artículo de la norma urbanística que lo decide.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
 </head>
 <body>
 <header id="barra">
-  <a id="marca" href="./"><b>¿Se puede construir?</b><span>Comprobador de parcelas · Castilla y León, Madrid, Cantabria y Cataluña</span></a>
+  <a id="marca" href="./"><b>¿Se puede construir?</b><span>Comprobador de parcelas · ocho comunidades autónomas</span></a>
   <form id="buscador" role="search" autocomplete="off">
     <input id="q" type="search" placeholder="Calle, pueblo, ref. catastral o polígono y parcela" aria-label="Buscar dirección, pueblo, referencia catastral o polígono y parcela" role="combobox" aria-controls="lista" aria-expanded="false" aria-autocomplete="list">
     <button type="submit">Comprobar</button>
@@ -44,8 +44,19 @@
         <button data-rc="17083A00400055">Viña en Garriguella <small>Girona, no urbanizable ordinario</small></button>
         <button data-rc="08255A01400012">Finca en Santa Maria de Merlès <small>Barcelona, protección reglada y Red Natura 2000</small></button>
         <button data-rc="6812019CH4061S">Calle Raval 61 <small>Rialp, Lleida, suelo urbano</small></button>
+        <button data-rc="07057A00300591">Finca en Santanyí <small>Mallorca, rústico general que llega a 13 m del mar</small></button>
+        <button data-rc="07011A00500288">Finca en Calvià <small>Mallorca, área natural de especial interés</small></button>
+        <button data-rc="07023A00700044">Finca en Ferreries <small>Menorca, partida y en Red Natura 2000</small></button>
+        <button data-rc="07046A00700008">Finca en Sant Antoni de Portmany <small>Eivissa, rústico común de menos de 14.000 m²</small></button>
+        <button data-rc="12075A00200001">Finca en La Mata de Morella <small>Castellón, rural común y protegida</small></button>
+        <button data-rc="03104A02800021">Finca en Petrer <small>Alicante, rural común de menos de una hectárea</small></button>
+        <button data-rc="12008A00600154">Finca en la Serra d'Espadà <small>Castellón, protegida por legislación ambiental</small></button>
+        <button data-rc="30001A00200222">Finca en Abanilla <small>Murcia, urbanizable sin sectorizar</small></button>
+        <button data-rc="30045A00200007">Finca en Los Alcázares <small>Murcia, no urbanizable junto a una rambla</small></button>
+        <button data-rc="50152A01800433">Finca en Luna <small>Zaragoza, no urbanizable genérico y monte público</small></button>
+        <button data-rc="50132A01200012">Finca en Jaulín <small>Zaragoza, no urbanizable especial en una ZEPA</small></button>
       </div>
-      <p class="nota">Cubre los 2.248 municipios de Castilla y León, los 179 de la Comunidad de Madrid, los 102 de Cantabria y los 947 de Cataluña con los datos públicos del Catastro y de cada comunidad. Es un cribado previo, no un certificado.</p>
+      <p class="nota">Cubre los 2.248 municipios de Castilla y León, los 179 de la Comunidad de Madrid, los 102 de Cantabria, los 947 de Cataluña, los 67 de Baleares, los 542 de la Comunitat Valenciana, 33 de los 45 de Murcia y 711 de los 731 de Aragón con los datos públicos del Catastro y de cada comunidad. Es un cribado previo, no un certificado.</p>
     </section>
     <section id="resultado" hidden></section>
   </aside>

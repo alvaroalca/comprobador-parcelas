@@ -28,7 +28,7 @@
 - Buscador: «polígono N parcela M municipio» para fincas rústicas (Catastro por código INE). Municipio ambiguo («Villanueva») → pide elegir. Lo que se pincha en el mapa queda escrito en el buscador.
 - Titular del veredicto con umbral del 10 %: los roces de borde ya no deciden (Becerril, Moralzarzal, Colmenar Viejo y Guadarrama daban titulares falsos).
 - Batería en Chrome sin interfaz contra `servir.py`: 22 parcelas al azar y 19 por código. Sin errores de consola ni de CSP. Veredicto en 1-2 s, ficha completa en 1,3-5,7 s.
-- Falta: smoke test de Álvaro, copiar a `public/parcelas/` del portfolio y añadir `https://idem.comunidad.madrid` al `connect-src` de `_headers`.
+- Smoke test de Álvaro superado (14/10). Al integrar: copiar a `public/parcelas/` del portfolio y añadir `https://idem.comunidad.madrid` al `connect-src` de `_headers`.
 - Abierto: espacios naturales protegidos de Madrid (`LugaresProtegidos:IDEM_MA_ENP`) sin consultar; la superficie mínima del art. 26.1.d (legislación forestal y agraria) no se calcula.
 
 ## Cantabria (14/10/2026, en local, sin desplegar)
@@ -37,15 +37,62 @@
 - Probado en Chrome: 28 parcelas por categoría y al azar, más 3 buscadas a más de 200 m del suelo urbano. Sin errores de consola; veredicto en 0,8-1,6 s (dos casos de 5-7 s fueron lentitud puntual del servidor, al repetir 0,8 s).
 - Arreglado de paso: las referencias de diseminado (`000300500VP70A`) no se reconocían.
 - Abierto: en municipios del art. 51.2 el titular sigue en «Solo ligada» y la ficha añade el aviso, porque no se sabe si la protección es sectorial; no está claro si el límite de 200 m sigue valiendo ahí. Costas (servidumbre de protección), espacios naturales protegidos y patrimonio (entornos de BIC, capa 3 de `Patrimonio_y_Cultura`) sin consultar.
-- Falta: smoke test de Álvaro. Al integrar: `https://idem.comunidad.madrid` y `https://geoservicios.cantabria.es` en el `connect-src` del portfolio.
+- Smoke test de Álvaro superado (14/10). Al integrar: `https://idem.comunidad.madrid` y `https://geoservicios.cantabria.es` en el `connect-src` del portfolio.
 
 ## Cataluña (14/10/2026, en local, sin desplegar)
 
 - Adaptador del MUC de la Generalitat y tabla del Texto refundido de la Ley de urbanismo (DL 1/2010): 93/93 citas en total. No urbanizable por calificación (N1 ordinario, N2 protección local, N3 protección reglada, N4 actividad autorizada) con la presunción del art. 47.6 bis; sistemas públicos con «No»; urbanizable no delimitado con régimen de no urbanizable (art. 52.2). Rehabilitación como vivienda solo para masías y casas rurales del catálogo. Afecciones: montes del CUP y Red Natura.
 - Probado en Chrome: 25 parcelas por clase, calificación y al azar. Veredicto en 0,5-1,6 s; una parcela alargada (canal, 42 ha en 17 × 19 km) tarda 7 s.
 - Arreglado de paso, para todas las comunidades: recorte a la caja de la parcela antes de polygon-clipping (fallaba con recintos enormes); referencias urbanas con letra entre las primeras cifras; atribuciones del mapa plegadas abajo a la izquierda.
-- Falta: smoke test de Álvaro. Al integrar: `https://sig.gencat.cat` en el `connect-src` del portfolio (además de Madrid y Cantabria).
+- Smoke test de Álvaro superado (14/10). Al integrar: `https://sig.gencat.cat` en el `connect-src` del portfolio (además de Madrid y Cantabria).
 - Abierto: costas, carreteras y patrimonio sin consultar. Cantabria sigue pidiendo por caja (ArcGIS): una parcela alargada traería recintos de más.
+
+## Baleares (14/10/2026, en local, sin desplegar)
+
+- Adaptador del MUIB del Govern (ArcGIS REST de la IDEIB) y tabla con tres normas: la matriz de ordenación del suelo rústico (anexo I de la Ley 6/1999 de Directrices, en la redacción de la Ley 7/2024), la Ley 6/1997 del Suelo Rústico y la Ley 12/2017 de urbanismo. 151/151 citas en total; el verificador acepta ya varias normas por tabla (`otras_fuentes` y `norma` en cada cita) y citas de anexos, y falla con una cita alterada o en otro artículo.
+- Matriz para la vivienda: prohibida en AANP, ANEI y APT; ARIP depende del plan territorial insular; AIA solo anexa a explotación; SRG, SRG forestal y AT, vivienda aislada. Parcela mínima de 14.000 m² en todo el rústico (art. 25), comparada con la superficie del Catastro: por debajo, «No».
+- El Govern tiene deshabilitadas las capas de APT y de APR de inundación, erosión y desprendimientos. La franja de 500 m de costa (100 m en Formentera) se calcula con el contorno de las islas (`web/datos/costa-baleares.json`, de `tools/costa_baleares.py`): entera dentro, la parcela pasa a APT; en parte, aviso con la distancia al mar. Preguntárselo al servidor tardaba 1,4-6 s.
+- La zona inundable del Ministerio en Baleares son 4 recintos: se usa el ARPSI de 500 años de la IDEIB (`aguaPropia` en el adaptador). Afecciones: zona inundable, Red Natura 2000 y aviso de riesgo de incendio.
+- Mapa: el WMS del MUIB pinta repetido el aviso de que las categorías no están al día y tapa el mapa; se usa el `export` de ArcGIS sin etiquetas.
+- Probado en Chrome: 21 parcelas por categoría, 22 al azar repartidas por las cuatro islas y 4 búsquedas escritas. Sin errores de consola; veredicto en menos de 1,2 s, ficha completa en 0,8-2,5 s (más cuando el Ministerio va lento). Regresión de los ejemplos de las otras comunidades: mismos resultados.
+- Smoke test de Álvaro superado (14/10). Al integrar: `https://ideib.caib.es` en el `connect-src` del portfolio.
+- Abierto: el propio Govern avisa de que las categorías del rústico del MUIB no recogen las últimas modificaciones de los planes territoriales; la ficha lo dice. Montes de utilidad pública, espacios naturales protegidos, APR deshabilitadas, franja de carreteras, costas y patrimonio sin consultar. Con la APT parcial el titular no cambia (se avisa), igual que la distancia en Cantabria.
+- Visto de paso, general: con Enter el buscador toma la primera sugerencia de CartoCiudad, que a veces es un comercio o una calle de otra provincia («Carrer de Sant Miquel 30, Palma» da un estanco; «Calle Mayor 5 Ciutadella», una calle de La Rioja).
+
+## Comunitat Valenciana (14/10/2026, en local, sin desplegar)
+
+- Adaptador del planeamiento refundido de la Generalitat (ICV, `terramapas.icv.gva.es/0702_Planeamiento`): WFS de MapServer nativo en 25830, con GeoJSON (el sondeo anterior decía solo GML) y CORS abierto. 122.840 recintos con la zona normalizada de la LOTUP (`zon_suelo`) y la dotación (`dotacion`); toda la comunidad cabe en 23 combinaciones.
+- Tabla del Texto refundido de la LOTUP (Decreto Legislativo 1/2021): 21 citas, 172/172 en total. Zona urbanizada por solar (art. 187; industrial y terciaria, según el plan); nuevo desarrollo, «Todavía no» (art. 28.4); rural común agropecuaria o forestal, vivienda aislada si el plan la prevé, con 1 ha y el 2 % de ocupación (art. 211.1.b); por debajo de 1 ha, solo la ligada a una explotación profesional; explotación de recursos, «No»; rural protegida por el municipio o agrícola, según el plan (art. 26.c); por legislación ambiental, riesgos, patrimonio o franjas de dominio público, «No»; dotaciones, «No».
+- En Valencia «vivienda aislada» se ordena por delante de «depende del plan» para el titular: una finca 60 % rural común y 34 % protegida municipal salía «Depende».
+- Probado en Chrome: 21 parcelas por zona y 20 al azar por las tres provincias. Sin errores de consola; veredicto en 0,5-0,9 s (3 s en dos casos), ficha completa en 0,8-4 s.
+- Falta: smoke test de Álvaro. Al integrar: `https://terramapas.icv.gva.es` en el `connect-src` del portfolio.
+- Abierto: Red Natura 2000, montes de utilidad pública y espacios naturales sin fuente WFS localizada (las protecciones ambientales que recoge el plan sí entran en el veredicto). Sin sección de rehabilitación. Se pide por caja (MapServer no entiende `CQL_FILTER`): una parcela alargada traerá recintos de más.
+
+## Proxy para servicios sin CORS (14/10/2026)
+
+- `tools/servir.py` tiene ahora una tabla `PROXIES` (prefijo local → servidor y rutas permitidas): `/api/miteco/` (agua), `/api/carm/` (Murcia: `wfs` y `wms` de `SIT_USU_PLA_URB_CARM`) y `/api/aragon/` (`SIUa/wfs`, `SIUa/wms`, `VISOR2D/wfs`). Cualquier otra ruta da 403. Las teselas del mapa también pasan por el proxy: MapLibre las pide con `fetch`.
+- Al integrar, el Worker del portfolio necesita las mismas rutas.
+
+## Región de Murcia (14/10/2026, en local, sin desplegar)
+
+- Clases de suelo del SITMurcia (`clases_plu_ze_37mun`): 9.469 recintos en 33 de los 45 municipios; los demás salen «sin datos» con el aviso de cobertura. Por el proxy `/api/carm/`.
+- Tabla de la Ley 13/2015: 14 citas. Urbano consolidado por solar (art. 89); sin consolidar y urbanizable sectorizado, «Todavía no»; núcleo rural y urbano especial, según el plan (arts. 90 y 91); urbanizable sin sectorizar, vivienda ligada a explotación en parcela de más de 5.000 m² (arts. 101-102; por debajo, «No»); no urbanizable protegido por el planeamiento, explotación de 20.000 m², e inadecuado, 10.000 m² en regadío (art. 95); protección específica, «No» (art. 94); sistemas generales, «No». La DT 5ª equipara las clases de los planes sin adaptar (no programado, apto para urbanizar, no urbanizable a secas) y la tabla lo recoge.
+- Probado en Chrome: 22 parcelas por clase y 10 al azar. Sin errores; veredicto en 0,8-1,8 s.
+- Falta: smoke test de Álvaro. Abierto: Red Natura, montes y vías pecuarias (la capa `plu_prot_vp` da error), espacios naturales.
+
+## Aragón (14/10/2026, en local, sin desplegar)
+
+- SIUa del Gobierno de Aragón (`clasificacion_idearagon`): 54.312 recintos en 711 de 731 municipios, con la clase normalizada (`notepa`) y el sistema general (`dot_sg`). Por el proxy `/api/aragon/`. Con `INTERSECTS`, 0,1 s.
+- En 119 municipios el único plan publicado figura como «No aprobada/Denegada/Obsoleta» (`fiab_geom`): ahí la ficha dice «Sin dato» y pide preguntar en el ayuntamiento. Las geometrías marcadas como dudosas llevan aviso.
+- Tabla del Texto refundido de la Ley de Urbanismo de Aragón (DL 1/2014): 16 citas, 202/202 en total. No urbanizable genérico, vivienda aislada si el plan no la prohíbe: 10.000 m², 300 m² construidos y sin dos viviendas a menos de 150 m (art. 34.2; por debajo de 1 ha, solo ligada a explotación); urbanizable no delimitado, igual (art. 33); no urbanizable especial, «No» (art. 37); sistemas generales, «No». En municipios sin plan general se avisa de la autorización especial (art. 35.1.b) y de la zona de borde (art. 289). Rehabilitación de bordas y edificios rurales tradicionales (art. 35.1.c).
+- Afecciones: montes de utilidad pública, vías pecuarias y Red Natura (LIC y ZEPA) del Gobierno de Aragón.
+- Probado en Chrome: 16 parcelas por clase y 15 al azar. Sin errores; veredicto en 0,8-1,8 s.
+- Falta: smoke test de Álvaro. No se mide la distancia a otras viviendas (núcleo de población): la ficha la explica.
+
+## Asturias (14/10/2026, parada)
+
+- Fuente localizada: GeoServer del RPGUR (`visorrpgur.asturias.es:8090`, solo http), con clasificación, no urbanizable por categorías y 5.401 núcleos rurales en los 78 concejos.
+- Dos bloqueos: el texto refundido asturiano (DL 1/2004) no está en la legislación consolidada del BOE, y el servidor tarda 5-15 s por parcela en el no urbanizable (cada concejo es un recinto de varios MB; no entiende `SRID=` en CQL). Salidas posibles: citar del BOPA (cambia la regla de citas) y un extracto estático del no urbanizable, o esperar.
 
 ## Pendiente
 
@@ -59,7 +106,7 @@
 
 ## Resto de España (prioridad actual)
 
-Objetivo: cerrar comunidad por comunidad hasta que cada una funcione igual que Castilla y León (fuente geométrica de categorías, tabla de su ley con citas verificadas, afecciones propias, batería de parcelas). Las ideas de después esperan a eso. La página está fuera de la portada del portfolio hasta entonces (accesible por URL).
+Objetivo: cerrar comunidad por comunidad hasta que cada una funcione igual que Castilla y León (fuente geométrica de categorías, tabla de su ley con citas verificadas, afecciones propias, batería de parcelas). Las ideas de después esperan a eso. No se despliega nada, tampoco en una ruta oculta, hasta que esté terminado (decisión de Álvaro, 14/10): la copia a `public/parcelas/` y la prueba con `wrangler dev` se hacen una sola vez, justo antes de publicar.
 
 No hay fuente nacional: el SIU del Ministerio agrega lo que mandan las comunidades y no tiene servicio por parcela. Sondeo del 14/10 (GetCapabilities + un recinto de muestra):
 
@@ -68,19 +115,21 @@ No hay fuente nacional: el SIU del Ministerio agrega lo que mandan las comunidad
 | Cataluña | `sig.gencat.cat/ows/PLANEJAMENT/wfs` · `MUC_CLASSIFICACIONS`, `MUC_QUALIFICACIONS` | `*` | 25831. Bloquea el user-agent de curl (el navegador pasa). |
 | Madrid | `idem.comunidad.madrid/geoidem/UsoDelSuelo/wfs` · `VPLA_V_CLASIFICACION_REF_25` | `*` | Refundido 2025, clase y categoría detallada. |
 | Cantabria | ArcGIS `geoservicios.cantabria.es/inspire/rest/services/Urbanismo/MapServer/6` (SIUCAN) | sí | Clase, categoría y subcategoría normalizadas; 0,1 s. |
-| Baleares | ArcGIS `ideib.caib.es/.../GOIB_MUIB/MapServer` · 12 clasificación, 11 categorías del rústico | sí | |
-| C. Valenciana | `terramapas.icv.gva.es/0702_Planeamiento` · `Planeamiento.Clasificacion` | `*` | Solo GML (sin GeoJSON). |
-| Murcia | `mapas-gis-inter.carm.es/geoserver/SIT_USU_PLA_URB_CARM/wfs` · `plu_clasific_tipos_*` | no | Proxy. |
-| Aragón | `idearagon.aragon.es/geoserver/ows` · `SIUa:clasificacion_idearagon` | no | Proxy. 6 s por petición sin filtro. |
-| Asturias | `visorrpgur.asturias.es:8090/geoserver` · `n02_CLASIFICACION_SUELO` | sí | Solo http: proxy obligatorio (contenido mixto). |
-| País Vasco | `geo.euskadi.eus/WMS_PLANGINTZA` (Udalplan) | `*` | Solo WMS + descarga shp: píxeles o datos propios. |
-| Canarias | `idecan2.grafcan.es/ServicioWMS/Planeamiento` | | Solo WMS encontrado. |
-| Extremadura | `mapas.ideex.es/CICTEX/planeamientoRefundido` | | Solo WMS de planos escaneados por municipio. |
-| Navarra | IDENA solo tiene el inventario de instrumentos | | Clasificación (SIUN) no localizada. |
-| Galicia | Xunta: Plan Básico Autonómico (afecciones, núcleos) | | Clasificación municipal no localizada. |
-| Andalucía | Solo WMS de algunos municipios (Córdoba, Sevilla) | | Sin capa regional. |
-| Castilla-La Mancha | Visor encargado a Tragsatec en 2024 | | No localizado; 291 municipios sin plan general. |
-| La Rioja | | | No localizado. |
+| Baleares | ArcGIS `ideib.caib.es/.../GOIB_MUIB/MapServer` · 12 clasificación, 11 categorías del rústico | sí | Hecha. |
+| C. Valenciana | `terramapas.icv.gva.es/0702_Planeamiento` · `Planeamiento.Clasificacion` | `*` | Hecha (GeoJSON sí). |
+| Murcia | `mapas-gis-inter.carm.es/geoserver/SIT_USU_PLA_URB_CARM/wfs` · `clases_plu_ze_37mun` | no | Hecha, por proxy. |
+| Aragón | `idearagon.aragon.es/geoserver/SIUa/wfs` · `SIUa:clasificacion_idearagon` | no | Hecha, por proxy. |
+| Asturias | `visorrpgur.asturias.es:8090/geoserver` · `n02_CLASIFICACION_SUELO`, `n05_SUELOS_NO_URBANIZABLES` | sí | Parada: sin texto en el BOE y 5-15 s por parcela. |
+| País Vasco | ArcGIS REST `www.geo.euskadi.eus/geoeuskadi/rest/services/U11/WMS_PLANGINTZA/MapServer` · Udalplan, capas 802-811 (residencial, actividades económicas, sistemas generales, no urbanizable con `SUBTIPO`) | `*` | Consultable por geometría (sondeo 14/10). Bloqueo: el catastro es foral (tres diputaciones), el punto → finca no funciona. |
+| Canarias | `idecan2.grafcan.es/ServicioWMS/Planeamiento` · `CLASI` (clase) y `CLA` (categoría, código `ePlanCLA`: SUCO, RPNR…) | `*` | Sin WFS. GetFeatureInfo devuelve códigos normalizados y el plan que rige: viable muestreando puntos dentro de la parcela. Ley 4/2017 en el BOE. |
+| Extremadura | `mapas.ideex.es/CICTEX/planeamientoRefundido` | | Su WFS solo trae la división en hojas de los planos escaneados. Sin clasificación. |
+| Navarra | IDENA (`idena.navarra.es/ogc/wfs`, 1.053 capas) | `*` | Sin capa de clasificación: solo la figura de plan por municipio e indicadores. Además, catastro foral. |
+| Galicia | ArcGIS `ideg.xunta.gal/servizos/rest/services/Ordenacion/POL_AD_PlaneamientoUrbanistico/MapServer/29` (IURB_V9) | sí | Clasificación homogeneizada (`SiglaHomog`) solo de los concellos del litoral y de 2011, con planes «no adaptados a la LOUGA». No sirve como fuente vigente. |
+| Andalucía | Solo WMS de algunos municipios y documentos escaneados (Consulta del Planeamiento) | | Sin capa regional (sondeo 14/10). |
+| Castilla-La Mancha | ArcGIS REST `geoservicios.castillalamancha.es/arcgis/rest/services/Vector/Sistema_Informacion_Urbana/MapServer/1` (SIU) | sí | 29.941 recintos en 920 municipios, 25830, GeoJSON. `CLASE`, `CATEGORIA`, `SUBCATEGOR`, `ADSCRIP` (texto con erratas que se normalizan). TRLOTAU 2023 en el BOE (`DOCM-q-2023-90063`). La mejor candidata. |
+| La Rioja | MapServer `ogc.larioja.org/wfs/request.php` · `urbanismo_planeamiento_urbanistico` | `*` | 2.091 recintos con clase y categoría escritas; solo WFS 1.1 y GML (hay que leer GML en el navegador). Mismo servicio: Red Natura, montes de UP, vías pecuarias y directriz de no urbanizable. Ley 5/2006 en el BOE. |
+
+Orden propuesto tras el sondeo del 14/10: Castilla-La Mancha (servicio completo y rápido), La Rioja (GML) y Canarias (muestreo por puntos). País Vasco y Navarra esperan a un adaptador de catastro foral; Galicia, Andalucía y Extremadura no publican la clasificación; Asturias, parada (ver arriba).
 
 ## Ideas para después (no ahora: primero el resto de España)
 

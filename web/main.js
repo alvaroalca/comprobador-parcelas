@@ -23,9 +23,10 @@ const wms = (base, capa) =>
   '&transparent=true&srs=EPSG:3857&width=256&height=256&bbox={bbox-epsg-3857}';
 const VACIO = { type: 'FeatureCollection', features: [] };
 
-// Una capa de suelo por comunidad, limitada a su caja para no pedir teselas fuera de ella
+// Una capa de suelo por comunidad, limitada a su caja para no pedir teselas fuera de ella. Una comunidad
+// puede dar su propia plantilla de teselas en vez de un WMS (Baleares)
 const fuentesSuelo = Object.fromEntries(COMUNIDADES.map((c) => [`suelo-${c.id}`, {
-  type: 'raster', tiles: [wms(c.capaSuelo.wms, c.capaSuelo.capa)], tileSize: 256, bounds: c.capaSuelo.limites, attribution: c.capaSuelo.atribucion,
+  type: 'raster', tiles: [c.capaSuelo.teselas ?? wms(c.capaSuelo.wms, c.capaSuelo.capa)], tileSize: 256, bounds: c.capaSuelo.limites, attribution: c.capaSuelo.atribucion,
 }]));
 const capasSuelo = COMUNIDADES.map((c) => ({ id: `suelo-${c.id}`, type: 'raster', source: `suelo-${c.id}`, minzoom: 11, paint: { 'raster-opacity': 0.5 } }));
 
@@ -288,7 +289,7 @@ async function completar(mio, rc, lon, lat, aproximada) {
   // Las afecciones del agua tardan 2-3 s cerca de un río: el veredicto se pinta antes y ellas llegan después
   const af = afecciones(geo.lonlat, geo.utm, comunidad);
   const [normas, suelo, plan] = await Promise.all([
-    normasDe(comunidad), comunidad.suelo(caja(geo.utm), geo.utm), comunidad.planeamiento?.(lon, lat) ?? null,
+    normasDe(comunidad), comunidad.suelo(caja(geo.utm), geo.utm, geo.superficie), comunidad.planeamiento?.(lon, lat) ?? null,
   ]);
   if (!vigente()) return;
   const v = veredicto(normas, reparto(geo.utm, suelo.recintos, normas.proteccion), datos);
@@ -353,6 +354,9 @@ const m2 = (n) => n >= 10000
   : `${Math.round(n).toLocaleString('es-ES')} m²`;
 // «Art. 59 del Reglamento…» o «Disposición transitoria primera de la Ley…»
 const articulo = (n, fuente) => (/^\d/.test(n) ? `Art. ${n}` : n[0].toUpperCase() + n.slice(1)) + ` ${fuente.de}`;
+
+// La norma de una cita: la de la tabla, salvo que la cita diga otra (`norma`, en `otras_fuentes`)
+const fuenteDe = (normas, clave) => (clave ? normas.otras_fuentes[clave] : normas.fuente);
 
 function bloqueCita(cita, art, fuente) {
   const f = el('figure', 'cita');
@@ -419,7 +423,6 @@ function pintarResultado(datos, geo, { v, comunidad, normas, suelo, plan, af, vi
 
   // Veredicto principal
   const t = v.titular;
-  const fuente = normas.fuente;
   const bloque = el('section', `veredicto tono-${v.nivel.tono}`);
   bloque.append(el('p', 'pregunta', '¿Casa nueva, también prefabricada?'), el('p', 'respuesta', v.nivel.titulo));
   // La sigla visible puede no ser el código interno (Cantabria separa SRPO cerca y lejos del suelo urbano)
@@ -433,9 +436,11 @@ function pintarResultado(datos, geo, { v, comunidad, normas, suelo, plan, af, vi
   // Lo que el adaptador ha medido para esta parcela (p. ej. la distancia al suelo urbano en Cantabria)
   const nota = suelo.notas?.[t.codigo]?.trim();
   if (nota) bloque.append(el('p', 'nota-medida', nota));
-  if (t.cita) bloque.append(bloqueCita(t.cita, t.articulo, fuente));
-  for (const extra of t.mas ?? []) bloque.append(bloqueCita(extra.cita, extra.articulo, fuente));
-  if (t.vivienda === 'vinculada' && normas.vinculada) bloque.append(bloqueCita(normas.vinculada.cita, normas.vinculada.articulo, fuente));
+  if (t.cita) bloque.append(bloqueCita(t.cita, t.articulo, fuenteDe(normas, t.norma)));
+  for (const extra of t.mas ?? []) bloque.append(bloqueCita(extra.cita, extra.articulo, fuenteDe(normas, extra.norma)));
+  if (t.vivienda === 'vinculada' && normas.vinculada) {
+    bloque.append(bloqueCita(normas.vinculada.cita, normas.vinculada.articulo, fuenteDe(normas, normas.vinculada.norma)));
+  }
   nodos.push(bloque);
 
   // Afecciones sectoriales: llegan después; mientras, se dice que se están comprobando
@@ -465,7 +470,7 @@ function pintarResultado(datos, geo, { v, comunidad, normas, suelo, plan, af, vi
   if (v.solape && normas.concurrencia) {
     const sec = el('section', 'secundario');
     sec.append(el('h3', null, 'Categorías superpuestas'), el('p', null, normas.concurrencia.explicacion),
-      bloqueCita(normas.concurrencia.cita, normas.concurrencia.articulo, fuente));
+      bloqueCita(normas.concurrencia.cita, normas.concurrencia.articulo, fuenteDe(normas, normas.concurrencia.norma)));
     nodos.push(sec);
   }
 
@@ -473,11 +478,12 @@ function pintarResultado(datos, geo, { v, comunidad, normas, suelo, plan, af, vi
   const rehab = normas.rehabilitar?.[t.rehabilitar];
   if (rehab) {
     const art = t.articulo_rehabilitar ?? t.articulo;
+    const fuente = fuenteDe(normas, t.norma_rehabilitar ?? t.norma);
     const sec = el('section', 'secundario');
     sec.append(el('h3', null, '¿Y rehabilitar o ampliar lo que ya hay?'),
       el('p', null, `${rehab} ${articulo(art, fuente)}${normas.rehabilitar.sufijo ?? ''}.`));
     if (t.cita_rehabilitar) sec.append(bloqueCita(t.cita_rehabilitar, art, fuente));
-    for (const extra of t.mas_rehabilitar ?? []) sec.append(bloqueCita(extra.cita, extra.articulo, fuente));
+    for (const extra of t.mas_rehabilitar ?? []) sec.append(bloqueCita(extra.cita, extra.articulo, fuenteDe(normas, extra.norma)));
     nodos.push(sec);
   }
 

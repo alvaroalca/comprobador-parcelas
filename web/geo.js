@@ -85,27 +85,38 @@ export function cuotas(features, utm) {
     .sort((a, b) => b.cuota - a.cuota);
 }
 
+// Distancia de un punto a un segmento
+const seg = (p, a, b) => {
+  const dx = b[0] - a[0], dy = b[1] - a[1];
+  const t = Math.max(0, Math.min(1, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / (dx * dx + dy * dy || 1)));
+  return Math.hypot(p[0] - a[0] - t * dx, p[1] - a[1] - t * dy);
+};
+
+// ¿Está el punto dentro del anillo? (par-impar)
+export function dentroDe(p, anillo) {
+  let c = false;
+  for (let i = 0, j = anillo.length - 1; i < anillo.length; j = i++) {
+    const [xi, yi] = anillo[i], [xj, yj] = anillo[j];
+    if ((yi > p[1]) !== (yj > p[1]) && p[0] < ((xj - xi) * (p[1] - yi)) / (yj - yi) + xi) c = !c;
+  }
+  return c;
+}
+
+// Distancia mínima de un punto a unas polilíneas
+export function distanciaPunto(p, lineas) {
+  let min = Infinity;
+  for (const linea of lineas) for (let i = 0; i < linea.length - 1; i++) min = Math.min(min, seg(p, linea[i], linea[i + 1]));
+  return min;
+}
+
 // Distancia mínima entre el polígono y una polilínea; 0 si la línea entra en él.
 export function distancia(multi, lineas) {
-  const seg = (p, a, b) => {
-    const dx = b[0] - a[0], dy = b[1] - a[1];
-    const t = Math.max(0, Math.min(1, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / (dx * dx + dy * dy || 1)));
-    return Math.hypot(p[0] - a[0] - t * dx, p[1] - a[1] - t * dy);
-  };
-  const dentro = (p, anillo) => {
-    let c = false;
-    for (let i = 0, j = anillo.length - 1; i < anillo.length; j = i++) {
-      const [xi, yi] = anillo[i], [xj, yj] = anillo[j];
-      if ((yi > p[1]) !== (yj > p[1]) && p[0] < ((xj - xi) * (p[1] - yi)) / (yj - yi) + xi) c = !c;
-    }
-    return c;
-  };
   const giro = (a, b, c) => Math.sign((b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]));
   const cruzan = (a, b, c, d) => giro(a, b, c) !== giro(a, b, d) && giro(c, d, a) !== giro(c, d, b);
   const bordes = multi.flat();
   let min = Infinity;
   for (const linea of lineas) {
-    for (const p of linea) if (multi.some((pol) => dentro(p, pol[0]) && !pol.slice(1).some((h) => dentro(p, h)))) return 0;
+    for (const p of linea) if (multi.some((pol) => dentroDe(p, pol[0]) && !pol.slice(1).some((h) => dentroDe(p, h)))) return 0;
     for (let i = 0; i < linea.length - 1; i++) {
       for (const anillo of bordes) {
         for (const q of anillo) min = Math.min(min, seg(q, linea[i], linea[i + 1]));
@@ -128,19 +139,23 @@ export async function conReintento(f) {
 }
 
 // Consulta a una capa ArcGIS REST (MapServer/<id>) por caja en EPSG:25830. Devuelve GeoJSON en 25830.
-// ArcGIS responde 200 también cuando falla: el error viene dentro del cuerpo.
-export function arcgis(capa, [x0, y0, x1, y1], { where = '1=1', campos = '*', geometria = true } = {}) {
+// ArcGIS responde 200 también cuando falla: el error viene dentro del cuerpo. `extra` añade o sustituye
+// parámetros (otra geometría, un búfer); con él la respuesta puede no ser una lista de recintos (un recuento).
+export function arcgis(capa, [x0, y0, x1, y1], { where = '1=1', campos = '*', geometria = true, extra = {} } = {}) {
   return conReintento(async () => {
     const q = new URLSearchParams({
       geometry: [x0, y0, x1, y1].join(','), geometryType: 'esriGeometryEnvelope', inSR: '25830', outSR: '25830',
-      spatialRel: 'esriSpatialRelIntersects', where, outFields: campos, returnGeometry: String(geometria), f: 'geojson',
+      spatialRel: 'esriSpatialRelIntersects', where, outFields: campos, returnGeometry: String(geometria), f: 'geojson', ...extra,
     });
-    const r = await fetch(`${capa}/query?${q}`);
+    // Un polígono largo no cabe en la URL (IIS corta hacia los 2 kB, y su error llega sin CORS): por POST
+    // de formulario, que es petición simple, sin preflight
+    const largo = q.toString().length > 1800;
+    const r = await (largo ? fetch(`${capa}/query`, { method: 'POST', body: q }) : fetch(`${capa}/query?${q}`));
     const host = new URL(capa).host;
     if (!r.ok) throw new Error(`${host} respondió ${r.status}`);
     const d = await r.json();
     if (d.error) throw new Error(`${host}: ${d.error.message}`);
-    return d.features;
+    return d.features ?? d;
   });
 }
 

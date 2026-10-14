@@ -1,0 +1,111 @@
+{
+  "fuente": {
+    "nombre": "Ley 13/2015 de ordenación territorial y urbanística de la Región de Murcia, texto consolidado",
+    "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2015-4790",
+    "pdf": "https://www.boe.es/buscar/pdf/2015/BOE-A-2015-4790-consolidado.pdf",
+    "de": "de la Ley 13/2015 de ordenación territorial y urbanística de la Región de Murcia"
+  },
+  "niveles": {
+    "prohibida": { "titulo": "No", "tono": "no" },
+    "vinculada": { "titulo": "Solo ligada a una explotación", "tono": "condicion" },
+    "segun_plan": { "titulo": "Depende del plan municipal", "tono": "depende" },
+    "solar": { "titulo": "Sí, si la parcela es solar", "tono": "si" },
+    "sin_urbanizar": { "titulo": "Todavía no", "tono": "condicion" },
+    "sin_dato": { "titulo": "Sin dato", "tono": "depende" }
+  },
+  "orden": ["solar", "segun_plan", "vinculada", "sin_urbanizar", "sin_dato", "prohibida"],
+  "proteccion": ["SG", "SNU-PE", "SNU-PP", "SNU-I", "SUNS-PEQ", "SUNS", "SUS", "SU-SC", "SU-NR", "SU-E", "SU", "SC"],
+  "sin_datos": "El planeamiento regional de Murcia no clasifica esta parcela. Cubre 33 de los 45 municipios: si el tuyo no está, pregunta en el ayuntamiento qué clasificación tiene.",
+  "categorias": {
+    "SU": {
+      "nombre": "Suelo urbano consolidado",
+      "articulo": "89",
+      "vivienda": "solar",
+      "explicacion": "En urbano consolidado se edifica la parcela que sea solar, o a la vez que se termina de urbanizar con garantías. Lo que se puede construir (uso, alturas, ocupación) lo fija el plan municipal.",
+      "cita": "El suelo urbano podrá edificarse cuando los terrenos adquieran la condición de solar, o bien cuando se asegure la ejecución simultánea de la urbanización y la edificación mediante las garantías señaladas en esta ley."
+    },
+    "SU-SC": {
+      "nombre": "Suelo urbano sin consolidar",
+      "articulo": "81",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Está dentro de una unidad de actuación: primero hay que repartir cargas y beneficios entre los propietarios y urbanizarla. Después se edifica cada solar.",
+      "cita": "Tendrán la consideración de suelo urbano sin consolidar los terrenos que el planeamiento delimite como unidad de actuación para su urbanización, mediante la ejecución de un proyecto de urbanización y la redistribución equitativa de beneficios y cargas."
+    },
+    "SU-NR": {
+      "nombre": "Suelo urbano de núcleo rural",
+      "articulo": "90",
+      "vivienda": "segun_plan",
+      "explicacion": "Es un asentamiento tradicional. Mientras no tenga su planeamiento específico, se puede edificar si la parcela da a vía pública y la casa es para la población del núcleo, con la tipología tradicional que fije el plan.",
+      "cita": "solo podrá edificarse cuando los terrenos tengan acceso a vía pública y las construcciones se destinen a usos relacionados con las actividades propias del medio rural o a vivienda para las necesidades de la población residente en dichos núcleos"
+    },
+    "SU-E": {
+      "nombre": "Suelo urbano especial",
+      "articulo": "91",
+      "vivienda": "segun_plan",
+      "explicacion": "Es un asentamiento con frente a un camino público tradicional, a menudo en la huerta. Se puede edificar si el plan fija los parámetros de edificación y la parcela da a camino público preexistente; si no, solo usos provisionales.",
+      "cita": "Los terrenos incluidos en esta categoría podrán edificarse cuando el planeamiento general o de desarrollo defina los parámetros y condiciones de edificación y siempre que dé frente a camino público preexistente."
+    },
+    "SUS": {
+      "nombre": "Suelo urbanizable sectorizado",
+      "articulo": "100",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Es urbanizable con sector delimitado: hasta que se apruebe su plan parcial no se puede edificar, salvo obras provisionales. Incluye el antiguo urbanizable programado.",
+      "cita": "Hasta tanto se apruebe el correspondiente planeamiento de desarrollo, en el suelo urbanizable sectorizado no podrán realizarse obras o instalaciones, salvo los sistemas generales que puedan ejecutarse mediante planes especiales y las de carácter provisional previstas en esta ley."
+    },
+    "SUNS": {
+      "nombre": "Suelo urbanizable sin sectorizar",
+      "articulo": "101",
+      "vivienda": "vinculada",
+      "explicacion": "Mientras no se desarrolle, en urbanizable sin sectorizar cabe la vivienda ligada a una explotación agraria o a las demás actividades que admite la ley, en parcela de más de 5.000 m² (2.500 m² en urbanizable especial si la finca es anterior a junio de 2001), aislada y pagando los servicios. Incluye el antiguo no programado y el apto para urbanizar.",
+      "cita": "d) Vivienda ligada a las actividades anteriores.",
+      "mas": [
+        { "articulo": "102", "cita": "Habrán de respetarse los parámetros edificatorios que fije el Plan General, debiendo ser la parcela mínima superior a 5.000 metros cuadrados." },
+        { "articulo": "disposición transitoria quinta", "cita": "el suelo urbanizable no programado, por el previsto para el suelo urbanizable sin sectorizar; el suelo apto para urbanizar se equiparará al suelo urbanizable sin sectorizar" }
+      ]
+    },
+    "SUNS-PEQ": {
+      "nombre": "Suelo urbanizable sin sectorizar",
+      "sigla": "SUNS",
+      "articulo": "102",
+      "vivienda": "prohibida",
+      "explicacion": "En urbanizable sin sectorizar la vivienda ligada a una explotación pide parcela de más de 5.000 m², y esta no llega. Con la finca sola no se puede (en urbanizable especial bastan 2.500 m² si la finca es anterior a junio de 2001).",
+      "cita": "Habrán de respetarse los parámetros edificatorios que fije el Plan General, debiendo ser la parcela mínima superior a 5.000 metros cuadrados."
+    },
+    "SNU-PE": {
+      "nombre": "Suelo no urbanizable de protección específica",
+      "articulo": "94",
+      "vivienda": "prohibida",
+      "explicacion": "Está protegido por una ley sectorial o un plan territorial o de recursos naturales (espacio natural, costa, cauce, riesgos). Solo cabe lo que admita esa norma, con informe favorable de la administración que la gestiona; una vivienda nueva no lo es.",
+      "cita": "En esta categoría de suelo solo podrán admitirse los usos, instalaciones o edificaciones que resulten conformes con los instrumentos de ordenación territorial, instrumentos específicos de protección y con su legislación sectorial específica."
+    },
+    "SNU-PP": {
+      "nombre": "Suelo no urbanizable protegido por el planeamiento",
+      "articulo": "95",
+      "vivienda": "vinculada",
+      "explicacion": "Cabe la vivienda unifamiliar ligada a la actividad productiva de una explotación de al menos 20.000 m² (puede ser la suma de varias fincas que funcionen juntas), si el plan la permite en esa zona. Incluye el no urbanizable de los planes antiguos sin adaptar.",
+      "cita": "Para autorizar el uso de vivienda unifamiliar ligado a la actividad productiva de la explotación, la superficie mínima de la explotación, entendida como agrupación de predios que constituyan una unidad funcional, será al menos de 20.000 metros cuadrados en el suelo protegido.",
+      "mas": [
+        { "articulo": "disposición transitoria quinta", "cita": "El suelo no urbanizable se regirá por lo dispuesto para el suelo no urbanizable protegido por el planeamiento, salvo áreas específicas protegidas por la legislación sectorial o instrumentos de ordenación del territorio" }
+      ]
+    },
+    "SNU-I": {
+      "nombre": "Suelo no urbanizable inadecuado para el desarrollo urbano",
+      "articulo": "95",
+      "vivienda": "vinculada",
+      "explicacion": "Cabe la vivienda unifamiliar ligada a la actividad productiva de una explotación, si el plan la permite en esa zona. En regadío la explotación tiene que sumar al menos 10.000 m² (5.000 m² si la finca existía en escritura antes del 17 de junio de 2001).",
+      "cita": "En el suelo calificado como inadecuado, y siempre que sea zona de regadío, esta superficie mínima será de 10.000 m2, o de 5.000 m2 si la finca hubiera surgido en escritura pública de fecha anterior al 17 de junio de 2001."
+    },
+    "SG": {
+      "nombre": "Sistema general",
+      "articulo": "95",
+      "vivienda": "prohibida",
+      "explicacion": "Es suelo que el plan reserva para infraestructuras, equipamientos o espacios libres públicos. Solo admite usos provisionales.",
+      "cita": "En los suelos reservados por el Plan General para sistemas generales de infraestructuras o servicios públicos, solo se admitirán los usos e instalaciones provisionales"
+    },
+    "SC": {
+      "nombre": "Sin clasificar",
+      "vivienda": "sin_dato",
+      "explicacion": "El planeamiento regional no asigna clase a este recinto. Pregunta en el ayuntamiento."
+    }
+  }
+}
