@@ -1,5 +1,6 @@
 """Comprueba que cada cita de web/normas/*.json está, literal, dentro de su artículo (o disposición)
-en el texto consolidado del BOE de su norma. Sale con código 1 si alguna no aparece.
+en el texto consolidado del BOE de su norma (o en el PDF de su diario oficial, si el BOE no la consolida:
+Orden 4/2020 en el DOCM). Sale con código 1 si alguna no aparece.
 
 Uso: python -I tools/verificar_citas.py   (necesita pdftotext en el PATH)
 """
@@ -29,21 +30,28 @@ def texto_boe(norma):
     pdf, txt = CACHE / f'{nombre}.pdf', CACHE / f'{nombre}.txt'
     if not txt.exists():
         if not pdf.exists():
-            urllib.request.urlretrieve(PDFS[norma], pdf)
+            # El DOCM no sirve el PDF sin user-agent de navegador
+            peticion = urllib.request.Request(PDFS[norma], headers={'User-Agent': 'Mozilla/5.0'})
+            pdf.write_bytes(urllib.request.urlopen(peticion).read())
         subprocess.run(['pdftotext', '-enc', 'UTF-8', str(pdf), str(txt)], check=True)
     texto = txt.read_text(encoding='utf-8')
     # Fuera la paginación del BOE, que corta frases a mitad (la cabecera puede llevar delante el salto de página)
     texto = re.sub(r'(?m)^\f?(LEGISLACIÓN CONSOLIDADA|BOLETÍN OFICIAL DEL ESTADO|Página \d+)\s*$', '', texto)
+    # Y la de un diario autonómico sin texto consolidado en el BOE (DOCM: «AÑO XXXIX Núm. 15», fecha y página)
+    if re.match(r'\f?AÑO [IVXLC]+ Núm\. \d+', texto):
+        texto = re.sub(r'(?m)^\f?AÑO [IVXLC]+ Núm\. \d+ ?', '', texto)
+        texto = re.sub(r'(?m)^(\d{1,2} de \w+ de \d{4}|\d{3,5})\s*$', '', texto)
     return re.sub(r'\s+', ' ', texto)
 
 
-CABECERA = r'Artículo (\d+(?: bis| ter)?)\. |(Disposición (?:adicional|transitoria|final|derogatoria) \w+)\. |(ANEXO [IVX]+)\b'
+# La disposición puede no llevar ordinal cuando es la única de su clase (DOCM: «Disposición adicional.»)
+CABECERA = r'Artículo (\d+(?: bis| ter)?)\. |(Disposición (?:adicional|transitoria|final|derogatoria)(?: \w+)?)\. |(ANEXO [IVX]+)\b'
 
 
 def articulos(texto):
     """Mapa 'número' (o 'disposición transitoria primera', o 'anexo i') -> texto, tomado de su última
     aparición (la primera es el índice)."""
-    trozos = re.split(r'(?=Artículo \d+(?: bis| ter)?\. |Disposición (?:adicional|transitoria|final|derogatoria) \w+\. |ANEXO [IVX]+\b)', texto)
+    trozos = re.split(r'(?=Artículo \d+(?: bis| ter)?\. |Disposición (?:adicional|transitoria|final|derogatoria)(?: \w+)?\. |ANEXO [IVX]+\b)', texto)
     mapa = {}
     for t in trozos:
         m = re.match(CABECERA, t)
@@ -62,7 +70,9 @@ def citas_de_tabla(clave, t):
         if c.get('cita'):
             salida.append((c.get('norma', clave), cod, c['articulo'], c['cita']))
         if c.get('cita_rehabilitar'):
-            salida.append((c.get('norma_rehabilitar', c.get('norma', clave)), cod + ' rehabilitar',
+            # `norma_rehabilitar: null`: la rehabilitación sale de la norma principal aunque la categoría cite otra
+            norma_rehab = c['norma_rehabilitar'] if 'norma_rehabilitar' in c else c.get('norma')
+            salida.append((norma_rehab or clave, cod + ' rehabilitar',
                            c.get('articulo_rehabilitar', c['articulo']), c['cita_rehabilitar']))
         for i, extra in enumerate(c.get('mas', [])):
             salida.append((extra.get('norma', clave), f'{cod} más {i + 1}', extra['articulo'], extra['cita']))

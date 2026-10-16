@@ -1,0 +1,310 @@
+{
+  "fuente": {
+    "nombre": "Texto refundido de la Ley de Ordenación del Territorio y de la Actividad Urbanística de Castilla-La Mancha (Decreto Legislativo 1/2023), texto consolidado",
+    "url": "https://www.boe.es/buscar/act.php?id=DOCM-q-2023-90063",
+    "pdf": "https://www.boe.es/buscar/pdf/2023/DOCM-q-2023-90063-consolidado.pdf",
+    "de": "del Texto refundido de la LOTAU (Decreto Legislativo 1/2023)"
+  },
+  "otras_fuentes": {
+    "clm-itp": {
+      "nombre": "Orden 4/2020 de la Consejería de Fomento, Instrucción Técnica de Planeamiento sobre requisitos sustantivos en suelo rústico (DOCM núm. 15, de 23 de enero de 2020)",
+      "url": "https://docm.jccm.es/docm/descargarArchivo.do?ruta=2020/01/23/pdf/2020_307.pdf&tipo=rutaDocm",
+      "pdf": "https://docm.jccm.es/docm/descargarArchivo.do?ruta=2020/01/23/pdf/2020_307.pdf&tipo=rutaDocm",
+      "de": "de la Instrucción Técnica de Planeamiento de suelo rústico (Orden 4/2020)",
+      "boletin": "DOCM"
+    }
+  },
+  "niveles": {
+    "prohibida": {
+      "titulo": "No",
+      "tono": "no"
+    },
+    "vinculada": {
+      "titulo": "Solo ligada a una explotación",
+      "tono": "condicion"
+    },
+    "aislada": {
+      "titulo": "Con condiciones: vivienda aislada",
+      "tono": "condicion"
+    },
+    "segun_proteccion": {
+      "titulo": "Depende de la protección y del plan",
+      "tono": "depende"
+    },
+    "solar": {
+      "titulo": "Sí, si la parcela es solar",
+      "tono": "si"
+    },
+    "sin_urbanizar": {
+      "titulo": "Todavía no",
+      "tono": "condicion"
+    },
+    "sin_dato": {
+      "titulo": "Sin dato",
+      "tono": "depende"
+    }
+  },
+  "orden": [
+    "solar",
+    "aislada",
+    "segun_proteccion",
+    "vinculada",
+    "sin_urbanizar",
+    "sin_dato",
+    "prohibida"
+  ],
+  "proteccion": [
+    "SG",
+    "SRNUEP-PEQ",
+    "SRNUEP-MEDIA",
+    "SRNUEP",
+    "SR",
+    "SRR-PEQ",
+    "SRR-MEDIA",
+    "SRR",
+    "SUZ",
+    "SUZ-URB",
+    "SURES",
+    "SUNC",
+    "SUNC-URB",
+    "SU",
+    "SUC"
+  ],
+  "sin_datos": "El Sistema de Información Urbanística de Castilla-La Mancha no clasifica esta parcela. Puede ser un municipio sin planeamiento, que se rige por las Normas Subsidiarias Provinciales: pregunta en el ayuntamiento qué clasificación tiene.",
+  "rehabilitar": {
+    "existente": "Se pueden reformar o rehabilitar las edificaciones existentes para conservarlas, si la obra no necesita proyecto. Si se recupera arquitectura popular (molinos, batanes, ventas, arquitectura negra) manteniendo sus características, la calificación urbanística puede eximir de la superficie mínima y de la ocupación máxima."
+  },
+  "categorias": {
+    "SUC": {
+      "nombre": "Suelo urbano consolidado",
+      "articulo": "51",
+      "vivienda": "solar",
+      "explicacion": "En suelo urbano consolidado se edifica la parcela que sea solar, o a la vez que se completa la urbanización que le falte, con garantías. Lo que se puede construir (uso, alturas, ocupación) lo fija el plan municipal.",
+      "cita": "Realizar la edificación en las condiciones fijadas por la ordenación urbanística, una vez que el suelo tenga la condición de solar",
+      "mas": [
+        {
+          "articulo": "102",
+          "cita": "Son actuaciones edificatorias las que tienen por objeto un único solar o una sola parcela para su edificación, con previa o simultánea realización de las obras de urbanización precisas para su conversión en solar"
+        }
+      ]
+    },
+    "SU": {
+      "nombre": "Suelo urbano",
+      "sigla": "SU",
+      "vivienda": "sin_dato",
+      "explicacion": "El Sistema de Información Urbanística no dice si este suelo urbano es consolidado o está pendiente de urbanizar. Si es solar, se edifica; si está dentro de una unidad de actuación, primero hay que urbanizar. Pregunta en el ayuntamiento."
+    },
+    "SUNC": {
+      "nombre": "Suelo urbano no consolidado",
+      "articulo": "69",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Está en un ámbito que todavía hay que urbanizar o reordenar, repartiendo cargas y cesiones entre los propietarios. Hasta que la parcela sea solar, o se urbanice a la vez con garantías, no se edifica.",
+      "cita": "En el suelo urbano no consolidado al que se refiere el número 3 del artículo 45, los terrenos quedarán vinculados al proceso de urbanización y edificación"
+    },
+    "SUNC-URB": {
+      "nombre": "Suelo urbano no consolidado ya urbanizado",
+      "sigla": "SUNC",
+      "articulo": "45",
+      "vivienda": "solar",
+      "explicacion": "El plan lo clasifica como no consolidado, pero el Sistema de Información Urbanística lo da como urbanizado: si la urbanización se hizo conforme al plan y está recibida, las parcelas son solares y se edifican con licencia. Confírmalo en el ayuntamiento.",
+      "cita": "Los terrenos que, reuniendo las condiciones exigidas a las parcelas, adquieran la condición de solares por haber sido urbanizados en ejecución del planeamiento territorial y urbanístico y de conformidad con sus determinaciones."
+    },
+    "SURES": {
+      "nombre": "Suelo urbano de reserva",
+      "articulo": "69",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Es suelo contiguo al casco en un municipio con delimitación de suelo urbano, pendiente de urbanizar por obras públicas ordinarias. Hasta que la parcela tenga los servicios de solar no se edifica.",
+      "cita": "En el suelo urbano de reserva, los terrenos quedarán vinculados al proceso de urbanización y edificación conforme a lo dispuesto en el art. 129, en régimen de obras públicas ordinarias"
+    },
+    "SUZ": {
+      "nombre": "Suelo urbanizable",
+      "articulo": "67",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Hasta que se apruebe su Programa de Actuación Urbanizadora y se urbanice, en el urbanizable solo se autorizan infraestructuras y obras provisionales: ninguna vivienda. Después, las parcelas que resulten serán solares.",
+      "cita": "En el suelo urbanizable, en tanto no se haya aprobado el correspondiente Programa de Actuación Urbanizadora, será aplicable el régimen propio del suelo rústico de reserva.",
+      "mas": [
+        {
+          "articulo": "67",
+          "cita": "En el suelo urbanizable a que se refiere el párrafo anterior sólo podrán autorizarse: a) Las obras correspondientes a infraestructuras y sistemas generales"
+        }
+      ]
+    },
+    "SUZ-URB": {
+      "nombre": "Suelo urbanizable ya urbanizado",
+      "sigla": "SUZ",
+      "articulo": "45",
+      "vivienda": "solar",
+      "explicacion": "El plan lo clasifica como urbanizable, pero el Sistema de Información Urbanística lo da como urbanizado: si la urbanización se hizo conforme al plan y está recibida, las parcelas son solares y se edifican con licencia. Confírmalo en el ayuntamiento.",
+      "cita": "Los terrenos que, reuniendo las condiciones exigidas a las parcelas, adquieran la condición de solares por haber sido urbanizados en ejecución del planeamiento territorial y urbanístico y de conformidad con sus determinaciones."
+    },
+    "SRR": {
+      "nombre": "Suelo rústico de reserva",
+      "sigla": "SRR",
+      "articulo": "54",
+      "vivienda": "aislada",
+      "explicacion": "Cabe una vivienda familiar aislada si el plan municipal la permite: finca de al menos 1,5 ha, la casa ocupando como mucho el 2 % de la finca y sin riesgo de formar núcleo de población. Hay riesgo, salvo que el plan diga otra distancia, a menos de 200 m del suelo urbano o urbanizable con programa aprobado (no rige en municipios de hasta 5.000 habitantes). Sin regla del plan, la casa va retranqueada 5 m de los linderos y 15 m del eje del camino, con dos plantas y 8,5 m a cumbrera como mucho.",
+      "cita": "La vivienda familiar aislada en áreas territoriales donde no exista riesgo de formación de núcleo de población, ni pueda presumirse finalidad urbanizadora, por no existir instalaciones o servicios necesarios para la finalidad de aprovechamiento urbanístico.",
+      "mas": [
+        {
+          "norma": "clm-itp",
+          "articulo": "5",
+          "cita": "En suelo rústico de reserva la superficie mínima de la finca para implantar vivienda familiar aislada será de una hectárea y media."
+        },
+        {
+          "articulo": "63",
+          "cita": "En cualquier caso, la ocupación por la edificación no podrá superar el dos por ciento de la superficie de dicha finca."
+        },
+        {
+          "articulo": "54",
+          "cita": "se considera que existe riesgo de formación de núcleo de población cuando se propongan edificaciones a una distancia menor de 200 metros del límite del suelo urbano o urbanizable, siempre que este cuente con un Programa de Actuación Urbanizadora aprobado"
+        },
+        {
+          "articulo": "55",
+          "cita": "Retranquearse, como mínimo, cinco metros a linderos y quince metros al eje de caminos o vías de acceso."
+        }
+      ],
+      "rehabilitar": "existente",
+      "cita_rehabilitar": "La reforma o rehabilitación de edificaciones existentes dirigidas a su conservación y mantenimiento, siempre que no exijan la redacción de proyecto conforme a la normativa de ordenación de la edificación.",
+      "mas_rehabilitar": [
+        {
+          "norma": "clm-itp",
+          "articulo": "disposición adicional",
+          "cita": "Podrán no ser de aplicación los requisitos de superficie mínima de la finca y superficie ocupada por la edificación e instalaciones para las construcciones vinculadas a usos o actividades descritos en la presente instrucción, cuando tales usos y actividades pretendan implantarse en suelo rústico mediante la adecuada recuperación del patrimonio arquitectónico preexistente"
+        }
+      ]
+    },
+    "SRR-MEDIA": {
+      "nombre": "Suelo rústico de reserva",
+      "sigla": "SRR",
+      "norma": "clm-itp",
+      "articulo": "5",
+      "vivienda": "vinculada",
+      "explicacion": "La finca no llega a 1,5 ha, el mínimo para una vivienda aislada sin más, pero pasa de 1 ha: cabe la vivienda ligada a una explotación agrícola, ganadera o forestal, si el plan municipal la permite y ocupando como mucho el 2 % de la finca. Si tienes parcelas colindantes, cuenta la finca entera.",
+      "cita": "Una hectárea si se trata de suelo rústico de reserva.",
+      "mas": [
+        {
+          "norma": "clm-itp",
+          "articulo": "5",
+          "cita": "Cuando se trate de viviendas familiares aisladas vinculadas con explotaciones agrícolas, ganaderas y forestales regirán las siguientes superficies mínimas"
+        },
+        {
+          "norma": "clm-itp",
+          "articulo": "1",
+          "cita": "Cuando se vinculen varias parcelas, éstas deberán tener continuidad física, excepto por el dominio público que, en su caso, las atraviese o separe."
+        }
+      ],
+      "rehabilitar": "existente",
+      "norma_rehabilitar": null,
+      "articulo_rehabilitar": "54",
+      "cita_rehabilitar": "La reforma o rehabilitación de edificaciones existentes dirigidas a su conservación y mantenimiento, siempre que no exijan la redacción de proyecto conforme a la normativa de ordenación de la edificación."
+    },
+    "SRR-PEQ": {
+      "nombre": "Suelo rústico de reserva",
+      "sigla": "SRR",
+      "norma": "clm-itp",
+      "articulo": "5",
+      "vivienda": "prohibida",
+      "explicacion": "La finca no llega a 1 ha, el mínimo incluso para la vivienda ligada a una explotación (1,5 ha para la vivienda aislada). Para la vivienda no caben excepciones de superficie. Si tienes parcelas colindantes, cuenta la finca entera.",
+      "cita": "En suelo rústico de reserva la superficie mínima de la finca para implantar vivienda familiar aislada será de una hectárea y media.",
+      "mas": [
+        {
+          "norma": "clm-itp",
+          "articulo": "5",
+          "cita": "Una hectárea si se trata de suelo rústico de reserva."
+        },
+        {
+          "norma": "clm-itp",
+          "articulo": "1",
+          "cita": "Cuando se vinculen varias parcelas, éstas deberán tener continuidad física, excepto por el dominio público que, en su caso, las atraviese o separe."
+        }
+      ],
+      "rehabilitar": "existente",
+      "norma_rehabilitar": null,
+      "articulo_rehabilitar": "54",
+      "cita_rehabilitar": "La reforma o rehabilitación de edificaciones existentes dirigidas a su conservación y mantenimiento, siempre que no exijan la redacción de proyecto conforme a la normativa de ordenación de la edificación."
+    },
+    "SRNUEP": {
+      "nombre": "Suelo rústico no urbanizable de especial protección",
+      "sigla": "SRNUEP",
+      "articulo": "54",
+      "vivienda": "segun_proteccion",
+      "explicacion": "La ley no prohíbe aquí la vivienda aislada: la admite si no la prohíben la norma de la protección (plan del espacio natural, ley de aguas, de carreteras, de patrimonio) ni el plan municipal, con calificación urbanística de la Junta y finca de al menos 3 ha, ocupando como mucho el 2 %. Muchas protecciones la prohíben: mira cuál afecta a la parcela.",
+      "cita": "En los terrenos clasificados como suelo rústico no urbanizable de especial protección podrán realizarse los actos enumerados en el número 1 del presente artículo siempre y cuando no se encuentren prohibidos por la legislación sectorial o el planeamiento territorial y urbanístico y cuenten con los informes o autorizaciones previstos en la normativa que resulte aplicable.",
+      "mas": [
+        {
+          "norma": "clm-itp",
+          "articulo": "5",
+          "cita": "En suelo rústico no urbanizable de especial protección la superficie mínima de la finca será de tres hectáreas."
+        },
+        {
+          "articulo": "64",
+          "cita": "En el suelo rústico no urbanizable de especial protección requerirán, además, calificación urbanística todos los actos previstos en el número 1 del artículo 54"
+        }
+      ],
+      "rehabilitar": "existente",
+      "cita_rehabilitar": "La reforma o rehabilitación de edificaciones existentes dirigidas a su conservación y mantenimiento, siempre que no exijan la redacción de proyecto conforme a la normativa de ordenación de la edificación."
+    },
+    "SRNUEP-MEDIA": {
+      "nombre": "Suelo rústico no urbanizable de especial protección",
+      "sigla": "SRNUEP",
+      "norma": "clm-itp",
+      "articulo": "5",
+      "vivienda": "vinculada",
+      "explicacion": "La finca no llega a 3 ha, el mínimo para una vivienda aislada en suelo protegido, pero pasa de 1,5 ha: cabe la vivienda ligada a una explotación agrícola, ganadera o forestal, si no la prohíben la norma de la protección ni el plan municipal, con calificación urbanística de la Junta. Si tienes parcelas colindantes, cuenta la finca entera.",
+      "cita": "Hectárea y media si se trata de suelo rústico no urbanizable de especial protección.",
+      "mas": [
+        {
+          "articulo": "54",
+          "cita": "En los terrenos clasificados como suelo rústico no urbanizable de especial protección podrán realizarse los actos enumerados en el número 1 del presente artículo siempre y cuando no se encuentren prohibidos por la legislación sectorial o el planeamiento territorial y urbanístico"
+        },
+        {
+          "norma": "clm-itp",
+          "articulo": "1",
+          "cita": "Cuando se vinculen varias parcelas, éstas deberán tener continuidad física, excepto por el dominio público que, en su caso, las atraviese o separe."
+        }
+      ],
+      "rehabilitar": "existente",
+      "norma_rehabilitar": null,
+      "articulo_rehabilitar": "54",
+      "cita_rehabilitar": "La reforma o rehabilitación de edificaciones existentes dirigidas a su conservación y mantenimiento, siempre que no exijan la redacción de proyecto conforme a la normativa de ordenación de la edificación."
+    },
+    "SRNUEP-PEQ": {
+      "nombre": "Suelo rústico no urbanizable de especial protección",
+      "sigla": "SRNUEP",
+      "norma": "clm-itp",
+      "articulo": "5",
+      "vivienda": "prohibida",
+      "explicacion": "La finca no llega a 1,5 ha, el mínimo en suelo protegido incluso para la vivienda ligada a una explotación (3 ha para la vivienda aislada). Para la vivienda no caben excepciones de superficie. Si tienes parcelas colindantes, cuenta la finca entera.",
+      "cita": "En suelo rústico no urbanizable de especial protección la superficie mínima de la finca será de tres hectáreas.",
+      "mas": [
+        {
+          "norma": "clm-itp",
+          "articulo": "5",
+          "cita": "Hectárea y media si se trata de suelo rústico no urbanizable de especial protección."
+        },
+        {
+          "norma": "clm-itp",
+          "articulo": "1",
+          "cita": "Cuando se vinculen varias parcelas, éstas deberán tener continuidad física, excepto por el dominio público que, en su caso, las atraviese o separe."
+        }
+      ],
+      "rehabilitar": "existente",
+      "norma_rehabilitar": null,
+      "articulo_rehabilitar": "54",
+      "cita_rehabilitar": "La reforma o rehabilitación de edificaciones existentes dirigidas a su conservación y mantenimiento, siempre que no exijan la redacción de proyecto conforme a la normativa de ordenación de la edificación."
+    },
+    "SR": {
+      "nombre": "Suelo rústico",
+      "sigla": "SR",
+      "vivienda": "sin_dato",
+      "explicacion": "El Sistema de Información Urbanística no dice si este rústico es de reserva o de especial protección, y de eso depende todo: en reserva cabe la vivienda aislada con 1,5 ha; en protección, solo si la protección no la prohíbe y con 3 ha. Pregunta en el ayuntamiento la categoría."
+    },
+    "SG": {
+      "nombre": "Sistema general",
+      "articulo": "126",
+      "vivienda": "prohibida",
+      "explicacion": "El plan reserva este suelo para un sistema general (viario, zona verde, equipamiento, infraestructura). La Administración lo obtiene por cesión o expropiación: no se edifica vivienda privada.",
+      "cita": "El suelo destinado por el planeamiento territorial o urbanístico a sistemas generales y locales se obtendrá"
+    }
+  }
+}

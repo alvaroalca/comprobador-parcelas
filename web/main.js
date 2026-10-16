@@ -362,7 +362,7 @@ function bloqueCita(cita, art, fuente) {
   const f = el('figure', 'cita');
   f.append(el('blockquote', null, `«${cita}»`));
   const pie = el('figcaption', null, `${articulo(art, fuente)} · `);
-  pie.append(enlace(fuente.url, 'texto en el BOE'));
+  pie.append(enlace(fuente.url, `texto en el ${fuente.boletin ?? 'BOE'}`));
   f.append(pie);
   return f;
 }
@@ -478,7 +478,8 @@ function pintarResultado(datos, geo, { v, comunidad, normas, suelo, plan, af, vi
   const rehab = normas.rehabilitar?.[t.rehabilitar];
   if (rehab) {
     const art = t.articulo_rehabilitar ?? t.articulo;
-    const fuente = fuenteDe(normas, t.norma_rehabilitar ?? t.norma);
+    // `norma_rehabilitar: null`: la rehabilitación sale de la norma principal aunque la categoría cite otra
+    const fuente = fuenteDe(normas, 'norma_rehabilitar' in t ? t.norma_rehabilitar : t.norma);
     const sec = el('section', 'secundario');
     sec.append(el('h3', null, '¿Y rehabilitar o ampliar lo que ya hay?'),
       el('p', null, `${rehab} ${articulo(art, fuente)}${normas.rehabilitar.sufijo ?? ''}.`));

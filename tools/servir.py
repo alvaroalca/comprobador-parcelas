@@ -20,7 +20,7 @@ CSP = '; '.join([
     "style-src 'self' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
     "img-src 'self' data: blob:",
-    "connect-src 'self' https://ovc.catastro.meh.es https://idecyl.jcyl.es https://idem.comunidad.madrid https://geoservicios.cantabria.es https://sig.gencat.cat https://ideib.caib.es https://terramapas.icv.gva.es https://www.cartociudad.es https://www.ign.es",
+    "connect-src 'self' https://ovc.catastro.meh.es https://idecyl.jcyl.es https://idem.comunidad.madrid https://geoservicios.cantabria.es https://sig.gencat.cat https://ideib.caib.es https://terramapas.icv.gva.es https://geoservicios.castillalamancha.es https://www.cartociudad.es https://www.ign.es",
     "worker-src 'self'",
     "object-src 'none'",
     "frame-ancestors 'none'",

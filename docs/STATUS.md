@@ -89,10 +89,20 @@
 - Probado en Chrome: 16 parcelas por clase y 15 al azar. Sin errores; veredicto en 0,8-1,8 s.
 - Falta: smoke test de Álvaro. No se mide la distancia a otras viviendas (núcleo de población): la ficha la explica.
 
+## Castilla-La Mancha (16/10/2026, en local, sin desplegar)
+
+- Sistema de Información Urbana de la Junta (ArcGIS REST, `Sistema_Informacion_Urbana/MapServer/1`): 29.941 recintos en los 919 municipios, también en los 284 sin planeamiento (ahí la Junta clasifica el casco como urbano, las protecciones sectoriales como especial protección y el resto como reserva; la ficha lo explica). 59 de 60 puntos al azar caen en un recinto. Clase y categoría con erratas que se normalizan; `URBANIZADO` marca 612 recintos urbanizables ya urbanizados, que salen como solar (art. 45). Figura de planeamiento, fecha, habitantes y zip del plan de `Planeamiento_Municipal`.
+- Tabla del Texto refundido de la LOTAU (DL 1/2023) y de la Instrucción Técnica de Planeamiento de suelo rústico (Orden 4/2020, DOCM núm. 15): 36 citas, 238/238 en total. **Primera norma citada fuera del BOE** (decisión de Álvaro, 16/10): el BOE no consolida la orden; el verificador lee el PDF del DOCM (quita sus cabeceras de página y acepta «Disposición adicional.» sin ordinal) y la ficha enlaza «texto en el DOCM». Falla con una cita alterada, en otro artículo o en otra disposición.
+- Veredicto: urbano consolidado por solar (art. 51); no consolidado y urbano de reserva, «Todavía no» (art. 69); urbanizable sin programa, «Todavía no» (art. 67); rústico de reserva, vivienda aislada con 1,5 ha y el 2 % de ocupación (art. 54.1.2º.f, ITP art. 5); entre 1 y 1,5 ha, solo ligada a explotación; por debajo, «No». Especial protección: la ley no la prohíbe (art. 54.4), depende de la norma de la protección y del plan, con calificación y 3 ha (1,5 ha ligada a explotación; por debajo, «No»). Sistemas generales, «No». Rehabilitación: art. 54.1.2º.d y la disposición adicional de la ITP (arquitectura popular sin superficie mínima). La ficha dice la diferenciación de la protección (natural, ambiental, estructural...) y si el municipio pasa de 5.000 habitantes (regla de los 200 m al suelo urbano, art. 54.3).
+- Afecciones: montes de utilidad pública, vías pecuarias (ejes con anchura legal) y Red Natura 2000 de la Junta.
+- Probado en Chrome: 16 parcelas por categoría, 20 al azar por las cinco provincias, 2 búsquedas escritas y regresión de Aragón, Baleares y Cantabria. Sin errores de consola ni de CSP; ficha completa en 0,5-3 s (una de 8,7 s por el Ministerio).
+- Smoke test de Álvaro superado (16/10). Al integrar: `https://geoservicios.castillalamancha.es` en el `connect-src` del portfolio.
+- Abierto: no se mide la distancia de 200 m al suelo urbano (solo se avisa en municipios de más de 5.000 habitantes). Espacios naturales protegidos (capa `Espacios_Naturales_Protegidos` localizada), carreteras y patrimonio (`Patrimonio_Cultural`) sin consultar como afección; el plan sí los recoge en la especial protección. La Junta tiene en consulta pública (mayo de 2026) una Norma Técnica de Planeamiento que podría sustituir la ITP: revisar.
+
 ## Asturias (14/10/2026, parada)
 
 - Fuente localizada: GeoServer del RPGUR (`visorrpgur.asturias.es:8090`, solo http), con clasificación, no urbanizable por categorías y 5.401 núcleos rurales en los 78 concejos.
-- Dos bloqueos: el texto refundido asturiano (DL 1/2004) no está en la legislación consolidada del BOE, y el servidor tarda 5-15 s por parcela en el no urbanizable (cada concejo es un recinto de varios MB; no entiende `SRID=` en CQL). Salidas posibles: citar del BOPA (cambia la regla de citas) y un extracto estático del no urbanizable, o esperar.
+- Dos bloqueos: el texto refundido asturiano (DL 1/2004) no está en la legislación consolidada del BOE, y el servidor tarda 5-15 s por parcela en el no urbanizable (cada concejo es un recinto de varios MB; no entiende `SRID=` en CQL). Salidas posibles: citar del BOPA (la regla ya lo admite desde el 16/10, como el DOCM en Castilla-La Mancha) y un extracto estático del no urbanizable, o esperar.
 
 ## Pendiente
 
@@ -126,10 +136,10 @@ No hay fuente nacional: el SIU del Ministerio agrega lo que mandan las comunidad
 | Navarra | IDENA (`idena.navarra.es/ogc/wfs`, 1.053 capas) | `*` | Sin capa de clasificación: solo la figura de plan por municipio e indicadores. Además, catastro foral. |
 | Galicia | ArcGIS `ideg.xunta.gal/servizos/rest/services/Ordenacion/POL_AD_PlaneamientoUrbanistico/MapServer/29` (IURB_V9) | sí | Clasificación homogeneizada (`SiglaHomog`) solo de los concellos del litoral y de 2011, con planes «no adaptados a la LOUGA». No sirve como fuente vigente. |
 | Andalucía | Solo WMS de algunos municipios y documentos escaneados (Consulta del Planeamiento) | | Sin capa regional (sondeo 14/10). |
-| Castilla-La Mancha | ArcGIS REST `geoservicios.castillalamancha.es/arcgis/rest/services/Vector/Sistema_Informacion_Urbana/MapServer/1` (SIU) | sí | 29.941 recintos en 920 municipios, 25830, GeoJSON. `CLASE`, `CATEGORIA`, `SUBCATEGOR`, `ADSCRIP` (texto con erratas que se normalizan). TRLOTAU 2023 en el BOE (`DOCM-q-2023-90063`). La mejor candidata. |
+| Castilla-La Mancha | ArcGIS REST `geoservicios.castillalamancha.es/arcgis/rest/services/Vector/Sistema_Informacion_Urbana/MapServer/1` (SIU) | sí | Hecha (16/10). |
 | La Rioja | MapServer `ogc.larioja.org/wfs/request.php` · `urbanismo_planeamiento_urbanistico` | `*` | 2.091 recintos con clase y categoría escritas; solo WFS 1.1 y GML (hay que leer GML en el navegador). Mismo servicio: Red Natura, montes de UP, vías pecuarias y directriz de no urbanizable. Ley 5/2006 en el BOE. |
 
-Orden propuesto tras el sondeo del 14/10: Castilla-La Mancha (servicio completo y rápido), La Rioja (GML) y Canarias (muestreo por puntos). País Vasco y Navarra esperan a un adaptador de catastro foral; Galicia, Andalucía y Extremadura no publican la clasificación; Asturias, parada (ver arriba).
+Orden propuesto tras el sondeo del 14/10: Castilla-La Mancha (hecha el 16/10), La Rioja (GML) y Canarias (muestreo por puntos). País Vasco y Navarra esperan a un adaptador de catastro foral; Galicia, Andalucía y Extremadura no publican la clasificación; Asturias, parada (ver arriba).
 
 ## Ideas para después (no ahora: primero el resto de España)
 
