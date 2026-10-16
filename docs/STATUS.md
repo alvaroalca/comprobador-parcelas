@@ -125,6 +125,10 @@
 - Fuente localizada: GeoServer del RPGUR (`visorrpgur.asturias.es:8090`, solo http), con clasificación, no urbanizable por categorías y 5.401 núcleos rurales en los 78 concejos.
 - Dos bloqueos: el texto refundido asturiano (DL 1/2004) no está en la legislación consolidada del BOE, y el servidor tarda 5-15 s por parcela en el no urbanizable (cada concejo es un recinto de varios MB; no entiende `SRID=` en CQL). Salidas posibles: citar del BOPA (la regla ya lo admite desde el 16/10, como el DOCM en Castilla-La Mancha) y un extracto estático del no urbanizable, o esperar.
 
+## Vigilancia de servicios (16/10/2026)
+
+- `tools/vigilar.mjs` y `tools/vigilancia.json`: 25 casos, de dos a cinco por comunidad, con su veredicto y categoría grabados. 25/25 en 1-7 s por caso. Probado con el fallo real de la Junta de CyL (campo `geom` en lugar de `geometry`): los cinco casos de CyL salen con el 400 y el resto pasa.
+
 ## Pendiente
 
 - [ ] SR-AI sale como «Depende del plan municipal»; en realidad solo admite residencial para regularizar el asentamiento (art. 61 bis). Valorar un nivel propio si aparece en casos reales.
@@ -161,6 +165,8 @@ No hay fuente nacional: el SIU del Ministerio agrega lo que mandan las comunidad
 | La Rioja | MapServer `ogc.larioja.org/wfs/request.php` · `urbanismo_planeamiento_urbanistico` | `*` | Hecha (16/10), con la Directriz de suelo no urbanizable. |
 
 Orden propuesto tras el sondeo del 14/10: Castilla-La Mancha, La Rioja y Canarias (hechas el 16/10). País Vasco y Navarra esperan a un adaptador de catastro foral; Galicia, Andalucía y Extremadura no publican la clasificación; Asturias, parada (ver arriba).
+
+Falta para toda España (16/10): Asturias (fuente localizada; el BOPA ya se puede citar, queda la lentitud del servidor), País Vasco y Navarra (adaptador de catastro foral), Galicia, Andalucía y Extremadura (sin capa regional en el sondeo del 14/10: volver a buscar, también visores provinciales), Ceuta y Melilla (sin sondear).
 
 ## Ideas para después (no ahora: primero el resto de España)
 

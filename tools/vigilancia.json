@@ -1,0 +1,177 @@
+[
+  {
+    "comunidad": "Castilla y León",
+    "nombre": "Prado en Quintanilla",
+    "caso": "24226A00400376",
+    "respuesta": "No",
+    "categoria": "Suelo rústico con protección agropecuaria (SR-PA)"
+  },
+  {
+    "comunidad": "Castilla y León",
+    "nombre": "Vega del Torío (agua del Ministerio)",
+    "caso": "24226A01400221",
+    "respuesta": "No",
+    "categoria": "Suelo rústico con protección natural (SR-PN)"
+  },
+  {
+    "comunidad": "Castilla y León",
+    "nombre": "Puebla de Sanabria",
+    "caso": "49184A00700149",
+    "respuesta": "Solo ligada a una explotación",
+    "categoria": "Suelo rústico común (SR-C)"
+  },
+  {
+    "comunidad": "Castilla y León",
+    "nombre": "Tremedal de Tormes (sin planeamiento)",
+    "caso": "37332A00500011",
+    "respuesta": "Solo ligada a una explotación",
+    "categoria": "Sin clasificar por el planeamiento"
+  },
+  {
+    "comunidad": "Castilla y León",
+    "nombre": "Calle Ancha 5, León (búsqueda)",
+    "caso": "q:Calle Ancha 5, León",
+    "respuesta": "Sí, si la parcela es solar",
+    "categoria": "Suelo urbano consolidado (SU-C)"
+  },
+  {
+    "comunidad": "Madrid",
+    "nombre": "Navalcarnero",
+    "caso": "28096A03000251",
+    "respuesta": "Solo ligada a una explotación",
+    "categoria": "Suelo no urbanizable de protección (SNUP)"
+  },
+  {
+    "comunidad": "Madrid",
+    "nombre": "Valdeavero",
+    "caso": "28156A00100265",
+    "respuesta": "Con condiciones: vivienda aislada",
+    "categoria": "En la parte de suelo urbanizable no sectorizado: 75 % de la parcela"
+  },
+  {
+    "comunidad": "Cantabria",
+    "nombre": "Ribamontán al Monte",
+    "caso": "39062A51700010",
+    "respuesta": "Con condiciones: vivienda aislada",
+    "categoria": "En la parte de suelo rústico de protección ordinaria: 98 % de la parcela"
+  },
+  {
+    "comunidad": "Cantabria",
+    "nombre": "Campoo de Enmedio",
+    "caso": "39027A06300010",
+    "respuesta": "Solo ligada a una explotación",
+    "categoria": "En la parte de suelo rústico de especial protección: 90 % de la parcela"
+  },
+  {
+    "comunidad": "Cataluña",
+    "nombre": "Garriguella",
+    "caso": "17083A00400055",
+    "respuesta": "Solo ligada a una explotación",
+    "categoria": "En la parte de suelo no urbanizable ordinario: 98 % de la parcela"
+  },
+  {
+    "comunidad": "Cataluña",
+    "nombre": "Calle Raval 61, Rialp",
+    "caso": "6812019CH4061S",
+    "respuesta": "Sí, si la parcela es solar",
+    "categoria": "Suelo urbano consolidado (SUC)"
+  },
+  {
+    "comunidad": "Baleares",
+    "nombre": "Santanyí",
+    "caso": "07057A00300591",
+    "respuesta": "Con condiciones: vivienda aislada",
+    "categoria": "En la parte de suelo rústico de régimen general: 80 % de la parcela"
+  },
+  {
+    "comunidad": "Baleares",
+    "nombre": "Ferreries",
+    "caso": "07023A00700044",
+    "respuesta": "Depende del plan territorial de la isla",
+    "categoria": "En la parte de área natural de interés territorial: 26 % de la parcela"
+  },
+  {
+    "comunidad": "C. Valenciana",
+    "nombre": "La Mata de Morella",
+    "caso": "12075A00200001",
+    "respuesta": "Con condiciones: vivienda aislada",
+    "categoria": "En la parte de zona rural común agropecuaria: 60 % de la parcela"
+  },
+  {
+    "comunidad": "C. Valenciana",
+    "nombre": "Petrer",
+    "caso": "03104A02800021",
+    "respuesta": "Solo ligada a una explotación",
+    "categoria": "Zona rural común (ZRC)"
+  },
+  {
+    "comunidad": "Murcia",
+    "nombre": "Abanilla",
+    "caso": "30001A00200222",
+    "respuesta": "Solo ligada a una explotación",
+    "categoria": "En la parte de suelo urbanizable sin sectorizar: 56 % de la parcela"
+  },
+  {
+    "comunidad": "Murcia",
+    "nombre": "Los Alcázares",
+    "caso": "30045A00200007",
+    "respuesta": "Solo ligada a una explotación",
+    "categoria": "Suelo no urbanizable protegido por el planeamiento (SNU-PP)"
+  },
+  {
+    "comunidad": "Aragón",
+    "nombre": "Luna",
+    "caso": "50152A01800433",
+    "respuesta": "Con condiciones: vivienda aislada",
+    "categoria": "En la parte de suelo no urbanizable genérico: 58 % de la parcela"
+  },
+  {
+    "comunidad": "Aragón",
+    "nombre": "Jaulín",
+    "caso": "50132A01200012",
+    "respuesta": "No",
+    "categoria": "Suelo no urbanizable especial (SNU-E)"
+  },
+  {
+    "comunidad": "Castilla-La Mancha",
+    "nombre": "Puertollano",
+    "caso": "13071A00100638",
+    "respuesta": "Con condiciones: vivienda aislada",
+    "categoria": "En la parte de suelo rústico de reserva: 81 % de la parcela"
+  },
+  {
+    "comunidad": "Castilla-La Mancha",
+    "nombre": "Yebes",
+    "caso": "0571933VK9807S",
+    "respuesta": "Sí, si la parcela es solar",
+    "categoria": "En la parte de suelo urbanizable ya urbanizado: 95 % de la parcela"
+  },
+  {
+    "comunidad": "La Rioja",
+    "nombre": "Sotés",
+    "caso": "26145A00100656",
+    "respuesta": "No",
+    "categoria": "Espacio protegido por la Directriz de suelo no urbanizable (Directriz)"
+  },
+  {
+    "comunidad": "La Rioja",
+    "nombre": "Logroño (sin plan publicado)",
+    "caso": "26900A03100001",
+    "respuesta": "Con condiciones: vivienda aislada",
+    "categoria": "Suelo no urbanizable genérico (SNUG)"
+  },
+  {
+    "comunidad": "Canarias",
+    "nombre": "Vega de San Mateo",
+    "caso": "35033A00700073",
+    "respuesta": "Sí, con las condiciones del plan",
+    "categoria": "Suelo rústico de asentamiento rural (SRAR)"
+  },
+  {
+    "comunidad": "Canarias",
+    "nombre": "Buenavista del Norte",
+    "caso": "38010A00600037",
+    "respuesta": "No",
+    "categoria": "Suelo rústico de protección agraria (SRPAG)"
+  }
+]
