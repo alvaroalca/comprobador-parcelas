@@ -25,10 +25,12 @@ const VACIO = { type: 'FeatureCollection', features: [] };
 
 // Una capa de suelo por comunidad, limitada a su caja para no pedir teselas fuera de ella. Una comunidad
 // puede dar su propia plantilla de teselas en vez de un WMS (Baleares)
-const fuentesSuelo = Object.fromEntries(COMUNIDADES.map((c) => [`suelo-${c.id}`, {
+// Asturias no tiene capa: su WMS solo va por http y tarda 5 s por tesela (pinta el concejo entero)
+const conCapa = COMUNIDADES.filter((c) => c.capaSuelo);
+const fuentesSuelo = Object.fromEntries(conCapa.map((c) => [`suelo-${c.id}`, {
   type: 'raster', tiles: [c.capaSuelo.teselas ?? wms(c.capaSuelo.wms, c.capaSuelo.capa)], tileSize: 256, bounds: c.capaSuelo.limites, attribution: c.capaSuelo.atribucion,
 }]));
-const capasSuelo = COMUNIDADES.map((c) => ({ id: `suelo-${c.id}`, type: 'raster', source: `suelo-${c.id}`, minzoom: 11, paint: { 'raster-opacity': 0.5 } }));
+const capasSuelo = conCapa.map((c) => ({ id: `suelo-${c.id}`, type: 'raster', source: `suelo-${c.id}`, minzoom: 11, paint: { 'raster-opacity': 0.5 } }));
 
 const mapa = new maplibregl.Map({
   container: 'mapa',
@@ -388,7 +390,7 @@ function pintarAfecciones(secAf, bloque, t, af, comunidad) {
     nodos.push(el('p', 'fallo', `No se pudo consultar: ${af.fallidas.join(', ')}. Que no salga no quiere decir que no haya. Prueba de nuevo en un rato.`));
   }
   // Donde el Ministerio está incompleto la comunidad dice qué parte del agua se consulta de verdad (Canarias)
-  nodos.push(el('p', 'consultadas', `Consultado: ${comunidad.consultadasAgua ?? normasAfecciones.consultadas}, ${comunidad.consultadas}. Aún no: ${comunidad.pendientes}.`));
+  nodos.push(el('p', 'consultadas', `Consultado: ${[comunidad.consultadasAgua ?? normasAfecciones.consultadas, comunidad.consultadas].filter(Boolean).join(', ')}. Aún no: ${comunidad.pendientes}.`));
   secAf.replaceChildren(...nodos);
   secAf.dataset.listo = '';
 }

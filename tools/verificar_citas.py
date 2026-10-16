@@ -20,8 +20,12 @@ PDFS = {
     **{k: f['pdf'] for t in tablas.values() for k, f in t.get('otras_fuentes', {}).items()},
     **{k: f['pdf'] for k, f in afecciones['fuentes'].items()},
 }
+FUENTES = {**{k: t['fuente'] for k, t in tablas.items()}, **{k: f for t in tablas.values() for k, f in t.get('otras_fuentes', {}).items()}}
 # Cabecera de página propia de un PDF que no sale del BOE (la Directriz de La Rioja): `cabecera` en su fuente
-CABECERAS = {k: f['cabecera'] for t in tablas.values() for k, f in t.get('otras_fuentes', {}).items() if f.get('cabecera')}
+CABECERAS = {k: f['cabecera'] for k, f in FUENTES.items() if f.get('cabecera')}
+# Norma dentro de un código electrónico del BOE, que junta varias (Asturias): `seccion` es su «§ N», que
+# encabeza cada una de sus páginas
+SECCIONES = {k: f['seccion'] for k, f in FUENTES.items() if f.get('seccion')}
 # La caché de antes se llamaba rucyl
 ALIAS = {'cyl': 'rucyl'}
 
@@ -37,6 +41,11 @@ def texto_boe(norma):
             pdf.write_bytes(urllib.request.urlopen(peticion).read())
         subprocess.run(['pdftotext', '-enc', 'UTF-8', str(pdf), str(txt)], check=True)
     texto = txt.read_text(encoding='utf-8')
+    if norma in SECCIONES:
+        marca = re.compile(rf'(?m)^{re.escape(SECCIONES[norma])} ')
+        texto = '\f'.join(pagina for pagina in texto.split('\f') if marca.search(pagina))
+        # Cabecera y pie de página del código: «CÓDIGO DE URBANISMO…», «§ 2 Título» y «– 102 –»
+        texto = re.sub(r'(?m)^\f?(CÓDIGO [A-ZÁÉÍÓÚÑ ,]+|§ \d+ .*|– \d+ –)\s*$', '', texto)
     # Fuera la paginación del BOE, que corta frases a mitad (la cabecera puede llevar delante el salto de página)
     texto = re.sub(r'(?m)^\f?(LEGISLACIÓN CONSOLIDADA|BOLETÍN OFICIAL DEL ESTADO|Página \d+)\s*$', '', texto)
     # Y la de un diario autonómico sin texto consolidado en el BOE (DOCM: «AÑO XXXIX Núm. 15», fecha y página)

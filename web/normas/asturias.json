@@ -1,0 +1,198 @@
+{
+  "fuente": {
+    "nombre": "Texto refundido de las disposiciones legales vigentes en materia de ordenación del territorio y urbanismo del Principado de Asturias (Decreto Legislativo 1/2004), en el Código de Urbanismo del Principado de Asturias del BOE, edición actualizada a 16 de diciembre de 2025",
+    "url": "https://www.boe.es/biblioteca_juridica/codigos/codigo.php?id=026_Codigo_de_Urbanismo_del_Principado_de_Asturias",
+    "pdf": "https://www.boe.es/biblioteca_juridica/codigos/pdf/026_Codigo_de_Urbanismo_del_Principado_de_Asturias.pdf",
+    "seccion": "§ 2",
+    "de": "del Texto refundido de ordenación del territorio y urbanismo de Asturias (Decreto Legislativo 1/2004)"
+  },
+  "niveles": {
+    "prohibida": {
+      "titulo": "No",
+      "tono": "no"
+    },
+    "nucleo": {
+      "titulo": "Sí, con las condiciones del plan",
+      "tono": "si"
+    },
+    "segun_plan": {
+      "titulo": "Depende del plan municipal",
+      "tono": "depende"
+    },
+    "solar": {
+      "titulo": "Sí, si la parcela es solar",
+      "tono": "si"
+    },
+    "sin_urbanizar": {
+      "titulo": "Todavía no",
+      "tono": "condicion"
+    },
+    "sin_dato": {
+      "titulo": "Sin dato",
+      "tono": "depende"
+    }
+  },
+  "orden": [
+    "solar",
+    "nucleo",
+    "segun_plan",
+    "sin_urbanizar",
+    "sin_dato",
+    "prohibida"
+  ],
+  "proteccion": [
+    "SU-NC",
+    "SU-C",
+    "SUR-PR",
+    "SUR-S",
+    "SUR-NS",
+    "NR",
+    "SNU-IF",
+    "SNU-EP",
+    "SNU-C",
+    "SNU-I"
+  ],
+  "sin_datos": "El Registro de Planeamiento del Principado no clasifica esta parcela. Pregunta en el ayuntamiento qué clasificación tiene.",
+  "rehabilitar": {
+    "existente": "Se pueden autorizar obras de mantenimiento de lo construido; ampliar, solo si es la vivienda de una explotación agraria o ganadera en activo. En una quintana tradicional cabe además una vivienda nueva a menos de 15 m de las existentes, si el plan lo regula."
+  },
+  "categorias": {
+    "NR": {
+      "nombre": "Núcleo rural",
+      "sigla": "SNU-NR",
+      "articulo": "138",
+      "vivienda": "nucleo",
+      "explicacion": "El núcleo rural es la categoría del no urbanizable pensada para vivir: cabe la vivienda nueva con la parcela mínima que fije el plan general o el Catálogo de Núcleos Rurales, ajustada a la tipología tradicional y sin materiales ni formas urbanas.",
+      "cita": "Dentro de los núcleos rurales existirán las posibilidades de parcelación y edificación que determinen el planeamiento urbanístico general y, en su caso, las normas de la Comunidad Autónoma.",
+      "mas": [
+        {
+          "articulo": "138",
+          "cita": "Todas las construcciones, y en especial las destinadas a vivienda, deberán ajustarse a la tipología tradicional, descartando el uso de materiales y formas características del medio urbano."
+        }
+      ],
+      "rehabilitar": "existente",
+      "articulo_rehabilitar": "124",
+      "cita_rehabilitar": "En el suelo no urbanizable podrán autorizarse, siempre que no se trate de construcciones que el planeamiento califique expresamente como fuera de ordenación, obras de mantenimiento de las construcciones existentes y, de forma excepcional, de ampliación, cuando se trate de viviendas integradas en la explotación agraria o ganadera que constituya la ocupación principal de sus habitantes, y en tanto no desaparezca dicha explotación.",
+      "mas_rehabilitar": [
+        {
+          "articulo": "124",
+          "cita": "También podrá autorizarse, en los términos establecidos por el planeamiento urbanístico, la construcción de una vivienda nueva, a no más de quince metros de las preexistentes, en los conjuntos compuestos por una o más viviendas y una explotación agraria que se definan como quintana tradicional asturiana."
+        }
+      ]
+    },
+    "SNU-I": {
+      "nombre": "Suelo no urbanizable de interés",
+      "sigla": "SNU-I",
+      "articulo": "124",
+      "vivienda": "segun_plan",
+      "explicacion": "Por regla general no cabe vivienda nueva, salvo en las zonas donde el plan general la permita para mantener el poblamiento tradicional asturiano: entonces, vivienda unifamiliar aislada donde no se forme núcleo de población, con la parcela mínima y los servicios que exija el plan.",
+      "cita": "Fuera de los núcleos rurales no se permitirá la construcción de edificaciones destinadas a vivienda, salvo en aquellas zonas del suelo no urbanizable de interés en que el planeamiento urbanístico así lo disponga para permitir el mantenimiento del peculiar sistema de poblamiento del territorio asturiano.",
+      "mas": [
+        {
+          "articulo": "124",
+          "cita": "En estas zonas, el planeamiento podrá autorizar construcciones de edificios aislados destinados a vivienda unifamiliar, en lugares en que no exista la posibilidad de formación de un núcleo de población, y siempre que se cumplan los requisitos exigidos por la ordenación urbanística acerca de la superficie mínima de parcela y la disponibilidad de servicios."
+        }
+      ],
+      "rehabilitar": "existente",
+      "articulo_rehabilitar": "124",
+      "cita_rehabilitar": "En el suelo no urbanizable podrán autorizarse, siempre que no se trate de construcciones que el planeamiento califique expresamente como fuera de ordenación, obras de mantenimiento de las construcciones existentes y, de forma excepcional, de ampliación, cuando se trate de viviendas integradas en la explotación agraria o ganadera que constituya la ocupación principal de sus habitantes, y en tanto no desaparezca dicha explotación.",
+      "mas_rehabilitar": [
+        {
+          "articulo": "124",
+          "cita": "También podrá autorizarse, en los términos establecidos por el planeamiento urbanístico, la construcción de una vivienda nueva, a no más de quince metros de las preexistentes, en los conjuntos compuestos por una o más viviendas y una explotación agraria que se definan como quintana tradicional asturiana."
+        }
+      ]
+    },
+    "SNU-EP": {
+      "nombre": "Suelo no urbanizable de especial protección",
+      "sigla": "SNU-EP",
+      "articulo": "124",
+      "vivienda": "prohibida",
+      "explicacion": "En Asturias la vivienda nueva en suelo no urbanizable va a los núcleos rurales; fuera de ellos solo cabe donde el plan lo permita dentro del no urbanizable de interés.",
+      "cita": "Fuera de los núcleos rurales no se permitirá la construcción de edificaciones destinadas a vivienda, salvo en aquellas zonas del suelo no urbanizable de interés en que el planeamiento urbanístico así lo disponga para permitir el mantenimiento del peculiar sistema de poblamiento del territorio asturiano.",
+      "rehabilitar": "existente",
+      "articulo_rehabilitar": "124",
+      "cita_rehabilitar": "En el suelo no urbanizable podrán autorizarse, siempre que no se trate de construcciones que el planeamiento califique expresamente como fuera de ordenación, obras de mantenimiento de las construcciones existentes y, de forma excepcional, de ampliación, cuando se trate de viviendas integradas en la explotación agraria o ganadera que constituya la ocupación principal de sus habitantes, y en tanto no desaparezca dicha explotación.",
+      "mas_rehabilitar": [
+        {
+          "articulo": "124",
+          "cita": "También podrá autorizarse, en los términos establecidos por el planeamiento urbanístico, la construcción de una vivienda nueva, a no más de quince metros de las preexistentes, en los conjuntos compuestos por una o más viviendas y una explotación agraria que se definan como quintana tradicional asturiana."
+        }
+      ]
+    },
+    "SNU-C": {
+      "nombre": "Suelo no urbanizable de costas",
+      "sigla": "SNU-C",
+      "articulo": "124",
+      "vivienda": "prohibida",
+      "explicacion": "En Asturias la vivienda nueva en suelo no urbanizable va a los núcleos rurales; fuera de ellos solo cabe donde el plan lo permita dentro del no urbanizable de interés.",
+      "cita": "Fuera de los núcleos rurales no se permitirá la construcción de edificaciones destinadas a vivienda, salvo en aquellas zonas del suelo no urbanizable de interés en que el planeamiento urbanístico así lo disponga para permitir el mantenimiento del peculiar sistema de poblamiento del territorio asturiano.",
+      "rehabilitar": "existente",
+      "articulo_rehabilitar": "124",
+      "cita_rehabilitar": "En el suelo no urbanizable podrán autorizarse, siempre que no se trate de construcciones que el planeamiento califique expresamente como fuera de ordenación, obras de mantenimiento de las construcciones existentes y, de forma excepcional, de ampliación, cuando se trate de viviendas integradas en la explotación agraria o ganadera que constituya la ocupación principal de sus habitantes, y en tanto no desaparezca dicha explotación.",
+      "mas_rehabilitar": [
+        {
+          "articulo": "124",
+          "cita": "También podrá autorizarse, en los términos establecidos por el planeamiento urbanístico, la construcción de una vivienda nueva, a no más de quince metros de las preexistentes, en los conjuntos compuestos por una o más viviendas y una explotación agraria que se definan como quintana tradicional asturiana."
+        }
+      ]
+    },
+    "SNU-IF": {
+      "nombre": "Suelo no urbanizable de infraestructuras",
+      "sigla": "SNU-IF",
+      "articulo": "124",
+      "vivienda": "prohibida",
+      "explicacion": "En Asturias la vivienda nueva en suelo no urbanizable va a los núcleos rurales; fuera de ellos solo cabe donde el plan lo permita dentro del no urbanizable de interés.",
+      "cita": "Fuera de los núcleos rurales no se permitirá la construcción de edificaciones destinadas a vivienda, salvo en aquellas zonas del suelo no urbanizable de interés en que el planeamiento urbanístico así lo disponga para permitir el mantenimiento del peculiar sistema de poblamiento del territorio asturiano.",
+      "rehabilitar": "existente",
+      "articulo_rehabilitar": "124",
+      "cita_rehabilitar": "En el suelo no urbanizable podrán autorizarse, siempre que no se trate de construcciones que el planeamiento califique expresamente como fuera de ordenación, obras de mantenimiento de las construcciones existentes y, de forma excepcional, de ampliación, cuando se trate de viviendas integradas en la explotación agraria o ganadera que constituya la ocupación principal de sus habitantes, y en tanto no desaparezca dicha explotación.",
+      "mas_rehabilitar": [
+        {
+          "articulo": "124",
+          "cita": "También podrá autorizarse, en los términos establecidos por el planeamiento urbanístico, la construcción de una vivienda nueva, a no más de quince metros de las preexistentes, en los conjuntos compuestos por una o más viviendas y una explotación agraria que se definan como quintana tradicional asturiana."
+        }
+      ]
+    },
+    "SU-C": {
+      "nombre": "Suelo urbano consolidado",
+      "sigla": "SU-C",
+      "articulo": "118",
+      "vivienda": "solar",
+      "explicacion": "En urbano consolidado se edifica la parcela que sea solar (urbanizada según el plan, con alineaciones y rasantes) o que pueda obtener licencia completando la urbanización. Lo que se puede construir lo fija el plan general.",
+      "cita": "Los propietarios de suelo urbano consolidado deberán solicitar la licencia de edificación en el plazo que señale el planeamiento o, en su defecto, la normativa urbanística, completar, en su caso, la urbanización, y edificar los terrenos en las condiciones y plazo establecidas en la licencia."
+    },
+    "SU-NC": {
+      "nombre": "Suelo urbano no consolidado",
+      "sigla": "SU-NC",
+      "articulo": "119",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Está en un polígono o unidad de actuación que hay que urbanizar o reordenar, repartiendo cargas y cesiones entre los propietarios. Hasta que la parcela sea solar no se edifica.",
+      "cita": "Los propietarios de suelo urbano no consolidado tendrán el derecho de edificar los terrenos, en las condiciones y plazo que establezcan el planeamiento y la normativa urbanística, una vez completada su urbanización para que adquieran la condición de solares"
+    },
+    "SUR-PR": {
+      "nombre": "Suelo urbanizable prioritario",
+      "sigla": "SUR-PR",
+      "articulo": "139",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Antes del plan parcial solo caben usos y obras provisionales. Después, y urbanizado, las parcelas serán solares.",
+      "cita": "En el suelo urbanizable prioritario, antes de la aprobación del Plan Parcial, sólo podrán autorizarse, de forma excepcional, usos y obras provisionales que no estén expresamente prohibidos por la legislación urbanística o sectorial ni por el planeamiento general"
+    },
+    "SUR-S": {
+      "nombre": "Suelo urbanizable sectorizado",
+      "sigla": "SUR-S",
+      "articulo": "139",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "El plan lo tiene dividido en sectores para urbanizarlo: hasta su plan parcial y su urbanización no se edifica vivienda, y la vivienda aislada que la ley admite en algún urbanizable no cabe en las áreas reservadas a la expansión urbana.",
+      "cita": "Estas construcciones no podrán ser autorizadas en aquellas áreas del suelo urbanizable no prioritario que el planeamiento reserve por considerarlas necesarias para la expansión urbana."
+    },
+    "SUR-NS": {
+      "nombre": "Suelo urbanizable no sectorizado",
+      "sigla": "SUR-NS",
+      "articulo": "139",
+      "vivienda": "segun_plan",
+      "explicacion": "Mientras no tenga plan parcial, el plan puede permitir una vivienda unifamiliar aislada donde no se forme núcleo de población, con la parcela mínima y los servicios que exija, e informe favorable de la Comisión de Urbanismo y Ordenación del Territorio.",
+      "cita": "En particular, el planeamiento podrá autorizar la construcción de edificación aislada destinada a vivienda unifamiliar en lugares en los que no exista posibilidad de formación de un núcleo de población, siempre que se cumplan los requisitos exigidos por el planeamiento acerca de la parcela mínima y la disponibilidad de servicios."
+    }
+  }
+}

@@ -120,10 +120,13 @@
 - Smoke test de Álvaro superado (16/10). Al integrar: `https://idecan2.grafcan.es` en el `connect-src` del portfolio.
 - Abierto: cauces de barrancos (consejos insulares de aguas), espacios naturales protegidos (WMS `EspNat`, sin atributos), costas, montes y patrimonio. La parcela mínima y las condiciones de los asentamientos las fija cada plan general.
 
-## Asturias (14/10/2026, parada)
+## Asturias (16/10/2026, en local, sin desplegar)
 
-- Fuente localizada: GeoServer del RPGUR (`visorrpgur.asturias.es:8090`, solo http), con clasificación, no urbanizable por categorías y 5.401 núcleos rurales en los 78 concejos.
-- Dos bloqueos: el texto refundido asturiano (DL 1/2004) no está en la legislación consolidada del BOE, y el servidor tarda 5-15 s por parcela en el no urbanizable (cada concejo es un recinto de varios MB; no entiende `SRID=` en CQL). Salidas posibles: citar del BOPA (la regla ya lo admite desde el 16/10, como el DOCM en Castilla-La Mancha) y un extracto estático del no urbanizable, o esperar.
+- Los dos bloqueos del 14/10, resueltos. **Norma**: el BOE publica consolidado y al día (edición del 16/12/2025) el Código de Urbanismo del Principado, con el texto refundido (DL 1/2004) como §2 y el Reglamento de 2022 como §7; el verificador lee solo las páginas de la sección (`seccion`). No hace falta el BOPA. La LOITA, que sustituiría al texto refundido, seguía en anteproyecto en junio de 2026: vigilar. **Lentitud**: el GetMap tampoco sirve (5-6 s, el servidor pinta el concejo entero), así que va de un extracto estático (decisión de Álvaro, 16/10): 2.866 teselas de 2 km, 43 MB (16 MB comprimido), mediana 13 kB por tesela; `tools/extracto_asturias.py` lo regenera.
+- Tabla del texto refundido: 22 citas, 342/342 en total; el verificador falla también con una frase que solo está en el Reglamento. Fuera de los núcleos rurales no hay vivienda nueva, salvo donde el plan la permita en el no urbanizable de interés (art. 124.1): núcleo rural, «Sí, con las condiciones del plan» (art. 138); interés, «Depende del plan»; especial protección, costas e infraestructuras, «No». Urbano consolidado por solar (art. 118); no consolidado, prioritario y sectorizado, «Todavía no» (arts. 119 y 139); no sectorizado, «Depende del plan» (art. 139.3). Rehabilitación y quintana tradicional (art. 124.2).
+- Probado en Chrome: 20 parcelas al azar por los concejos y 3 búsquedas (Oviedo, Gijón, Lena). Veredicto en 0,5-0,9 s. 28/28 en la vigilancia, con tres casos de Asturias.
+- Smoke test de Álvaro superado (16/10). Al integrar: nada en `connect-src` (todo es del mismo origen), pero sí copiar `web/datos/asturias/`.
+- Abierto: sin capa de suelo en el mapa. Sin afecciones propias (montes, vías pecuarias, Red Natura: la IDE de Asturias no tiene un WFS localizable). El extracto envejece: regenerarlo cuando cambien planes.
 
 ## Vigilancia de servicios (16/10/2026)
 
@@ -154,7 +157,7 @@ No hay fuente nacional: el SIU del Ministerio agrega lo que mandan las comunidad
 | C. Valenciana | `terramapas.icv.gva.es/0702_Planeamiento` · `Planeamiento.Clasificacion` | `*` | Hecha (GeoJSON sí). |
 | Murcia | `mapas-gis-inter.carm.es/geoserver/SIT_USU_PLA_URB_CARM/wfs` · `clases_plu_ze_37mun` | no | Hecha, por proxy. |
 | Aragón | `idearagon.aragon.es/geoserver/SIUa/wfs` · `SIUa:clasificacion_idearagon` | no | Hecha, por proxy. |
-| Asturias | `visorrpgur.asturias.es:8090/geoserver` · `n02_CLASIFICACION_SUELO`, `n05_SUELOS_NO_URBANIZABLES` | sí | Parada: sin texto en el BOE y 5-15 s por parcela. |
+| Asturias | `visorrpgur.asturias.es:8090/geoserver` · `n03`-`n06` | no | Hecha (16/10), con extracto estático. |
 | País Vasco | ArcGIS REST `www.geo.euskadi.eus/geoeuskadi/rest/services/U11/WMS_PLANGINTZA/MapServer` · Udalplan, capas 802-811 (residencial, actividades económicas, sistemas generales, no urbanizable con `SUBTIPO`) | `*` | Consultable por geometría (sondeo 14/10). Bloqueo: el catastro es foral (tres diputaciones), el punto → finca no funciona. |
 | Canarias | `idecan2.grafcan.es/ServicioWMS/Planeamiento` · `CLA` (código `cod`) | `*` | Hecha (16/10), contando píxeles. |
 | Extremadura | `mapas.ideex.es/CICTEX/planeamientoRefundido` | | Su WFS solo trae la división en hojas de los planos escaneados. Sin clasificación. |
@@ -166,7 +169,7 @@ No hay fuente nacional: el SIU del Ministerio agrega lo que mandan las comunidad
 
 Orden propuesto tras el sondeo del 14/10: Castilla-La Mancha, La Rioja y Canarias (hechas el 16/10). País Vasco y Navarra esperan a un adaptador de catastro foral; Galicia, Andalucía y Extremadura no publican la clasificación; Asturias, parada (ver arriba).
 
-Falta para toda España (16/10): Asturias (fuente localizada; el BOPA ya se puede citar, queda la lentitud del servidor), País Vasco y Navarra (adaptador de catastro foral), Galicia, Andalucía y Extremadura (sin capa regional en el sondeo del 14/10: volver a buscar, también visores provinciales), Ceuta y Melilla (sin sondear).
+Falta para toda España (16/10): País Vasco y Navarra (adaptador de catastro foral), Galicia, Andalucía y Extremadura (sin capa regional en el sondeo del 14/10: volver a buscar, también visores provinciales), Ceuta y Melilla (sin sondear).
 
 ## Ideas para después (no ahora: primero el resto de España)
 

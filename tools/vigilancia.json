@@ -173,5 +173,26 @@
     "caso": "38010A00600037",
     "respuesta": "No",
     "categoria": "Suelo rústico de protección agraria (SRPAG)"
+  },
+  {
+    "comunidad": "Asturias",
+    "nombre": "Pravia (núcleo rural)",
+    "caso": "33051A03100328",
+    "respuesta": "Sí, con las condiciones del plan",
+    "categoria": "En la parte de núcleo rural: 84 % de la parcela"
+  },
+  {
+    "comunidad": "Asturias",
+    "nombre": "Tineo",
+    "caso": "33073A15501897",
+    "respuesta": "Depende del plan municipal",
+    "categoria": "Suelo no urbanizable de interés (SNU-I)"
+  },
+  {
+    "comunidad": "Asturias",
+    "nombre": "Calle Uría 10, Oviedo (búsqueda)",
+    "caso": "q:Calle Uría 10, Oviedo",
+    "respuesta": "Sí, si la parcela es solar",
+    "categoria": "Suelo urbano consolidado (SU-C)"
   }
 ]
