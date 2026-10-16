@@ -289,10 +289,11 @@ async function completar(mio, rc, lon, lat, aproximada) {
   // Las afecciones del agua tardan 2-3 s cerca de un río: el veredicto se pinta antes y ellas llegan después
   const af = afecciones(geo.lonlat, geo.utm, comunidad);
   const [normas, suelo, plan] = await Promise.all([
-    normasDe(comunidad), comunidad.suelo(caja(geo.utm), geo.utm, geo.superficie, datos),comunidad.planeamiento?.(lon, lat) ?? null,
+    normasDe(comunidad), comunidad.suelo(caja(geo.utm), geo.utm, geo.superficie, datos, geo.lonlat), comunidad.planeamiento?.(lon, lat) ?? null,
   ]);
   if (!vigente()) return;
-  const v = veredicto(normas, reparto(geo.utm, suelo.recintos, normas.proteccion), datos);
+  // Sin recintos vectoriales (Canarias: solo WMS) el adaptador trae el reparto ya contado
+  const v = veredicto(normas, suelo.partes ? { partes: suelo.partes, solape: false } : reparto(geo.utm, suelo.recintos, normas.proteccion), datos);
   pintarResultado(datos, geo, { v, comunidad, normas, suelo, plan, af, vigente });
 }
 
@@ -386,7 +387,8 @@ function pintarAfecciones(secAf, bloque, t, af, comunidad) {
   if (af.fallidas.length) {
     nodos.push(el('p', 'fallo', `No se pudo consultar: ${af.fallidas.join(', ')}. Que no salga no quiere decir que no haya. Prueba de nuevo en un rato.`));
   }
-  nodos.push(el('p', 'consultadas', `Consultado: ${normasAfecciones.consultadas}, ${comunidad.consultadas}. Aún no: ${comunidad.pendientes}.`));
+  // Donde el Ministerio está incompleto la comunidad dice qué parte del agua se consulta de verdad (Canarias)
+  nodos.push(el('p', 'consultadas', `Consultado: ${comunidad.consultadasAgua ?? normasAfecciones.consultadas}, ${comunidad.consultadas}. Aún no: ${comunidad.pendientes}.`));
   secAf.replaceChildren(...nodos);
   secAf.dataset.listo = '';
 }

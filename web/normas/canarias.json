@@ -1,0 +1,325 @@
+{
+  "fuente": {
+    "nombre": "Ley 4/2017, de 13 de julio, del Suelo y de los Espacios Naturales Protegidos de Canarias, texto consolidado",
+    "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2017-10295",
+    "pdf": "https://www.boe.es/buscar/pdf/2017/BOE-A-2017-10295-consolidado.pdf",
+    "de": "de la Ley 4/2017 del Suelo y de los Espacios Naturales Protegidos de Canarias"
+  },
+  "niveles": {
+    "prohibida": {
+      "titulo": "No",
+      "tono": "no"
+    },
+    "vinculada": {
+      "titulo": "Solo ligada a una explotación",
+      "tono": "condicion"
+    },
+    "asentamiento": {
+      "titulo": "Sí, con las condiciones del plan",
+      "tono": "si"
+    },
+    "segun_plan": {
+      "titulo": "Depende del plan municipal",
+      "tono": "depende"
+    },
+    "solar": {
+      "titulo": "Sí, si la parcela es solar",
+      "tono": "si"
+    },
+    "sin_urbanizar": {
+      "titulo": "Todavía no",
+      "tono": "condicion"
+    },
+    "sin_dato": {
+      "titulo": "Sin dato",
+      "tono": "depende"
+    }
+  },
+  "orden": [
+    "solar",
+    "asentamiento",
+    "segun_plan",
+    "vinculada",
+    "sin_urbanizar",
+    "sin_dato",
+    "prohibida"
+  ],
+  "proteccion": [],
+  "sin_datos": "El planeamiento de Canarias (GRAFCAN) no clasifica esta parcela. Pregunta en el ayuntamiento qué clasificación tiene.",
+  "rehabilitar": {
+    "etnografico": "Los edificios de valor etnográfico o arquitectónico se pueden rehabilitar o reconstruir, incluso para vivienda o turismo y aunque estén fuera de ordenación, en las condiciones del reglamento y del plan."
+  },
+  "categorias": {
+    "SUCO": {
+      "nombre": "Suelo urbano consolidado",
+      "articulo": "56",
+      "vivienda": "solar",
+      "explicacion": "En urbano consolidado se edifica la parcela que sea solar (acceso por vía pavimentada, agua, luz, saneamiento, acera y alumbrado), o a la vez que se completa la urbanización pendiente. Lo que se puede construir lo fija el plan general.",
+      "cita": "Edificar en las condiciones fijadas por la ordenación urbanística, una vez que el suelo tenga la condición de solar o, en su caso, con carácter simultáneo a las obras de urbanización pendientes."
+    },
+    "SU": {
+      "nombre": "Suelo urbano",
+      "sigla": "SU",
+      "articulo": "48",
+      "vivienda": "solar",
+      "explicacion": "El plan no distingue si este urbano es consolidado o no. Si la parcela es solar se edifica; si está dentro de un ámbito pendiente de urbanizar, antes hay que urbanizar. Pregunta en el ayuntamiento.",
+      "cita": "Tienen la condición de solares las superficies de suelo urbano aptas para la edificación que se encuentren dotadas de los siguientes servicios:"
+    },
+    "SUNCO": {
+      "nombre": "Suelo urbano no consolidado",
+      "articulo": "47",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Le faltan servicios urbanos o está en un ámbito que hay que urbanizar o reformar, con cargas y cesiones entre los propietarios. Hasta que la parcela sea solar, o se urbanice a la vez con garantías, no se edifica.",
+      "cita": "Suelo urbano no consolidado (SUNCO), integrado por el restante suelo urbano."
+    },
+    "SUOR": {
+      "nombre": "Suelo urbanizable ordenado",
+      "articulo": "40",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Tiene ordenación pormenorizada, pero hay que urbanizarlo antes de edificar. Después, las parcelas que resulten serán solares.",
+      "cita": "El suelo será ordenado (SUOR) cuando cuente con ordenación pormenorizada por el planeamiento general o de desarrollo, legitimando la actividad de ejecución."
+    },
+    "SUNOR": {
+      "nombre": "Suelo urbanizable no ordenado",
+      "articulo": "40",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Todavía no tiene ordenación pormenorizada: primero hay que aprobarla y urbanizar. Hasta entonces no se edifica vivienda.",
+      "cita": "El suelo será no ordenado (SUNOR) cuando no cuente con esa ordenación pormenorizada."
+    },
+    "SUz": {
+      "nombre": "Suelo urbanizable",
+      "sigla": "SUz",
+      "articulo": "40",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Es urbanizable: hay que ordenarlo y urbanizarlo antes de edificar.",
+      "cita": "El suelo urbanizable se dividirá en ordenado y no ordenado."
+    },
+    "SRAR": {
+      "nombre": "Suelo rústico de asentamiento rural",
+      "articulo": "60",
+      "vivienda": "asentamiento",
+      "explicacion": "Es de los pocos rústicos de Canarias donde cabe una vivienda unifamiliar nueva: la finca tiene que ser unidad apta para la edificación y quedar vinculada a la casa, sin promociones de más de dos viviendas ni casas adosadas. Parcela mínima, alturas y retranqueos los fija el plan general.",
+      "cita": "Situarse en terrenos calificados como asentamientos rurales o agrícolas, salvo las excepciones que se establezcan reglamentariamente para posibilitar la adecuada vigilancia en los espacios naturales protegidos o de instalaciones autorizadas.",
+      "mas": [
+        {
+          "articulo": "69",
+          "cita": "El uso residencial, evitando tipologías y procesos de producción de suelo y edificación propios del suelo urbano y, en particular, los proyectos y promociones para más de dos viviendas, salvo rehabilitación de patrimonio con valor arquitectónico, histórico, arqueológico o etnográfico. En ningún caso se permitirán construcciones en hilera o adosadas."
+        },
+        {
+          "articulo": "60",
+          "cita": "Constituir la finca que les otorgue soporte, una unidad apta para la edificación, quedando en su integridad vinculada legalmente a la vivienda autorizada."
+        }
+      ],
+      "rehabilitar": "etnografico",
+      "articulo_rehabilitar": "60",
+      "cita_rehabilitar": "La rehabilitación para su conservación, o la reconstrucción en los términos y condiciones previstos en el artículo 161 de esta ley, incluso para destino residencial o turístico, de edificios de valor etnográfico o arquitectónico, aun cuando se encontraren en situación de fuera de ordenación"
+    },
+    "SRAG": {
+      "nombre": "Suelo rústico de asentamiento agrícola",
+      "articulo": "60",
+      "vivienda": "vinculada",
+      "explicacion": "Cabe una vivienda unifamiliar aislada, una por parcela, ligada a una explotación agrícola efectiva: no se puede ocupar hasta acreditar que la finca está en explotación.",
+      "cita": "Cuando se trate de viviendas situadas en asentamientos agrícolas, estar directamente vinculadas a las correspondientes explotaciones agrícolas efectivas.",
+      "mas": [
+        {
+          "articulo": "69",
+          "cita": "En todo caso, las viviendas serán de tipo unifamiliar y aislado, admitiéndose una sola vivienda por parcela, incluidas las ya existentes."
+        }
+      ],
+      "rehabilitar": "etnografico",
+      "articulo_rehabilitar": "60",
+      "cita_rehabilitar": "La rehabilitación para su conservación, o la reconstrucción en los términos y condiciones previstos en el artículo 161 de esta ley, incluso para destino residencial o turístico, de edificios de valor etnográfico o arquitectónico, aun cuando se encontraren en situación de fuera de ordenación"
+    },
+    "SRA": {
+      "nombre": "Suelo rústico de asentamiento",
+      "sigla": "SRA",
+      "articulo": "60",
+      "vivienda": "segun_plan",
+      "explicacion": "El plan no dice si el asentamiento es rural o agrícola: en el rural cabe una vivienda unifamiliar con las condiciones del plan; en el agrícola, solo ligada a una explotación efectiva. Pregunta en el ayuntamiento.",
+      "cita": "Situarse en terrenos calificados como asentamientos rurales o agrícolas, salvo las excepciones que se establezcan reglamentariamente para posibilitar la adecuada vigilancia en los espacios naturales protegidos o de instalaciones autorizadas.",
+      "rehabilitar": "etnografico",
+      "articulo_rehabilitar": "60",
+      "cita_rehabilitar": "La rehabilitación para su conservación, o la reconstrucción en los términos y condiciones previstos en el artículo 161 de esta ley, incluso para destino residencial o turístico, de edificios de valor etnográfico o arquitectónico, aun cuando se encontraren en situación de fuera de ordenación"
+    },
+    "SRPN": {
+      "nombre": "Suelo rústico de protección natural",
+      "articulo": "60",
+      "vivienda": "prohibida",
+      "explicacion": "En Canarias la vivienda nueva en suelo rústico solo cabe en los asentamientos rurales o agrícolas que delimita el plan. Aquí además solo caben los usos que prevean el plan del espacio natural, el de la Red Natura o el plan insular.",
+      "cita": "Situarse en terrenos calificados como asentamientos rurales o agrícolas, salvo las excepciones que se establezcan reglamentariamente para posibilitar la adecuada vigilancia en los espacios naturales protegidos o de instalaciones autorizadas.",
+      "rehabilitar": "etnografico",
+      "articulo_rehabilitar": "60",
+      "cita_rehabilitar": "La rehabilitación para su conservación, o la reconstrucción en los términos y condiciones previstos en el artículo 161 de esta ley, incluso para destino residencial o turístico, de edificios de valor etnográfico o arquitectónico, aun cuando se encontraren en situación de fuera de ordenación"
+    },
+    "SRPP": {
+      "nombre": "Suelo rústico de protección paisajística",
+      "articulo": "60",
+      "vivienda": "prohibida",
+      "explicacion": "En Canarias la vivienda nueva en suelo rústico solo cabe en los asentamientos rurales o agrícolas que delimita el plan.",
+      "cita": "Situarse en terrenos calificados como asentamientos rurales o agrícolas, salvo las excepciones que se establezcan reglamentariamente para posibilitar la adecuada vigilancia en los espacios naturales protegidos o de instalaciones autorizadas.",
+      "rehabilitar": "etnografico",
+      "articulo_rehabilitar": "60",
+      "cita_rehabilitar": "La rehabilitación para su conservación, o la reconstrucción en los términos y condiciones previstos en el artículo 161 de esta ley, incluso para destino residencial o turístico, de edificios de valor etnográfico o arquitectónico, aun cuando se encontraren en situación de fuera de ordenación"
+    },
+    "SRPCU": {
+      "nombre": "Suelo rústico de protección cultural",
+      "articulo": "60",
+      "vivienda": "prohibida",
+      "explicacion": "En Canarias la vivienda nueva en suelo rústico solo cabe en los asentamientos rurales o agrícolas que delimita el plan.",
+      "cita": "Situarse en terrenos calificados como asentamientos rurales o agrícolas, salvo las excepciones que se establezcan reglamentariamente para posibilitar la adecuada vigilancia en los espacios naturales protegidos o de instalaciones autorizadas.",
+      "rehabilitar": "etnografico",
+      "articulo_rehabilitar": "60",
+      "cita_rehabilitar": "La rehabilitación para su conservación, o la reconstrucción en los términos y condiciones previstos en el artículo 161 de esta ley, incluso para destino residencial o turístico, de edificios de valor etnográfico o arquitectónico, aun cuando se encontraren en situación de fuera de ordenación"
+    },
+    "SRPEN": {
+      "nombre": "Suelo rústico de protección de entornos",
+      "articulo": "60",
+      "vivienda": "prohibida",
+      "explicacion": "En Canarias la vivienda nueva en suelo rústico solo cabe en los asentamientos rurales o agrícolas que delimita el plan.",
+      "cita": "Situarse en terrenos calificados como asentamientos rurales o agrícolas, salvo las excepciones que se establezcan reglamentariamente para posibilitar la adecuada vigilancia en los espacios naturales protegidos o de instalaciones autorizadas.",
+      "rehabilitar": "etnografico",
+      "articulo_rehabilitar": "60",
+      "cita_rehabilitar": "La rehabilitación para su conservación, o la reconstrucción en los términos y condiciones previstos en el artículo 161 de esta ley, incluso para destino residencial o turístico, de edificios de valor etnográfico o arquitectónico, aun cuando se encontraren en situación de fuera de ordenación"
+    },
+    "SRPCO": {
+      "nombre": "Suelo rústico de protección costera",
+      "articulo": "60",
+      "vivienda": "prohibida",
+      "explicacion": "En Canarias la vivienda nueva en suelo rústico solo cabe en los asentamientos rurales o agrícolas que delimita el plan.",
+      "cita": "Situarse en terrenos calificados como asentamientos rurales o agrícolas, salvo las excepciones que se establezcan reglamentariamente para posibilitar la adecuada vigilancia en los espacios naturales protegidos o de instalaciones autorizadas.",
+      "rehabilitar": "etnografico",
+      "articulo_rehabilitar": "60",
+      "cita_rehabilitar": "La rehabilitación para su conservación, o la reconstrucción en los términos y condiciones previstos en el artículo 161 de esta ley, incluso para destino residencial o turístico, de edificios de valor etnográfico o arquitectónico, aun cuando se encontraren en situación de fuera de ordenación"
+    },
+    "SRPA": {
+      "nombre": "Suelo rústico de protección ambiental",
+      "articulo": "60",
+      "vivienda": "prohibida",
+      "explicacion": "En Canarias la vivienda nueva en suelo rústico solo cabe en los asentamientos rurales o agrícolas que delimita el plan.",
+      "cita": "Situarse en terrenos calificados como asentamientos rurales o agrícolas, salvo las excepciones que se establezcan reglamentariamente para posibilitar la adecuada vigilancia en los espacios naturales protegidos o de instalaciones autorizadas.",
+      "rehabilitar": "etnografico",
+      "articulo_rehabilitar": "60",
+      "cita_rehabilitar": "La rehabilitación para su conservación, o la reconstrucción en los términos y condiciones previstos en el artículo 161 de esta ley, incluso para destino residencial o turístico, de edificios de valor etnográfico o arquitectónico, aun cuando se encontraren en situación de fuera de ordenación"
+    },
+    "SRPAG": {
+      "nombre": "Suelo rústico de protección agraria",
+      "articulo": "60",
+      "vivienda": "prohibida",
+      "explicacion": "En Canarias la vivienda nueva en suelo rústico solo cabe en los asentamientos rurales o agrícolas que delimita el plan. En protección agraria la ley lo prohíbe además de forma expresa.",
+      "cita": "Situarse en terrenos calificados como asentamientos rurales o agrícolas, salvo las excepciones que se establezcan reglamentariamente para posibilitar la adecuada vigilancia en los espacios naturales protegidos o de instalaciones autorizadas.",
+      "mas": [
+        {
+          "articulo": "66",
+          "cita": "Quedan prohibidas nuevas construcciones destinadas a vivienda o habitación o a la implantación del uso residencial, salvo la excepción prevista en el artículo 61.4 de la presente ley."
+        }
+      ],
+      "rehabilitar": "etnografico",
+      "articulo_rehabilitar": "60",
+      "cita_rehabilitar": "La rehabilitación para su conservación, o la reconstrucción en los términos y condiciones previstos en el artículo 161 de esta ley, incluso para destino residencial o turístico, de edificios de valor etnográfico o arquitectónico, aun cuando se encontraren en situación de fuera de ordenación"
+    },
+    "SRPF": {
+      "nombre": "Suelo rústico de protección forestal",
+      "articulo": "60",
+      "vivienda": "prohibida",
+      "explicacion": "En Canarias la vivienda nueva en suelo rústico solo cabe en los asentamientos rurales o agrícolas que delimita el plan.",
+      "cita": "Situarse en terrenos calificados como asentamientos rurales o agrícolas, salvo las excepciones que se establezcan reglamentariamente para posibilitar la adecuada vigilancia en los espacios naturales protegidos o de instalaciones autorizadas.",
+      "rehabilitar": "etnografico",
+      "articulo_rehabilitar": "60",
+      "cita_rehabilitar": "La rehabilitación para su conservación, o la reconstrucción en los términos y condiciones previstos en el artículo 161 de esta ley, incluso para destino residencial o turístico, de edificios de valor etnográfico o arquitectónico, aun cuando se encontraren en situación de fuera de ordenación"
+    },
+    "SRPH": {
+      "nombre": "Suelo rústico de protección hidrológica",
+      "articulo": "60",
+      "vivienda": "prohibida",
+      "explicacion": "En Canarias la vivienda nueva en suelo rústico solo cabe en los asentamientos rurales o agrícolas que delimita el plan.",
+      "cita": "Situarse en terrenos calificados como asentamientos rurales o agrícolas, salvo las excepciones que se establezcan reglamentariamente para posibilitar la adecuada vigilancia en los espacios naturales protegidos o de instalaciones autorizadas.",
+      "rehabilitar": "etnografico",
+      "articulo_rehabilitar": "60",
+      "cita_rehabilitar": "La rehabilitación para su conservación, o la reconstrucción en los términos y condiciones previstos en el artículo 161 de esta ley, incluso para destino residencial o turístico, de edificios de valor etnográfico o arquitectónico, aun cuando se encontraren en situación de fuera de ordenación"
+    },
+    "SRPM": {
+      "nombre": "Suelo rústico de protección minera",
+      "articulo": "60",
+      "vivienda": "prohibida",
+      "explicacion": "En Canarias la vivienda nueva en suelo rústico solo cabe en los asentamientos rurales o agrícolas que delimita el plan.",
+      "cita": "Situarse en terrenos calificados como asentamientos rurales o agrícolas, salvo las excepciones que se establezcan reglamentariamente para posibilitar la adecuada vigilancia en los espacios naturales protegidos o de instalaciones autorizadas.",
+      "rehabilitar": "etnografico",
+      "articulo_rehabilitar": "60",
+      "cita_rehabilitar": "La rehabilitación para su conservación, o la reconstrucción en los términos y condiciones previstos en el artículo 161 de esta ley, incluso para destino residencial o turístico, de edificios de valor etnográfico o arquitectónico, aun cuando se encontraren en situación de fuera de ordenación"
+    },
+    "SRPI": {
+      "nombre": "Suelo rústico de protección de infraestructuras",
+      "articulo": "60",
+      "vivienda": "prohibida",
+      "explicacion": "En Canarias la vivienda nueva en suelo rústico solo cabe en los asentamientos rurales o agrícolas que delimita el plan.",
+      "cita": "Situarse en terrenos calificados como asentamientos rurales o agrícolas, salvo las excepciones que se establezcan reglamentariamente para posibilitar la adecuada vigilancia en los espacios naturales protegidos o de instalaciones autorizadas.",
+      "rehabilitar": "etnografico",
+      "articulo_rehabilitar": "60",
+      "cita_rehabilitar": "La rehabilitación para su conservación, o la reconstrucción en los términos y condiciones previstos en el artículo 161 de esta ley, incluso para destino residencial o turístico, de edificios de valor etnográfico o arquitectónico, aun cuando se encontraren en situación de fuera de ordenación"
+    },
+    "SRPE": {
+      "nombre": "Suelo rústico de protección económica",
+      "articulo": "60",
+      "vivienda": "prohibida",
+      "explicacion": "En Canarias la vivienda nueva en suelo rústico solo cabe en los asentamientos rurales o agrícolas que delimita el plan.",
+      "cita": "Situarse en terrenos calificados como asentamientos rurales o agrícolas, salvo las excepciones que se establezcan reglamentariamente para posibilitar la adecuada vigilancia en los espacios naturales protegidos o de instalaciones autorizadas.",
+      "rehabilitar": "etnografico",
+      "articulo_rehabilitar": "60",
+      "cita_rehabilitar": "La rehabilitación para su conservación, o la reconstrucción en los términos y condiciones previstos en el artículo 161 de esta ley, incluso para destino residencial o turístico, de edificios de valor etnográfico o arquitectónico, aun cuando se encontraren en situación de fuera de ordenación"
+    },
+    "SRC": {
+      "nombre": "Suelo rústico común",
+      "articulo": "60",
+      "vivienda": "prohibida",
+      "explicacion": "En Canarias la vivienda nueva en suelo rústico solo cabe en los asentamientos rurales o agrícolas que delimita el plan. En el común solo caben usos ordinarios con construcciones provisionales.",
+      "cita": "Situarse en terrenos calificados como asentamientos rurales o agrícolas, salvo las excepciones que se establezcan reglamentariamente para posibilitar la adecuada vigilancia en los espacios naturales protegidos o de instalaciones autorizadas.",
+      "mas": [
+        {
+          "articulo": "70",
+          "cita": "En el suelo rústico común, tanto ordinario como de reserva, será posible cualquier uso y actividad ordinaria, con sus correspondientes construcciones e instalaciones de carácter provisional."
+        }
+      ],
+      "rehabilitar": "etnografico",
+      "articulo_rehabilitar": "60",
+      "cita_rehabilitar": "La rehabilitación para su conservación, o la reconstrucción en los términos y condiciones previstos en el artículo 161 de esta ley, incluso para destino residencial o turístico, de edificios de valor etnográfico o arquitectónico, aun cuando se encontraren en situación de fuera de ordenación"
+    },
+    "SRCR": {
+      "nombre": "Suelo rústico común de reserva",
+      "articulo": "60",
+      "vivienda": "prohibida",
+      "explicacion": "En Canarias la vivienda nueva en suelo rústico solo cabe en los asentamientos rurales o agrícolas que delimita el plan. En el común solo caben usos ordinarios con construcciones provisionales.",
+      "cita": "Situarse en terrenos calificados como asentamientos rurales o agrícolas, salvo las excepciones que se establezcan reglamentariamente para posibilitar la adecuada vigilancia en los espacios naturales protegidos o de instalaciones autorizadas.",
+      "mas": [
+        {
+          "articulo": "70",
+          "cita": "En el suelo rústico común, tanto ordinario como de reserva, será posible cualquier uso y actividad ordinaria, con sus correspondientes construcciones e instalaciones de carácter provisional."
+        }
+      ],
+      "rehabilitar": "etnografico",
+      "articulo_rehabilitar": "60",
+      "cita_rehabilitar": "La rehabilitación para su conservación, o la reconstrucción en los términos y condiciones previstos en el artículo 161 de esta ley, incluso para destino residencial o turístico, de edificios de valor etnográfico o arquitectónico, aun cuando se encontraren en situación de fuera de ordenación"
+    },
+    "SRCO": {
+      "nombre": "Suelo rústico común ordinario",
+      "articulo": "60",
+      "vivienda": "prohibida",
+      "explicacion": "En Canarias la vivienda nueva en suelo rústico solo cabe en los asentamientos rurales o agrícolas que delimita el plan. En el común solo caben usos ordinarios con construcciones provisionales.",
+      "cita": "Situarse en terrenos calificados como asentamientos rurales o agrícolas, salvo las excepciones que se establezcan reglamentariamente para posibilitar la adecuada vigilancia en los espacios naturales protegidos o de instalaciones autorizadas.",
+      "mas": [
+        {
+          "articulo": "70",
+          "cita": "En el suelo rústico común, tanto ordinario como de reserva, será posible cualquier uso y actividad ordinaria, con sus correspondientes construcciones e instalaciones de carácter provisional."
+        }
+      ],
+      "rehabilitar": "etnografico",
+      "articulo_rehabilitar": "60",
+      "cita_rehabilitar": "La rehabilitación para su conservación, o la reconstrucción en los términos y condiciones previstos en el artículo 161 de esta ley, incluso para destino residencial o turístico, de edificios de valor etnográfico o arquitectónico, aun cuando se encontraren en situación de fuera de ordenación"
+    },
+    "SUSP": {
+      "nombre": "Ámbito en suspensión",
+      "sigla": "SUSP",
+      "vivienda": "sin_dato",
+      "explicacion": "El planeamiento de este ámbito está suspendido: hasta que se resuelva no se sabe qué rige. Pregunta en el ayuntamiento."
+    }
+  }
+}

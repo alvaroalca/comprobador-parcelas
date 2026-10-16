@@ -111,6 +111,15 @@
 - Smoke test de Álvaro superado (16/10). Al integrar: `https://ogc.larioja.org` en el `connect-src` del portfolio.
 - Abierto: urbano de Logroño y de los otros 49 municipios sin plan publicado, «Sin dato» (el Ayuntamiento de Logroño publica su plan aparte: mirar). No se mide la distancia de 150 m a otras edificaciones ni se sabe si la finca es de regadío (el cultivo del Catastro lo diría: `datos.cultivo`). Espacios naturales protegidos, carreteras y patrimonio sin consultar.
 
+## Canarias (16/10/2026, en local, sin desplegar)
+
+- Planeamiento de IDECanarias (GRAFCAN), solo WMS: la capa de categorías trae un código normalizado por recinto (`cod`, el de la leyenda) con las categorías de la Ley 4/2017 y sus equivalencias ya aplicadas a los planes antiguos. Sin geometría que descargar, el reparto se cuenta en píxeles: un `GetMap` recortado a la parcela con un color exacto por código (por POST: el estilo no cabe en la URL) y una consulta de punto por categoría para el nombre que le da el plan y el documento. `main.js` acepta ya un reparto calculado por el adaptador.
+- Tabla de la Ley 4/2017 (BOE): 49 citas, 320/320 en total. La vivienda nueva en rústico solo cabe en asentamiento rural (con las condiciones del plan: unidad apta, nada de promociones de más de dos ni adosadas) o agrícola (ligada a una explotación efectiva); en el resto del rústico, «No» (art. 60.1.a; en protección agraria, además, art. 66.3). Urbano consolidado por solar; no consolidado y urbanizable, «Todavía no». Rehabilitación de edificios de valor etnográfico o arquitectónico, incluso para vivienda (art. 60.6.a).
+- Afecciones: Red Natura 2000 (LIC/ZEC y ZEPA de GRAFCAN, sin nombres: esas capas no publican atributos) y la zona inundable del Ministerio (34 áreas de riesgo). El cauce y la policía del Ministerio en Canarias son 67 tramos para miles de barrancos: se quitan y van a pendientes, y la línea de fuentes lo dice.
+- Probado en Chrome: 8 parcelas por categoría (asentamientos, urbanizables, no consolidado), 16 al azar por las islas y búsquedas por polígono y parcela (Teide, Caldera de Taburiente). Sin errores; ficha completa en 1-2 s (4 s la primera).
+- Smoke test de Álvaro superado (16/10). Al integrar: `https://idecan2.grafcan.es` en el `connect-src` del portfolio.
+- Abierto: cauces de barrancos (consejos insulares de aguas), espacios naturales protegidos (WMS `EspNat`, sin atributos), costas, montes y patrimonio. La parcela mínima y las condiciones de los asentamientos las fija cada plan general.
+
 ## Asturias (14/10/2026, parada)
 
 - Fuente localizada: GeoServer del RPGUR (`visorrpgur.asturias.es:8090`, solo http), con clasificación, no urbanizable por categorías y 5.401 núcleos rurales en los 78 concejos.
@@ -143,7 +152,7 @@ No hay fuente nacional: el SIU del Ministerio agrega lo que mandan las comunidad
 | Aragón | `idearagon.aragon.es/geoserver/SIUa/wfs` · `SIUa:clasificacion_idearagon` | no | Hecha, por proxy. |
 | Asturias | `visorrpgur.asturias.es:8090/geoserver` · `n02_CLASIFICACION_SUELO`, `n05_SUELOS_NO_URBANIZABLES` | sí | Parada: sin texto en el BOE y 5-15 s por parcela. |
 | País Vasco | ArcGIS REST `www.geo.euskadi.eus/geoeuskadi/rest/services/U11/WMS_PLANGINTZA/MapServer` · Udalplan, capas 802-811 (residencial, actividades económicas, sistemas generales, no urbanizable con `SUBTIPO`) | `*` | Consultable por geometría (sondeo 14/10). Bloqueo: el catastro es foral (tres diputaciones), el punto → finca no funciona. |
-| Canarias | `idecan2.grafcan.es/ServicioWMS/Planeamiento` · `CLASI` (clase) y `CLA` (categoría, código `ePlanCLA`: SUCO, RPNR…) | `*` | Sin WFS. GetFeatureInfo devuelve códigos normalizados y el plan que rige: viable muestreando puntos dentro de la parcela. Ley 4/2017 en el BOE. |
+| Canarias | `idecan2.grafcan.es/ServicioWMS/Planeamiento` · `CLA` (código `cod`) | `*` | Hecha (16/10), contando píxeles. |
 | Extremadura | `mapas.ideex.es/CICTEX/planeamientoRefundido` | | Su WFS solo trae la división en hojas de los planos escaneados. Sin clasificación. |
 | Navarra | IDENA (`idena.navarra.es/ogc/wfs`, 1.053 capas) | `*` | Sin capa de clasificación: solo la figura de plan por municipio e indicadores. Además, catastro foral. |
 | Galicia | ArcGIS `ideg.xunta.gal/servizos/rest/services/Ordenacion/POL_AD_PlaneamientoUrbanistico/MapServer/29` (IURB_V9) | sí | Clasificación homogeneizada (`SiglaHomog`) solo de los concellos del litoral y de 2011, con planes «no adaptados a la LOUGA». No sirve como fuente vigente. |
@@ -151,7 +160,7 @@ No hay fuente nacional: el SIU del Ministerio agrega lo que mandan las comunidad
 | Castilla-La Mancha | ArcGIS REST `geoservicios.castillalamancha.es/arcgis/rest/services/Vector/Sistema_Informacion_Urbana/MapServer/1` (SIU) | sí | Hecha (16/10). |
 | La Rioja | MapServer `ogc.larioja.org/wfs/request.php` · `urbanismo_planeamiento_urbanistico` | `*` | Hecha (16/10), con la Directriz de suelo no urbanizable. |
 
-Orden propuesto tras el sondeo del 14/10: Castilla-La Mancha y La Rioja (hechas el 16/10) y Canarias (muestreo por puntos). País Vasco y Navarra esperan a un adaptador de catastro foral; Galicia, Andalucía y Extremadura no publican la clasificación; Asturias, parada (ver arriba).
+Orden propuesto tras el sondeo del 14/10: Castilla-La Mancha, La Rioja y Canarias (hechas el 16/10). País Vasco y Navarra esperan a un adaptador de catastro foral; Galicia, Andalucía y Extremadura no publican la clasificación; Asturias, parada (ver arriba).
 
 ## Ideas para después (no ahora: primero el resto de España)
 
