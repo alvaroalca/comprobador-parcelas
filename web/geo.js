@@ -172,3 +172,35 @@ export function wfs(base, capa, filtro, propiedades, srs) {
     return (await r.json()).features;
   });
 }
+
+// WFS 1.1 que solo sabe GML 3 (MapServer de La Rioja), por caja en EPSG:25830. Devuelve recintos como
+// GeoJSON: { geometry: MultiPolygon | MultiLineString, properties }. Llega en ISO-8859-1, y Response.text()
+// siempre lee UTF-8: se decodifica con el juego de caracteres de la cabecera.
+export function wfsGml(base, capa, [x0, y0, x1, y1]) {
+  return conReintento(async () => {
+    const q = new URLSearchParams({
+      service: 'WFS', version: '1.1.0', request: 'GetFeature', typeName: capa, srsName: 'EPSG:25830',
+      bbox: `${x0},${y0},${x1},${y1},urn:ogc:def:crs:EPSG::25830`,
+    });
+    const r = await fetch(`${base}?${q}`);
+    if (!r.ok) throw new Error(`${new URL(base).host} respondió ${r.status}`);
+    const juego = /charset=([\w-]+)/i.exec(r.headers.get('content-type') ?? '')?.[1] ?? 'utf-8';
+    const doc = new DOMParser().parseFromString(new TextDecoder(juego).decode(await r.arrayBuffer()), 'text/xml');
+    if (doc.getElementsByTagName('ows:ExceptionReport').length) throw new Error(`${new URL(base).host}: ${doc.documentElement.textContent.trim()}`);
+    const pares = (el) => {
+      const n = el.textContent.trim().split(/\s+/).map(Number);
+      return Array.from({ length: n.length / 2 }, (_, i) => [n[2 * i], n[2 * i + 1]]);
+    };
+    const hijos = (el, nombre) => [...el.getElementsByTagNameNS('*', nombre)];
+    return [...doc.getElementsByTagNameNS('*', capa)].map((f) => {
+      const properties = {};
+      for (const c of f.children) if (c.localName !== 'msGeometry' && c.localName !== 'boundedBy') properties[c.localName] = c.textContent.trim();
+      const poligonos = [...hijos(f, 'Polygon'), ...hijos(f, 'PolygonPatch')]
+        .map((p) => [...hijos(p, 'exterior'), ...hijos(p, 'interior')].map((a) => pares(hijos(a, 'posList')[0])));
+      const geometry = poligonos.length
+        ? { type: 'MultiPolygon', coordinates: poligonos }
+        : { type: 'MultiLineString', coordinates: hijos(f, 'LineString').map((l) => pares(hijos(l, 'posList')[0])) };
+      return { geometry, properties };
+    });
+  });
+}

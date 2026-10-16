@@ -37,7 +37,7 @@ export default {
   // Recintos de categoría que tocan la caja de la parcela (EPSG:25830). El recorte exacto se hace en el navegador.
   async suelo([oeste, sur, este, norte]) {
     const r = await pedirWfs('plau_cyl_categorias_desagrupa',
-      `BBOX(geom,${oeste},${sur},${este},${norte},'EPSG:25830')`, 'geom,c_categ_sue,n_categ_sue', 'EPSG:25830');
+      `BBOX(geometry,${oeste},${sur},${este},${norte},'EPSG:25830')`, 'geometry,c_categ_sue,n_categ_sue', 'EPSG:25830');
     return {
       recintos: r.features.map((f) => ({ geometry: f.geometry, codigo: f.properties.c_categ_sue, nombre: f.properties.n_categ_sue })),
     };

@@ -20,6 +20,8 @@ PDFS = {
     **{k: f['pdf'] for t in tablas.values() for k, f in t.get('otras_fuentes', {}).items()},
     **{k: f['pdf'] for k, f in afecciones['fuentes'].items()},
 }
+# Cabecera de página propia de un PDF que no sale del BOE (la Directriz de La Rioja): `cabecera` en su fuente
+CABECERAS = {k: f['cabecera'] for t in tablas.values() for k, f in t.get('otras_fuentes', {}).items() if f.get('cabecera')}
 # La caché de antes se llamaba rucyl
 ALIAS = {'cyl': 'rucyl'}
 
@@ -41,6 +43,8 @@ def texto_boe(norma):
     if re.match(r'\f?AÑO [IVXLC]+ Núm\. \d+', texto):
         texto = re.sub(r'(?m)^\f?AÑO [IVXLC]+ Núm\. \d+ ?', '', texto)
         texto = re.sub(r'(?m)^(\d{1,2} de \w+ de \d{4}|\d{3,5})\s*$', '', texto)
+    if norma in CABECERAS:
+        texto = re.sub(CABECERAS[norma], ' ', texto)
     return re.sub(r'\s+', ' ', texto)
 
 

@@ -1,0 +1,280 @@
+{
+  "fuente": {
+    "nombre": "Ley 5/2006, de 2 de mayo, de Ordenación del Territorio y Urbanismo de La Rioja, texto consolidado",
+    "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2006-9008",
+    "pdf": "https://www.boe.es/buscar/pdf/2006/BOE-A-2006-9008-consolidado.pdf",
+    "de": "de la Ley 5/2006 de Ordenación del Territorio y Urbanismo de La Rioja"
+  },
+  "otras_fuentes": {
+    "rioja-dpsnu": {
+      "nombre": "Directriz de Protección del Suelo No Urbanizable de La Rioja (Decreto 18/2019, anexo, volumen I: normativa; BOR núm. 65, de 29 de mayo de 2019)",
+      "url": "https://ias1.larioja.org/cex/sistemas/GenericoServlet?servlet=cex.sistemas.cmu.ImgServletSis&code=GEEyL9CIKaNNn2ufVPq98uhYVrWWwJXmDfcxjCqePztIGYnOEf4nRj2Bgd7ywIsW4aYk61cYNydL%0AXfDfhBWKyA%3D%3D&enc",
+      "pdf": "https://ias1.larioja.org/cex/sistemas/GenericoServlet?servlet=cex.sistemas.cmu.ImgServletSis&code=GEEyL9CIKaNNn2ufVPq98uhYVrWWwJXmDfcxjCqePztIGYnOEf4nRj2Bgd7ywIsW4aYk61cYNydL%0AXfDfhBWKyA%3D%3D&enc",
+      "de": "de la Directriz de Protección del Suelo No Urbanizable de La Rioja",
+      "boletin": "BOR",
+      "cabecera": "(?:\\b\\d{1,3}\\s+)?\\f?Directriz de Protección de suelo No Urbanizable de La Rioja(?: \\d{1,3}\\b)?"
+    }
+  },
+  "niveles": {
+    "prohibida": {
+      "titulo": "No",
+      "tono": "no"
+    },
+    "aislada": {
+      "titulo": "Con condiciones: vivienda aislada",
+      "tono": "condicion"
+    },
+    "regadio": {
+      "titulo": "Solo si la finca es de regadío",
+      "tono": "condicion"
+    },
+    "segun_plan": {
+      "titulo": "Depende del plan municipal",
+      "tono": "depende"
+    },
+    "solar": {
+      "titulo": "Sí, si la parcela es solar",
+      "tono": "si"
+    },
+    "sin_urbanizar": {
+      "titulo": "Todavía no",
+      "tono": "condicion"
+    },
+    "sin_dato": {
+      "titulo": "Sin dato",
+      "tono": "depende"
+    }
+  },
+  "orden": [
+    "solar",
+    "aislada",
+    "regadio",
+    "segun_plan",
+    "sin_urbanizar",
+    "sin_dato",
+    "prohibida"
+  ],
+  "proteccion": [
+    "SG",
+    "SUC",
+    "SU",
+    "SUNC",
+    "SUZD",
+    "SUZND-PEQ",
+    "SUZND-MEDIA",
+    "SUZND",
+    "DIR",
+    "SNUE",
+    "SNU-PEQ",
+    "SNU",
+    "SNUG-PEQ",
+    "SNUG-MEDIA",
+    "SNUG"
+  ],
+  "sin_datos": "El sistema de información urbanística de La Rioja no tiene el plan de este municipio y la parcela no es rústica en el Catastro. Pregunta en el ayuntamiento qué clasificación tiene.",
+  "rehabilitar": {
+    "existente": "Se pueden autorizar obras de rehabilitación, reforma o ampliación de las construcciones existentes que no estén fuera de ordenación, si son compatibles con lo que protege el suelo."
+  },
+  "categorias": {
+    "SUC": {
+      "nombre": "Suelo urbano consolidado",
+      "articulo": "44",
+      "vivienda": "solar",
+      "explicacion": "En suelo urbano consolidado se edifica la parcela que sea solar (urbanizada según el plan, con alineaciones y rasantes), o a la vez que se completa la urbanización con garantías. Lo que se puede construir lo fija el plan municipal.",
+      "cita": "Los terrenos estarán sujetos a la limitación de no poder ser edificados hasta que merezcan la condición de solar, salvo que se asegure la ejecución simultánea de la urbanización y la edificación mediante las garantías reglamentariamente establecidas."
+    },
+    "SU": {
+      "nombre": "Suelo urbano",
+      "sigla": "SU",
+      "articulo": "42",
+      "vivienda": "solar",
+      "explicacion": "El plan no lo marca como no consolidado, así que la ley lo trata como consolidado: se edifica la parcela que sea solar. Si el ayuntamiento la tiene dentro de una unidad de ejecución, antes hay que urbanizar.",
+      "cita": "El resto de suelo urbano tendrá la consideración de suelo urbano consolidado, incluidos los núcleos rurales del artículo 41.1.d).",
+      "mas": [
+        {
+          "articulo": "44",
+          "cita": "Los terrenos estarán sujetos a la limitación de no poder ser edificados hasta que merezcan la condición de solar, salvo que se asegure la ejecución simultánea de la urbanización y la edificación mediante las garantías reglamentariamente establecidas."
+        }
+      ]
+    },
+    "SUNC": {
+      "nombre": "Suelo urbano no consolidado",
+      "articulo": "44",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Está en un ámbito que hay que urbanizar, renovar o reordenar, repartiendo cargas y cesiones entre los propietarios. Hasta que la parcela sea solar, o se urbanice a la vez con garantías, no se edifica.",
+      "cita": "Los terrenos estarán sujetos a la limitación de no poder ser edificados hasta que merezcan la condición de solar, salvo que se asegure la ejecución simultánea de la urbanización y la edificación mediante las garantías reglamentariamente establecidas.",
+      "mas": [
+        {
+          "articulo": "42",
+          "cita": "Tendrán la consideración de suelo urbano no consolidado los terrenos que el planeamiento defina expresamente como tales por estar sometidos a procesos integrales de urbanización, a procesos integrales de renovación o a procesos de reforma interior."
+        }
+      ]
+    },
+    "SUZD": {
+      "nombre": "Suelo urbanizable delimitado",
+      "articulo": "56",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Primero hay que aprobar su plan parcial y urbanizarlo; hasta entonces solo caben usos y obras provisionales. Después, las parcelas que resulten serán solares.",
+      "cita": "Los terrenos clasificados como suelo urbanizable delimitado no podrán ser urbanizados hasta que se apruebe el correspondiente plan parcial."
+    },
+    "SUZND": {
+      "nombre": "Suelo urbanizable no delimitado",
+      "sigla": "SUZND",
+      "articulo": "57",
+      "vivienda": "aislada",
+      "explicacion": "Mientras no tenga plan parcial se rige como el no urbanizable genérico: cabe una vivienda unifamiliar aislada con autorización de la Comisión de Ordenación del Territorio y Urbanismo, en parcela de 20.000 m² en secano (5.000 m² en regadío), a más de 150 m de cualquier otra edificación y sin formar núcleo de población.",
+      "cita": "En el suelo urbanizable no delimitado, en tanto no se haya delimitado mediante modificación del plan general o no se haya aprobado definitivamente el correspondiente plan parcial en los términos del artículo 76, se aplicará el régimen establecido para el suelo no urbanizable genérico.",
+      "mas": [
+        {
+          "articulo": "52",
+          "cita": "Que la parcela sobre la que se vaya a construir no sea inferior a cinco mil metros cuadrados en suelos de regadío o a veinte mil metros cuadrados en suelos de secano."
+        }
+      ]
+    },
+    "SNUG": {
+      "nombre": "Suelo no urbanizable genérico",
+      "sigla": "SNUG",
+      "articulo": "52",
+      "vivienda": "aislada",
+      "explicacion": "Cabe una vivienda unifamiliar autónoma con autorización de la Comisión de Ordenación del Territorio y Urbanismo: parcela de al menos 20.000 m² en secano (5.000 m² en regadío), a más de 150 m de cualquier otra edificación y sin riesgo de formar núcleo de población. La Directriz de suelo no urbanizable, que en vivienda obliga también al plan municipal, añade 0,02 m² construidos por m² de parcela, dos plantas, 6 m a cumbrera y 8 m de retranqueo a linderos (10 m a caminos). El plan puede ser más estricto.",
+      "cita": "En suelo no urbanizable genérico podrá autorizarse su construcción conforme al procedimiento establecido en el artículo siguiente, cuando se cumplan las siguientes condiciones:",
+      "mas": [
+        {
+          "articulo": "52",
+          "cita": "Que no se encuentre a una distancia inferior a 150 metros, de otra edificación, cualquiera que sea su uso."
+        },
+        {
+          "articulo": "52",
+          "cita": "Que la parcela sobre la que se vaya a construir no sea inferior a cinco mil metros cuadrados en suelos de regadío o a veinte mil metros cuadrados en suelos de secano."
+        },
+        {
+          "norma": "rioja-dpsnu",
+          "articulo": "8",
+          "cita": "para los usos bodega, vivienda unifamiliar autónoma y casetas rurales, con el planeamiento municipal, tendrá carácter vinculante, tanto para el suelo no urbanizable incluido en espacios de ordenación, como para el suelo no urbanizable genérico. No obstante, el planeamiento municipal podrá establecer determinaciones más protectoras."
+        }
+      ],
+      "rehabilitar": "existente",
+      "articulo_rehabilitar": "51",
+      "cita_rehabilitar": "Obras de rehabilitación, reforma o ampliación de las construcciones existentes que no se encuentren en situación de fuera de ordenación."
+    },
+    "SNUG-MEDIA": {
+      "nombre": "Suelo no urbanizable genérico",
+      "sigla": "SNUG",
+      "articulo": "52",
+      "vivienda": "regadio",
+      "explicacion": "La parcela pasa de 5.000 m² pero no llega a 20.000: la vivienda unifamiliar autónoma solo cabe si es de regadío, con autorización de la Comisión de Ordenación del Territorio y Urbanismo, a más de 150 m de cualquier otra edificación y sin riesgo de formar núcleo de población. El plan puede ser más estricto.",
+      "cita": "Que la parcela sobre la que se vaya a construir no sea inferior a cinco mil metros cuadrados en suelos de regadío o a veinte mil metros cuadrados en suelos de secano.",
+      "rehabilitar": "existente",
+      "articulo_rehabilitar": "51",
+      "cita_rehabilitar": "Obras de rehabilitación, reforma o ampliación de las construcciones existentes que no se encuentren en situación de fuera de ordenación."
+    },
+    "SNUG-PEQ": {
+      "nombre": "Suelo no urbanizable genérico",
+      "sigla": "SNUG",
+      "articulo": "52",
+      "vivienda": "prohibida",
+      "explicacion": "La parcela no llega a 5.000 m², el mínimo para una vivienda autónoma incluso en regadío (20.000 m² en secano).",
+      "cita": "Que la parcela sobre la que se vaya a construir no sea inferior a cinco mil metros cuadrados en suelos de regadío o a veinte mil metros cuadrados en suelos de secano.",
+      "rehabilitar": "existente",
+      "articulo_rehabilitar": "51",
+      "cita_rehabilitar": "Obras de rehabilitación, reforma o ampliación de las construcciones existentes que no se encuentren en situación de fuera de ordenación."
+    },
+    "SUZND-MEDIA": {
+      "nombre": "Suelo urbanizable no delimitado",
+      "sigla": "SUZND",
+      "articulo": "57",
+      "vivienda": "regadio",
+      "explicacion": "Mientras no tenga plan parcial se rige como el no urbanizable genérico, y la parcela pasa de 5.000 m² pero no llega a 20.000: la vivienda autónoma solo cabe si es de regadío, con autorización de la Comisión de Ordenación del Territorio y Urbanismo y a más de 150 m de cualquier otra edificación.",
+      "cita": "En el suelo urbanizable no delimitado, en tanto no se haya delimitado mediante modificación del plan general o no se haya aprobado definitivamente el correspondiente plan parcial en los términos del artículo 76, se aplicará el régimen establecido para el suelo no urbanizable genérico.",
+      "mas": [
+        {
+          "articulo": "52",
+          "cita": "Que la parcela sobre la que se vaya a construir no sea inferior a cinco mil metros cuadrados en suelos de regadío o a veinte mil metros cuadrados en suelos de secano."
+        }
+      ]
+    },
+    "SUZND-PEQ": {
+      "nombre": "Suelo urbanizable no delimitado",
+      "sigla": "SUZND",
+      "articulo": "57",
+      "vivienda": "prohibida",
+      "explicacion": "Mientras no tenga plan parcial se rige como el no urbanizable genérico, y la parcela no llega a 5.000 m², el mínimo para una vivienda autónoma incluso en regadío.",
+      "cita": "En el suelo urbanizable no delimitado, en tanto no se haya delimitado mediante modificación del plan general o no se haya aprobado definitivamente el correspondiente plan parcial en los términos del artículo 76, se aplicará el régimen establecido para el suelo no urbanizable genérico.",
+      "mas": [
+        {
+          "articulo": "52",
+          "cita": "Que la parcela sobre la que se vaya a construir no sea inferior a cinco mil metros cuadrados en suelos de regadío o a veinte mil metros cuadrados en suelos de secano."
+        }
+      ]
+    },
+    "SNUE": {
+      "nombre": "Suelo no urbanizable especial",
+      "sigla": "SNUE",
+      "articulo": "52",
+      "vivienda": "prohibida",
+      "explicacion": "En el no urbanizable especial la vivienda unifamiliar autónoma está prohibida. Solo caben las construcciones que el plan prevea expresamente para conservar el valor protegido.",
+      "cita": "Se prohíben en suelo no urbanizable especial las viviendas unifamiliares autónomas.",
+      "rehabilitar": "existente",
+      "articulo_rehabilitar": "51",
+      "cita_rehabilitar": "Obras de rehabilitación, reforma o ampliación de las construcciones existentes que no se encuentren en situación de fuera de ordenación."
+    },
+    "DIR": {
+      "nombre": "Espacio protegido por la Directriz de suelo no urbanizable",
+      "sigla": "Directriz",
+      "norma": "rioja-dpsnu",
+      "articulo": "6",
+      "vivienda": "prohibida",
+      "explicacion": "La parcela está en uno de los espacios de ordenación de la Directriz de Protección del Suelo No Urbanizable de La Rioja (cumbres, sierras, riberas, espacios agrarios, vegetación singular, parajes geomorfológicos, embalses o zonas húmedas). Todos prohíben la vivienda unifamiliar autónoma y obligan al plan municipal, aunque este sea anterior.",
+      "cita": "todos esos terrenos, deberán clasificarse por el planeamiento municipal como suelo no urbanizable especial, por encontrarse sometidos a un régimen especial de protección incompatible con su transformación",
+      "mas": [
+        {
+          "articulo": "52",
+          "cita": "Se prohíben en suelo no urbanizable especial las viviendas unifamiliares autónomas."
+        }
+      ],
+      "rehabilitar": "existente",
+      "norma_rehabilitar": null,
+      "articulo_rehabilitar": "51",
+      "cita_rehabilitar": "Obras de rehabilitación, reforma o ampliación de las construcciones existentes que no se encuentren en situación de fuera de ordenación."
+    },
+    "SNU": {
+      "nombre": "Suelo no urbanizable",
+      "sigla": "SNU",
+      "articulo": "52",
+      "vivienda": "segun_plan",
+      "explicacion": "El plan municipal es anterior a la ley y no dice si este no urbanizable es especial o genérico, y de eso depende todo: en especial la vivienda autónoma está prohibida; en genérico cabe con 20.000 m² en secano (5.000 m² en regadío) y a más de 150 m de cualquier otra edificación. Si el plan lo protege por algún valor, lo normal es que sea especial. Pregunta en el ayuntamiento.",
+      "cita": "Se prohíben en suelo no urbanizable especial las viviendas unifamiliares autónomas.",
+      "mas": [
+        {
+          "articulo": "disposición transitoria segunda",
+          "cita": "El suelo no urbanizable existente se regirá por las disposiciones de esta Ley."
+        },
+        {
+          "articulo": "52",
+          "cita": "Que la parcela sobre la que se vaya a construir no sea inferior a cinco mil metros cuadrados en suelos de regadío o a veinte mil metros cuadrados en suelos de secano."
+        }
+      ],
+      "rehabilitar": "existente",
+      "articulo_rehabilitar": "51",
+      "cita_rehabilitar": "Obras de rehabilitación, reforma o ampliación de las construcciones existentes que no se encuentren en situación de fuera de ordenación."
+    },
+    "SNU-PEQ": {
+      "nombre": "Suelo no urbanizable",
+      "sigla": "SNU",
+      "articulo": "52",
+      "vivienda": "prohibida",
+      "explicacion": "El plan municipal no dice si este no urbanizable es especial o genérico, pero da igual: la parcela no llega a 5.000 m², el mínimo para una vivienda autónoma incluso en genérico de regadío, y en especial está prohibida.",
+      "cita": "Que la parcela sobre la que se vaya a construir no sea inferior a cinco mil metros cuadrados en suelos de regadío o a veinte mil metros cuadrados en suelos de secano.",
+      "rehabilitar": "existente",
+      "articulo_rehabilitar": "51",
+      "cita_rehabilitar": "Obras de rehabilitación, reforma o ampliación de las construcciones existentes que no se encuentren en situación de fuera de ordenación."
+    },
+    "SG": {
+      "nombre": "Sistema general",
+      "articulo": "164",
+      "vivienda": "prohibida",
+      "explicacion": "El plan reserva este suelo para un sistema general (viario, zona verde, equipamiento, infraestructura). La Administración lo obtiene por cesión o expropiación: no se edifica vivienda privada.",
+      "cita": "Los terrenos destinados por el planeamiento al establecimiento de sistemas generales en suelo urbanizable y en suelo urbano no consolidado se obtendrán:"
+    }
+  }
+}

@@ -289,7 +289,7 @@ async function completar(mio, rc, lon, lat, aproximada) {
   // Las afecciones del agua tardan 2-3 s cerca de un río: el veredicto se pinta antes y ellas llegan después
   const af = afecciones(geo.lonlat, geo.utm, comunidad);
   const [normas, suelo, plan] = await Promise.all([
-    normasDe(comunidad), comunidad.suelo(caja(geo.utm), geo.utm, geo.superficie), comunidad.planeamiento?.(lon, lat) ?? null,
+    normasDe(comunidad), comunidad.suelo(caja(geo.utm), geo.utm, geo.superficie, datos),comunidad.planeamiento?.(lon, lat) ?? null,
   ]);
   if (!vigente()) return;
   const v = veredicto(normas, reparto(geo.utm, suelo.recintos, normas.proteccion), datos);

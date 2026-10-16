@@ -10,8 +10,9 @@ import valenciana from './valenciana.js';
 import murcia from './murcia.js';
 import aragon from './aragon.js';
 import clm from './clm.js';
+import rioja from './rioja.js';
 
-export const COMUNIDADES = [cyl, madrid, cantabria, cataluna, baleares, valenciana, murcia, aragon, clm];
+export const COMUNIDADES = [cyl, madrid, cantabria, cataluna, baleares, valenciana, murcia, aragon, clm, rioja];
 
 export const comunidadDe = (provincia) => COMUNIDADES.find((c) => c.provincias.includes(provincia)) ?? null;
 
