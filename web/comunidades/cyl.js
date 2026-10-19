@@ -5,6 +5,7 @@ import { cuotas, distancia, wfs, wkt } from '../geo.js';
 
 const URBANISMO = 'https://idecyl.jcyl.es/geoserver/urbanismo/wfs';
 const MONTES = 'https://idecyl.jcyl.es/geoserver/montes/wfs';
+const VVPP = 'https://idecyl.jcyl.es/geoserver/viaspecuarias/wfs';
 
 async function pedirWfs(capa, filtro, propiedades, srs) {
   const q = new URLSearchParams({
@@ -83,13 +84,13 @@ export default {
       vvpp: {
         nombre: 'vías pecuarias',
         consulta: async () => {
-          const fs = await wfs(MONTES, 'montes:znie_cyl_vvpp_ejes', `DWITHIN(geometry,${enMetros},40,meters)`,
-            'geometry,nombre,categoria,ancho_m', 'EPSG:25830');
+          const fs = await wfs(VVPP, 'viaspecuarias:vvpp_cyl_ejes', `DWITHIN(geometry,${enMetros},40,meters)`,
+            'geometry,n_vp,m_ancho_m', 'EPSG:25830');
           const vias = fs.filter((f) => {
             const lineas = f.geometry.type === 'LineString' ? [f.geometry.coordinates] : f.geometry.coordinates;
-            return distancia(utm, lineas) <= (Number(f.properties.ancho_m) || 0) / 2;
+            return distancia(utm, lineas) <= (Number(f.properties.m_ancho_m) || 0) / 2;
           });
-          const nombres = [...new Set(vias.map((f) => `${f.properties.nombre}${f.properties.ancho_m ? ` (${Math.round(f.properties.ancho_m)} m de ancho)` : ''}`))];
+          const nombres = [...new Set(vias.map((f) => `${f.properties.n_vp}${f.properties.m_ancho_m ? ` (${Math.round(f.properties.m_ancho_m)} m de ancho)` : ''}`))];
           return nombres.length ? [{ tipo: 'vvpp', detalle: nombres.join(', ') }] : [];
         },
       },
