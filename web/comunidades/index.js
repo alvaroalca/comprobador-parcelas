@@ -14,8 +14,10 @@ import rioja from './rioja.js';
 import canarias from './canarias.js';
 import asturias from './asturias.js';
 import euskadi from './euskadi.js';
+import extremadura from './extremadura.js';
+import andalucia from './andalucia.js';
 
-export const COMUNIDADES = [cyl, madrid, cantabria, cataluna, baleares, valenciana, murcia, aragon, clm, rioja, canarias, asturias, euskadi];
+export const COMUNIDADES = [cyl, madrid, cantabria, cataluna, baleares, valenciana, murcia, aragon, clm, rioja, canarias, asturias, euskadi, extremadura, andalucia];
 
 export const comunidadDe = (provincia) => COMUNIDADES.find((c) => c.provincias.includes(provincia)) ?? null;
 

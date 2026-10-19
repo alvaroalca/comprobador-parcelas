@@ -138,6 +138,23 @@
 - Smoke test de Álvaro superado (19/10). Cinco casos en `tools/vigilancia.json`. Al integrar: `https://geo.araba.eus https://geo.bizkaia.eus https://b5m.gipuzkoa.eus https://www.geo.euskadi.eus` en el `connect-src` del portfolio.
 - Abierto: sin afecciones propias (Red Natura, montes de utilidad pública). Navarra: su catastro foral funciona igual (WFS INSPIRE con CORS, `inspire.navarra.es/services/CP/wfs`), pero sigue sin capa de clasificación.
 
+## Extremadura (19/10/2026, en local, sin desplegar)
+
+- **SIU del Ministerio** (`web/siu.js`): capa nacional de clases de suelo (`mapas.fomento.gob.es/arcgis/rest/services/SIU/CLASES_DE_SUELO/MapServer/0`), con CORS, 0,14-0,25 s y 11-235 kB por parcela. 5.900 municipios: Galicia 276 de 313, Andalucía 618 de 785, Extremadura 375 de 388, Ceuta, Melilla, Navarra 83 de 272. Solo la clase (urbano, no consolidado, urbanizable delimitado o no, no urbanizable, sistemas generales) y una marca de núcleo rural: no separa el no urbanizable protegido. Es la base para lo que falta de España (decisión de Álvaro, 19/10).
+- **Extremadura**: categorías de la IDE de Extremadura (MapServer `mapas.ideex.es/CICTEX/urbanismo`, nueve capas sin atributos, sin CORS: por el proxy `/api/ideex/`), con el SIU de respaldo donde no hay recintos. Una petición para las nueve capas (`wfsGml` admite ya una lista). En 30 puntos al azar, la IDEEX dio categoría en los 20 de Extremadura, igual que el SIU.
+- Tabla de la LOTUS (Ley 11/2018, BOE consolidado a 04/08/2026): 31 citas, 420/420 en total. La DT 2ª equipara las categorías de los planes antiguos (no urbanizable → rústico; protegido → rústico protegido) y hace autorizable todo uso que el plan no prohíba expresamente. Rústico común con 1,5 ha o más, «Con condiciones: vivienda aislada» (calificación rústica, art. 70.3; 300 m del suelo urbano, art. 66.1.c); por debajo, «Solo ligada a una explotación» (uso vinculado, art. 67.3.b, sin calificación ni superficie mínima). Rústico protegido, «Depende de la protección y del plan» (la Junta califica con informe del órgano que protege). Urbano, por solar (art. 8); no consolidado y urbanizable, «Todavía no» (art. 8.2). Rehabilitación de edificaciones tradicionales de más de 30 años en parcela menor (art. 70.3).
+- Probado en Chrome: 8 casos dirigidos (común, protegidos, Cáceres y Mérida) y 26 puntos al azar en Extremadura, todos con veredicto, 1-10 s. Sin errores propios (el Ministerio de agua daba 404 a 4 de cada 10 peticiones ese día). Sin probar todavía el respaldo del SIU dentro de Extremadura: en las muestras no hubo ningún punto sin IDEEX.
+- Falta el smoke test de Álvaro y sus casos en `tools/vigilancia.json`. Al integrar: `https://mapas.fomento.gob.es` en el `connect-src` y el prefijo `/api/ideex/` (`https://mapas.ideex.es`, ruta `/CICTEX/urbanismo`) en el Worker.
+- Abierto: sin afecciones propias. Los municipios de 10.000 habitantes o más se rigen por su propio plan (DT 2ª.1.b): la ficha lo avisa, no lo distingue. No se mide la distancia de 300 m al suelo urbano.
+
+## Andalucía (19/10/2026, en local, sin desplegar)
+
+- Sin capa regional: las clases salen del SIU del Ministerio (618 de 785 municipios). Fuera de ellos, «Sin dato». Mapa: el `export` del MapServer del SIU.
+- Tabla de la LISTA (Ley 7/2021, BOE consolidado a 07/04/2026) y de su Reglamento General (Decreto 550/2022, PDF firmado del BOJA 232; el verificador lo lee con su `cabecera`): 20 citas, 440/440 en total. La DT 1ª reparte los planes antiguos: urbano sigue urbano (solar, art. 18.1.a); no consolidado y urbanizable sectorizado, actuaciones de transformación delimitadas («Todavía no»); el resto, rústico con su categoría, y el urbanizable no sectorizado, rústico hasta que se delimite. Rústico de 2,5 ha o más, «Depende de la protección y del plan»: en rústico común cabe la vivienda unifamiliar aislada no vinculada (art. 22.2 y Reglamento art. 31: 2,5 ha, 5 en forestal; 100 m a otra vivienda; 200 m a un núcleo; 1 % de ocupación; 25 m a linderos; prestación del 15 %), pero el SIU no dice si es común o protegido. Menos de 2,5 ha, «Solo ligada a una explotación» (art. 21.2.b; Reglamento art. 29). Núcleo rural del SIU en no urbanizable, hábitat rural diseminado (art. 23). Sistemas generales, «No» (art. 116).
+- Probado en Chrome: 5 casos dirigidos y 30 puntos al azar: de las 20 parcelas andaluzas, 18 con veredicto y 2 en municipios sin SIU («Sin dato»: Cañaveral de León y Algodonales). Hallazgo: el SIU contesta 500 sin CORS al user-agent `HeadlessChrome`; `vigilar.mjs` se presenta ya como un Chrome normal. Un navegador de verdad no tiene el problema.
+- Falta el smoke test de Álvaro. Al integrar: nada nuevo en `connect-src` (`https://mapas.fomento.gob.es` ya entra con Extremadura).
+- Abierto: sin afecciones propias; la categoría del rústico (común, preservado, protegido) no está en ninguna fuente abierta encontrada; no se mide la distancia a otras viviendas ni a los núcleos.
+
 ## Vigilancia de servicios (16/10/2026)
 
 - 19/10: la Junta de CyL movió las vías pecuarias a `viaspecuarias:vvpp_cyl_ejes` y renombró sus campos. Fallaban los cinco casos de CyL; arreglado.
@@ -180,7 +197,7 @@ No hay fuente nacional: el SIU del Ministerio agrega lo que mandan las comunidad
 
 Orden propuesto tras el sondeo del 14/10: Castilla-La Mancha, La Rioja y Canarias (hechas el 16/10). País Vasco (hecho el 19/10, con catastro foral). Galicia, Andalucía y Extremadura no publican la clasificación (el 19/10, una búsqueda rápida tampoco encontró nada nuevo; en la Xunta sigue solo IURB_V9, de 2011).
 
-Falta para toda España (19/10): Navarra (sin capa de clasificación; el catastro foral ya no es el problema), Galicia, Andalucía y Extremadura (sin capa regional en el sondeo del 14/10: volver a buscar, también visores provinciales), Ceuta y Melilla (sin sondear).
+Falta para toda España (19/10): Galicia, Ceuta y Melilla con el SIU del Ministerio y la ley de cada una; Navarra, con el SIU (83 de 272 municipios) y su catastro foral.
 
 ## Ideas para después (no ahora: primero el resto de España)
 

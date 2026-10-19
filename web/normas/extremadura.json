@@ -1,0 +1,236 @@
+{
+  "fuente": {
+    "nombre": "Ley 11/2018, de 21 de diciembre, de ordenación territorial y urbanística sostenible de Extremadura (LOTUS), texto consolidado",
+    "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2019-1790",
+    "pdf": "https://www.boe.es/buscar/pdf/2019/BOE-A-2019-1790-consolidado.pdf",
+    "de": "de la Ley 11/2018 de ordenación territorial y urbanística sostenible de Extremadura"
+  },
+  "niveles": {
+    "prohibida": {
+      "titulo": "No",
+      "tono": "no"
+    },
+    "vinculada": {
+      "titulo": "Solo ligada a una explotación",
+      "tono": "condicion"
+    },
+    "aislada": {
+      "titulo": "Con condiciones: vivienda aislada",
+      "tono": "condicion"
+    },
+    "segun_proteccion": {
+      "titulo": "Depende de la protección y del plan",
+      "tono": "depende"
+    },
+    "solar": {
+      "titulo": "Sí, si la parcela es solar",
+      "tono": "si"
+    },
+    "sin_urbanizar": {
+      "titulo": "Todavía no",
+      "tono": "condicion"
+    },
+    "sin_dato": {
+      "titulo": "Sin dato",
+      "tono": "depende"
+    }
+  },
+  "orden": [
+    "solar",
+    "aislada",
+    "segun_proteccion",
+    "vinculada",
+    "sin_urbanizar",
+    "sin_dato",
+    "prohibida"
+  ],
+  "proteccion": [
+    "SG",
+    "SRP",
+    "SRP-A",
+    "SRP-E",
+    "SRP-I",
+    "SR-PEQ",
+    "SNU-PEQ",
+    "SR",
+    "SNU",
+    "SUZ",
+    "SUNC",
+    "SU",
+    "SIN-CODIGO"
+  ],
+  "vinculada": {
+    "articulo": "67",
+    "cita": "Residencial autónomo vinculado a explotación agrícola, ganadera, silvícola, cinegética y análogas, que proporcionalmente se requiera para su desarrollo y cuya permanencia queda vinculada al mantenimiento efectivo de la explotación servida."
+  },
+  "rehabilitar": {
+    "tradicional": "Se pueden rehabilitar las edificaciones tradicionales de más de 30 años aunque la parcela no llegue a 1,5 ha, si no se ha dividido en los 5 años anteriores."
+  },
+  "sin_datos": "Ni la Junta de Extremadura ni el Sistema de Información Urbana del Ministerio clasifican esta parcela. Pregunta en el ayuntamiento qué clasificación tiene.",
+  "categorias": {
+    "SU": {
+      "nombre": "Suelo urbano consolidado",
+      "articulo": "8",
+      "vivienda": "solar",
+      "explicacion": "En suelo urbano se edifica la parcela que sea solar (con acceso, agua, saneamiento, luz y alumbrado, y urbanizada según las alineaciones y rasantes del plan), o a la vez que se termina la urbanización con garantías. Lo que se puede construir lo fija el plan municipal.",
+      "cita": "La condición de solar será requisito imprescindible para que se pueda otorgar licencia de edificación."
+    },
+    "SUNC": {
+      "nombre": "Suelo urbano no consolidado",
+      "articulo": "8",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Está en un ámbito que hay que urbanizar o reformar. Hasta que se ejecute la actuación y el ayuntamiento reciba las obras, la parcela no es solar y no se puede edificar (salvo urbanizando a la vez con garantías).",
+      "cita": "Los terrenos incluidos en suelo urbano y suelo urbanizable sólo alcanzarán la condición de solar cuando se haya ejecutado el instrumento de ordenación y recibido por la administración las obras de urbanización exigibles",
+      "mas": [
+        {
+          "articulo": "8",
+          "cita": "La condición de solar será requisito imprescindible para que se pueda otorgar licencia de edificación."
+        }
+      ]
+    },
+    "SUZ": {
+      "nombre": "Suelo urbanizable",
+      "articulo": "8",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Primero hay que ordenar y urbanizar el sector. Hasta que el ayuntamiento reciba las obras de urbanización, la parcela no es solar y no se puede edificar.",
+      "cita": "Los terrenos incluidos en suelo urbano y suelo urbanizable sólo alcanzarán la condición de solar cuando se haya ejecutado el instrumento de ordenación y recibido por la administración las obras de urbanización exigibles",
+      "mas": [
+        {
+          "articulo": "8",
+          "cita": "La condición de solar será requisito imprescindible para que se pueda otorgar licencia de edificación."
+        }
+      ]
+    },
+    "SR": {
+      "nombre": "Suelo no urbanizable común",
+      "articulo": "disposición transitoria segunda",
+      "vivienda": "aislada",
+      "explicacion": "Cabe una vivienda autónoma con calificación rústica, que en el no urbanizable de los planes anteriores a la ley es autorizable salvo que el plan la prohíba expresamente: parcela de 1,5 ha como mínimo (o la que fije el plan, si es mayor), edificación aislada, a 300 m o más del suelo urbano o urbanizable con actuación urbanizadora aprobada salvo que el plan diga otra cosa, y un canon del 5 % de la inversión. La calificación la da el ayuntamiento o la Junta según el municipio.",
+      "cita": "En suelo rústico, aquellos usos no prohibidos expresamente por el planeamiento, mediante su identificación nominal concreta o mediante su adscripción a uno de los grupos o subgrupos de usos del artículo 5.5 de la Ley, se considerarán autorizables conforme al régimen previsto en el artículo 67",
+      "mas": [
+        {
+          "articulo": "70",
+          "cita": "La superficie mínima de suelo que sirva de soporte físico a las edificaciones, construcciones e instalaciones de nueva planta será de 1,5 hectáreas"
+        },
+        {
+          "articulo": "66",
+          "cita": "Se situarán a una distancia no menor de 300 metros del límite del suelo urbano o urbanizable, siempre que aquel cuente con una actuación urbanizadora aprobada por el órgano competente para ello."
+        }
+      ],
+      "rehabilitar": "tradicional",
+      "articulo_rehabilitar": "70",
+      "cita_rehabilitar": "En el caso de rehabilitación de edificaciones, construcciones o instalaciones tradicionales con antigüedad no inferior a 30 años en el momento de entrada en vigor de esta ley, situadas en parcelas inferiores a 1,5 hectáreas, se considera bastante la parcela preexistente siempre que no haya sido dividida en los 5 años inmediatamente anteriores."
+    },
+    "SR-PEQ": {
+      "nombre": "Suelo no urbanizable común",
+      "articulo": "70",
+      "vivienda": "vinculada",
+      "explicacion": "La parcela no llega a 1,5 ha, el mínimo de la calificación rústica que exige una vivienda autónoma. Sí cabe la vivienda ligada a una explotación agrícola, ganadera o forestal, en proporción a lo que la explotación necesite y mientras se mantenga: es un uso vinculado, que va con licencia municipal y sin calificación rústica.",
+      "cita": "La superficie mínima de suelo que sirva de soporte físico a las edificaciones, construcciones e instalaciones de nueva planta será de 1,5 hectáreas",
+      "rehabilitar": "tradicional",
+      "articulo_rehabilitar": "70",
+      "cita_rehabilitar": "En el caso de rehabilitación de edificaciones, construcciones o instalaciones tradicionales con antigüedad no inferior a 30 años en el momento de entrada en vigor de esta ley, situadas en parcelas inferiores a 1,5 hectáreas, se considera bastante la parcela preexistente siempre que no haya sido dividida en los 5 años inmediatamente anteriores."
+    },
+    "SNU": {
+      "nombre": "Suelo no urbanizable",
+      "articulo": "disposición transitoria segunda",
+      "vivienda": "segun_proteccion",
+      "explicacion": "La fuente (el Sistema de Información Urbana del Ministerio) no dice si este no urbanizable es común o protegido. Si es común: Cabe una vivienda autónoma con calificación rústica, que en el no urbanizable de los planes anteriores a la ley es autorizable salvo que el plan la prohíba expresamente: parcela de 1,5 ha como mínimo (o la que fije el plan, si es mayor), edificación aislada, a 300 m o más del suelo urbano o urbanizable con actuación urbanizadora aprobada salvo que el plan diga otra cosa, y un canon del 5 % de la inversión. La calificación la da el ayuntamiento o la Junta según el municipio. Si es protegido, la calificación la da la Junta con informe del organismo que lo protege, y puede negarla.",
+      "cita": "En suelo rústico, aquellos usos no prohibidos expresamente por el planeamiento, mediante su identificación nominal concreta o mediante su adscripción a uno de los grupos o subgrupos de usos del artículo 5.5 de la Ley, se considerarán autorizables conforme al régimen previsto en el artículo 67",
+      "mas": [
+        {
+          "articulo": "70",
+          "cita": "La superficie mínima de suelo que sirva de soporte físico a las edificaciones, construcciones e instalaciones de nueva planta será de 1,5 hectáreas"
+        },
+        {
+          "articulo": "66",
+          "cita": "Se situarán a una distancia no menor de 300 metros del límite del suelo urbano o urbanizable, siempre que aquel cuente con una actuación urbanizadora aprobada por el órgano competente para ello."
+        }
+      ],
+      "rehabilitar": "tradicional",
+      "articulo_rehabilitar": "70",
+      "cita_rehabilitar": "En el caso de rehabilitación de edificaciones, construcciones o instalaciones tradicionales con antigüedad no inferior a 30 años en el momento de entrada en vigor de esta ley, situadas en parcelas inferiores a 1,5 hectáreas, se considera bastante la parcela preexistente siempre que no haya sido dividida en los 5 años inmediatamente anteriores."
+    },
+    "SNU-PEQ": {
+      "nombre": "Suelo no urbanizable",
+      "articulo": "70",
+      "vivienda": "vinculada",
+      "explicacion": "La parcela no llega a 1,5 ha, el mínimo de la calificación rústica que exige una vivienda autónoma. Sí cabe la vivienda ligada a una explotación agrícola, ganadera o forestal, en proporción a lo que la explotación necesite y mientras se mantenga: es un uso vinculado, que va con licencia municipal y sin calificación rústica.",
+      "cita": "La superficie mínima de suelo que sirva de soporte físico a las edificaciones, construcciones e instalaciones de nueva planta será de 1,5 hectáreas",
+      "rehabilitar": "tradicional",
+      "articulo_rehabilitar": "70",
+      "cita_rehabilitar": "En el caso de rehabilitación de edificaciones, construcciones o instalaciones tradicionales con antigüedad no inferior a 30 años en el momento de entrada en vigor de esta ley, situadas en parcelas inferiores a 1,5 hectáreas, se considera bastante la parcela preexistente siempre que no haya sido dividida en los 5 años inmediatamente anteriores."
+    },
+    "SRP": {
+      "nombre": "Suelo no urbanizable protegido",
+      "articulo": "disposición transitoria segunda",
+      "vivienda": "segun_proteccion",
+      "explicacion": "En el rústico protegido la vivienda no está prohibida por la ley: si el plan no la prohíbe es autorizable, pero la calificación rústica la da la Junta y depende de un informe del organismo que protege ese suelo, que puede negarla. Además hacen falta 1,5 ha (salvo la vivienda ligada a una explotación).",
+      "cita": "dependiendo su autorización, en última instancia, de que quede acreditada su compatibilidad con la conservación de las características ambientales, edafológicas o los valores singulares del suelo, mediante el informe del organismo que tenga entre sus funciones la protección de los valores que indujeron la inclusión del suelo en una concreta categoría.",
+      "mas": [
+        {
+          "articulo": "69",
+          "cita": "Sobre suelo rústico protegido o restringido."
+        }
+      ],
+      "rehabilitar": "tradicional",
+      "articulo_rehabilitar": "70",
+      "cita_rehabilitar": "En el caso de rehabilitación de edificaciones, construcciones o instalaciones tradicionales con antigüedad no inferior a 30 años en el momento de entrada en vigor de esta ley, situadas en parcelas inferiores a 1,5 hectáreas, se considera bastante la parcela preexistente siempre que no haya sido dividida en los 5 años inmediatamente anteriores."
+    },
+    "SRP-A": {
+      "nombre": "Suelo no urbanizable de protección ambiental",
+      "articulo": "disposición transitoria segunda",
+      "vivienda": "segun_proteccion",
+      "explicacion": "En el rústico protegido la vivienda no está prohibida por la ley: si el plan no la prohíbe es autorizable, pero la calificación rústica la da la Junta y depende de un informe del organismo que protege ese suelo, que puede negarla. Además hacen falta 1,5 ha (salvo la vivienda ligada a una explotación). Aquí protege valores naturales: el informe suele ser del órgano ambiental de la Junta.",
+      "cita": "dependiendo su autorización, en última instancia, de que quede acreditada su compatibilidad con la conservación de las características ambientales, edafológicas o los valores singulares del suelo, mediante el informe del organismo que tenga entre sus funciones la protección de los valores que indujeron la inclusión del suelo en una concreta categoría.",
+      "mas": [
+        {
+          "articulo": "69",
+          "cita": "Sobre suelo rústico protegido o restringido."
+        }
+      ],
+      "rehabilitar": "tradicional",
+      "articulo_rehabilitar": "70",
+      "cita_rehabilitar": "En el caso de rehabilitación de edificaciones, construcciones o instalaciones tradicionales con antigüedad no inferior a 30 años en el momento de entrada en vigor de esta ley, situadas en parcelas inferiores a 1,5 hectáreas, se considera bastante la parcela preexistente siempre que no haya sido dividida en los 5 años inmediatamente anteriores."
+    },
+    "SRP-E": {
+      "nombre": "Suelo no urbanizable de protección estructural",
+      "articulo": "disposición transitoria segunda",
+      "vivienda": "segun_proteccion",
+      "explicacion": "En el rústico protegido la vivienda no está prohibida por la ley: si el plan no la prohíbe es autorizable, pero la calificación rústica la da la Junta y depende de un informe del organismo que protege ese suelo, que puede negarla. Además hacen falta 1,5 ha (salvo la vivienda ligada a una explotación). Aquí protege el valor agrícola, ganadero, forestal o hidrológico del suelo.",
+      "cita": "dependiendo su autorización, en última instancia, de que quede acreditada su compatibilidad con la conservación de las características ambientales, edafológicas o los valores singulares del suelo, mediante el informe del organismo que tenga entre sus funciones la protección de los valores que indujeron la inclusión del suelo en una concreta categoría.",
+      "mas": [
+        {
+          "articulo": "69",
+          "cita": "Sobre suelo rústico protegido o restringido."
+        }
+      ],
+      "rehabilitar": "tradicional",
+      "articulo_rehabilitar": "70",
+      "cita_rehabilitar": "En el caso de rehabilitación de edificaciones, construcciones o instalaciones tradicionales con antigüedad no inferior a 30 años en el momento de entrada en vigor de esta ley, situadas en parcelas inferiores a 1,5 hectáreas, se considera bastante la parcela preexistente siempre que no haya sido dividida en los 5 años inmediatamente anteriores."
+    },
+    "SRP-I": {
+      "nombre": "Suelo no urbanizable de protección de infraestructuras y equipamientos",
+      "articulo": "disposición transitoria segunda",
+      "vivienda": "segun_proteccion",
+      "explicacion": "En el rústico protegido la vivienda no está prohibida por la ley: si el plan no la prohíbe es autorizable, pero la calificación rústica la da la Junta y depende de un informe del organismo que protege ese suelo, que puede negarla. Además hacen falta 1,5 ha (salvo la vivienda ligada a una explotación). Aquí protege una infraestructura o un equipamiento: decide también su titular.",
+      "cita": "dependiendo su autorización, en última instancia, de que quede acreditada su compatibilidad con la conservación de las características ambientales, edafológicas o los valores singulares del suelo, mediante el informe del organismo que tenga entre sus funciones la protección de los valores que indujeron la inclusión del suelo en una concreta categoría.",
+      "mas": [
+        {
+          "articulo": "69",
+          "cita": "Sobre suelo rústico protegido o restringido."
+        }
+      ],
+      "rehabilitar": "tradicional",
+      "articulo_rehabilitar": "70",
+      "cita_rehabilitar": "En el caso de rehabilitación de edificaciones, construcciones o instalaciones tradicionales con antigüedad no inferior a 30 años en el momento de entrada en vigor de esta ley, situadas en parcelas inferiores a 1,5 hectáreas, se considera bastante la parcela preexistente siempre que no haya sido dividida en los 5 años inmediatamente anteriores."
+    },
+    "SG": {
+      "nombre": "Sistema general",
+      "articulo": "104",
+      "vivienda": "prohibida",
+      "explicacion": "El plan reserva este suelo para un sistema general (viario, zona verde, equipamiento, infraestructura). La Administración lo obtiene por cesión o expropiación: no se edifica vivienda privada.",
+      "cita": "Cuando no esté adscrito a sector o unidad de actuación algunos, se obtendrán por expropiación o permuta forzosa."
+    }
+  }
+}

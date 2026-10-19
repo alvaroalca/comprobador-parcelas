@@ -1,0 +1,191 @@
+{
+  "fuente": {
+    "nombre": "Ley 7/2021, de 1 de diciembre, de impulso para la sostenibilidad del territorio de Andalucía (LISTA), texto consolidado",
+    "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2021-20916",
+    "pdf": "https://www.boe.es/buscar/pdf/2021/BOE-A-2021-20916-consolidado.pdf",
+    "de": "de la Ley 7/2021 de impulso para la sostenibilidad del territorio de Andalucía"
+  },
+  "otras_fuentes": {
+    "andalucia-rg": {
+      "nombre": "Reglamento General de la Ley 7/2021 de impulso para la sostenibilidad del territorio de Andalucía (Decreto 550/2022; BOJA núm. 232, de 2 de diciembre de 2022)",
+      "url": "https://www.juntadeandalucia.es/boja/2022/232/BOJA22-232-00310-19728-01_00272914.pdf",
+      "pdf": "https://www.juntadeandalucia.es/boja/2022/232/BOJA22-232-00310-19728-01_00272914.pdf",
+      "de": "del Reglamento General de la Ley de impulso para la sostenibilidad del territorio de Andalucía (Decreto 550/2022)",
+      "boletin": "BOJA",
+      "cabecera": "(?m)^\\f?(?:00272914|Depósito Legal: SE-410/1979\\. ISSN: 2253-802X|DECISION|https://www\\.juntadeandalucia\\.es/eboja|BOJA|Boletín Oficial de la Junta de Andalucía|Número 232 - Viernes, 2 de diciembre de 2022 página 19728/\\d+|PÁG\\. \\d+)\\s*$"
+    }
+  },
+  "niveles": {
+    "prohibida": {
+      "titulo": "No",
+      "tono": "no"
+    },
+    "vinculada": {
+      "titulo": "Solo ligada a una explotación",
+      "tono": "condicion"
+    },
+    "segun_proteccion": {
+      "titulo": "Depende de la protección y del plan",
+      "tono": "depende"
+    },
+    "segun_plan": {
+      "titulo": "Depende del plan municipal",
+      "tono": "depende"
+    },
+    "solar": {
+      "titulo": "Sí, si la parcela es solar",
+      "tono": "si"
+    },
+    "sin_urbanizar": {
+      "titulo": "Todavía no",
+      "tono": "condicion"
+    },
+    "sin_dato": {
+      "titulo": "Sin dato",
+      "tono": "depende"
+    }
+  },
+  "orden": [
+    "solar",
+    "segun_proteccion",
+    "segun_plan",
+    "vinculada",
+    "sin_urbanizar",
+    "sin_dato",
+    "prohibida"
+  ],
+  "proteccion": [
+    "SG",
+    "HRD",
+    "SNU-PEQ",
+    "SUZND-PEQ",
+    "SNU",
+    "SUZND",
+    "SUZD",
+    "SUNC",
+    "SU",
+    "SIN-CODIGO"
+  ],
+  "vinculada": {
+    "articulo": "21",
+    "cita": "Las edificaciones destinadas a uso residencial que sean necesarias para el desarrollo de los usos ordinarios del suelo rústico, entre los que se incluyen los alojamientos para personas que desarrollen trabajos por temporada, conforme a los requisitos que se establezcan reglamentariamente."
+  },
+  "sin_datos": "El Sistema de Información Urbana del Ministerio no tiene el plan de este municipio. Pregunta en el ayuntamiento qué clasificación tiene la parcela.",
+  "categorias": {
+    "SU": {
+      "nombre": "Suelo urbano",
+      "articulo": "18",
+      "vivienda": "solar",
+      "explicacion": "En suelo urbano se edifica la parcela que sea solar (con acceso por vía pavimentada, alumbrado, agua, saneamiento y luz), o completando a la vez la urbanización que falte. Lo que se puede construir lo fija el plan municipal.",
+      "cita": "Materializar, mediante la edificación y una vez el suelo tenga la condición de solar, el aprovechamiento que corresponda a los terrenos."
+    },
+    "SUNC": {
+      "nombre": "Suelo urbano no consolidado",
+      "articulo": "disposición transitoria primera",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Está en un ámbito que el plan manda urbanizar, reformar o reordenar. Con la ley actual es una actuación de transformación urbanística: hasta que se ejecute y la parcela sea solar, no se edifica.",
+      "cita": "Los ámbitos de suelo urbano no consolidado del planeamiento general vigente tendrán el régimen que se establece en esta Ley para la promoción de actuaciones de transformación urbanística delimitadas sobre suelo urbano"
+    },
+    "SUZD": {
+      "nombre": "Suelo urbanizable sectorizado u ordenado",
+      "articulo": "disposición transitoria primera",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Es una actuación de nueva urbanización ya delimitada: primero hay que ordenarla y urbanizarla repartiendo cargas entre los propietarios. Hasta entonces la parcela no es solar.",
+      "cita": "Los ámbitos de suelo urbanizable ordenado o sectorizado podrán desarrollarse conforme a las determinaciones contenidas en el planeamiento general vigente."
+    },
+    "SUZND": {
+      "nombre": "Suelo urbanizable no sectorizado",
+      "articulo": "22",
+      "vivienda": "segun_proteccion",
+      "explicacion": "El plan lo clasificó como urbanizable no sectorizado. Con la ley actual es suelo rústico mientras no se apruebe una propuesta de delimitación que lo convierta en una actuación de nueva urbanización. Si es rústico común, cabe una vivienda unifamiliar aislada no vinculada con autorización previa del ayuntamiento y una prestación del 15 % del presupuesto: parcela de 2,5 ha como mínimo (5 ha si es terreno forestal), a más de 100 m de cualquier otra vivienda y a más de 200 m de un núcleo o de un hábitat rural diseminado, fuera de zona inundable, ocupando como mucho el 1 % de la parcela y a 25 m de los linderos. Si el plan lo protege (rústico especialmente protegido o preservado), depende de su régimen, que puede prohibirla. La fuente no dice qué categoría tiene: pregúntalo en el ayuntamiento.",
+      "cita": "En los términos que se establezcan reglamentariamente podrán autorizarse viviendas unifamiliares aisladas, siempre que no induzcan a la formación de nuevos asentamientos conforme a lo dispuesto en el apartado b del artículo 20 ni impidan el normal desarrollo de los usos ordinarios del suelo rústico.",
+      "mas": [
+        {
+          "articulo": "disposición transitoria primera",
+          "cita": "Los ámbitos de suelo urbanizable no sectorizado podrán desarrollarse conforme a los criterios y directrices establecidos en el planeamiento general vigente para proceder a su sectorización"
+        },
+        {
+          "articulo": "disposición transitoria primera",
+          "cita": "El resto de los terrenos tendrán la consideración de suelo rústico, con la categoría que le corresponda según lo dispuesto en el artículo 14."
+        },
+        {
+          "articulo": "22",
+          "cita": "siempre que no estén expresamente prohibidas por la legislación o por la ordenación territorial y urbanística, y respeten el régimen de protección que, en su caso, les sea de aplicación"
+        },
+        {
+          "norma": "andalucia-rg",
+          "articulo": "31",
+          "cita": "La parcela deberá tener una superficie mínima de 2,5 hectáreas y permitir el trazado de un círculo de 50 metros de radio en su interior. La superficie mínima cuando la parcela se localice en terrenos forestales será de 5 hectáreas."
+        },
+        {
+          "norma": "andalucia-rg",
+          "articulo": "31",
+          "cita": "La vivienda deberá situarse a una distancia superior a 100 metros respecto de cualquier otra edificación de uso residencial."
+        }
+      ]
+    },
+    "SUZND-PEQ": {
+      "nombre": "Suelo urbanizable no sectorizado",
+      "norma": "andalucia-rg",
+      "articulo": "31",
+      "vivienda": "vinculada",
+      "explicacion": "El plan lo clasificó como urbanizable no sectorizado. Con la ley actual es suelo rústico mientras no se apruebe una propuesta de delimitación que lo convierta en una actuación de nueva urbanización. La parcela no llega a 2,5 ha, el mínimo para una vivienda aislada no vinculada (5 ha en terreno forestal). Solo cabe la vivienda necesaria para una explotación agrícola, ganadera o forestal que sea una unidad técnica y económica, si el plan no la prohíbe en esta categoría de rústico.",
+      "cita": "La parcela deberá tener una superficie mínima de 2,5 hectáreas y permitir el trazado de un círculo de 50 metros de radio en su interior. La superficie mínima cuando la parcela se localice en terrenos forestales será de 5 hectáreas.",
+      "mas": [
+        {
+          "articulo": "disposición transitoria primera",
+          "cita": "Los ámbitos de suelo urbanizable no sectorizado podrán desarrollarse conforme a los criterios y directrices establecidos en el planeamiento general vigente para proceder a su sectorización"
+        },
+        {
+          "articulo": "disposición transitoria primera",
+          "cita": "El resto de los terrenos tendrán la consideración de suelo rústico, con la categoría que le corresponda según lo dispuesto en el artículo 14."
+        }
+      ]
+    },
+    "SNU": {
+      "nombre": "Suelo no urbanizable",
+      "articulo": "22",
+      "vivienda": "segun_proteccion",
+      "explicacion": "El plan lo clasificó como no urbanizable, que con la ley actual es suelo rústico. Si es rústico común, cabe una vivienda unifamiliar aislada no vinculada con autorización previa del ayuntamiento y una prestación del 15 % del presupuesto: parcela de 2,5 ha como mínimo (5 ha si es terreno forestal), a más de 100 m de cualquier otra vivienda y a más de 200 m de un núcleo o de un hábitat rural diseminado, fuera de zona inundable, ocupando como mucho el 1 % de la parcela y a 25 m de los linderos. Si el plan lo protege (rústico especialmente protegido o preservado), depende de su régimen, que puede prohibirla. La fuente no dice qué categoría tiene: pregúntalo en el ayuntamiento.",
+      "cita": "En los términos que se establezcan reglamentariamente podrán autorizarse viviendas unifamiliares aisladas, siempre que no induzcan a la formación de nuevos asentamientos conforme a lo dispuesto en el apartado b del artículo 20 ni impidan el normal desarrollo de los usos ordinarios del suelo rústico.",
+      "mas": [
+        {
+          "articulo": "22",
+          "cita": "siempre que no estén expresamente prohibidas por la legislación o por la ordenación territorial y urbanística, y respeten el régimen de protección que, en su caso, les sea de aplicación"
+        },
+        {
+          "norma": "andalucia-rg",
+          "articulo": "31",
+          "cita": "La parcela deberá tener una superficie mínima de 2,5 hectáreas y permitir el trazado de un círculo de 50 metros de radio en su interior. La superficie mínima cuando la parcela se localice en terrenos forestales será de 5 hectáreas."
+        },
+        {
+          "norma": "andalucia-rg",
+          "articulo": "31",
+          "cita": "La vivienda deberá situarse a una distancia superior a 100 metros respecto de cualquier otra edificación de uso residencial."
+        }
+      ]
+    },
+    "SNU-PEQ": {
+      "nombre": "Suelo no urbanizable",
+      "norma": "andalucia-rg",
+      "articulo": "31",
+      "vivienda": "vinculada",
+      "explicacion": "El plan lo clasificó como no urbanizable, que con la ley actual es suelo rústico. La parcela no llega a 2,5 ha, el mínimo para una vivienda aislada no vinculada (5 ha en terreno forestal). Solo cabe la vivienda necesaria para una explotación agrícola, ganadera o forestal que sea una unidad técnica y económica, si el plan no la prohíbe en esta categoría de rústico.",
+      "cita": "La parcela deberá tener una superficie mínima de 2,5 hectáreas y permitir el trazado de un círculo de 50 metros de radio en su interior. La superficie mínima cuando la parcela se localice en terrenos forestales será de 5 hectáreas."
+    },
+    "HRD": {
+      "nombre": "Hábitat rural diseminado",
+      "articulo": "23",
+      "vivienda": "segun_plan",
+      "explicacion": "Es un núcleo de casas dispersas en rústico, ligado en su origen al campo. Las condiciones para edificar dentro las fija el plan o un plan especial, sin pasar de tres viviendas por hectárea en todo el ámbito. Pregunta en el ayuntamiento si esta finca admite una casa nueva.",
+      "cita": "Sobre los ámbitos delimitados como hábitat rural diseminado por los instrumentos de ordenación urbanística general o por los planes especiales podrán desarrollarse las actuaciones urbanísticas que contribuyan a su conservación, mantenimiento y mejora"
+    },
+    "SG": {
+      "nombre": "Sistema general",
+      "articulo": "116",
+      "vivienda": "prohibida",
+      "explicacion": "El plan reserva este suelo para un sistema general (viario, zona verde, equipamiento, infraestructura). La Administración lo obtiene por cesión o expropiación: no se edifica vivienda privada.",
+      "cita": "La expropiación u ocupación directa de los terrenos destinados a sistemas generales y locales no incluidos ni adscritos a un ámbito de actuación o unidad de ejecución deberá tener lugar dentro de los cuatro años siguientes a la aprobación del instrumento de ordenación urbanística que legitime la actividad de ejecución."
+    }
+  }
+}

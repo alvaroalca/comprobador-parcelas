@@ -20,7 +20,7 @@ CSP = '; '.join([
     "style-src 'self' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
     "img-src 'self' data: blob:",
-    "connect-src 'self' https://ovc.catastro.meh.es https://idecyl.jcyl.es https://idem.comunidad.madrid https://geoservicios.cantabria.es https://sig.gencat.cat https://ideib.caib.es https://terramapas.icv.gva.es https://geoservicios.castillalamancha.es https://ogc.larioja.org https://idecan2.grafcan.es https://geo.araba.eus https://geo.bizkaia.eus https://b5m.gipuzkoa.eus https://www.geo.euskadi.eus https://www.cartociudad.es https://www.ign.es",
+    "connect-src 'self' https://ovc.catastro.meh.es https://idecyl.jcyl.es https://idem.comunidad.madrid https://geoservicios.cantabria.es https://sig.gencat.cat https://ideib.caib.es https://terramapas.icv.gva.es https://geoservicios.castillalamancha.es https://ogc.larioja.org https://idecan2.grafcan.es https://geo.araba.eus https://geo.bizkaia.eus https://b5m.gipuzkoa.eus https://www.geo.euskadi.eus https://mapas.fomento.gob.es https://www.cartociudad.es https://www.ign.es",
     "worker-src 'self'",
     "object-src 'none'",
     "frame-ancestors 'none'",
@@ -34,6 +34,7 @@ PROXIES = {
     '/api/miteco/': ('https://gis.miteco.gob.es', ('/geoserver/agua/wfs', '/geoserver/agua/wms')),
     '/api/carm/': ('https://mapas-gis-inter.carm.es', ('/geoserver/SIT_USU_PLA_URB_CARM/wfs', '/geoserver/SIT_USU_PLA_URB_CARM/wms')),
     '/api/aragon/': ('https://idearagon.aragon.es', ('/geoserver/SIUa/wfs', '/geoserver/SIUa/wms', '/geoserver/VISOR2D/wfs')),
+    '/api/ideex/': ('https://mapas.ideex.es', ('/CICTEX/urbanismo',)),
 }
 
 

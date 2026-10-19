@@ -36,7 +36,9 @@ async function arrancar() {
     .find(existsSync);
   if (!chrome) throw new Error('No encuentro Chrome: dime dónde con la variable CHROME');
   const perfil = mkdtempSync(join(tmpdir(), 'vigilar-'));
-  hijos.push(spawn(chrome, ['--headless=new', `--remote-debugging-port=${PUERTO_CDP}`, `--user-data-dir=${perfil}`, '--window-size=1280,900', 'about:blank'], { stdio: 'ignore' }));
+  // El SIU del Ministerio contesta 500 y sin CORS a «HeadlessChrome» (19/10/2026): se presenta como un Chrome normal
+  const agente = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36';
+  hijos.push(spawn(chrome, ['--headless=new', `--remote-debugging-port=${PUERTO_CDP}`, `--user-data-dir=${perfil}`, `--user-agent=${agente}`, '--window-size=1280,900', 'about:blank'], { stdio: 'ignore' }));
   let paginas = [];
   for (let i = 0; i < 40 && !paginas.length; i++) {
     await pausa(250);
