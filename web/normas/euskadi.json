@@ -1,0 +1,367 @@
+{
+  "fuente": {
+    "nombre": "Ley 2/2006, de 30 de junio, de Suelo y Urbanismo del País Vasco, texto consolidado",
+    "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2011-17400",
+    "pdf": "https://www.boe.es/buscar/pdf/2011/BOE-A-2011-17400-consolidado.pdf",
+    "de": "de la Ley 2/2006 de Suelo y Urbanismo del País Vasco"
+  },
+  "otras_fuentes": {
+    "euskadi-dot": {
+      "nombre": "Directrices de Ordenación Territorial de la Comunidad Autónoma del País Vasco (Decreto 128/2019, normas de aplicación; BOPV núm. 181, de 24 de septiembre de 2019)",
+      "url": "https://www.euskadi.eus/web01-bopv/es/bopv2/datos/2019/09/1904315a.pdf",
+      "pdf": "https://www.euskadi.eus/web01-bopv/es/bopv2/datos/2019/09/1904315a.pdf",
+      "de": "de las Directrices de Ordenación Territorial del País Vasco (Decreto 128/2019)",
+      "boletin": "BOPV",
+      "cabecera": "2019/4315 \\(\\d+/116\\)|BOLETÍN OFICIAL DEL PAÍS VASCO|martes 24 de septiembre de 2019|N\\.º 181",
+      "fin": "ANEXO II AL DECRETO 128/2019"
+    }
+  },
+  "niveles": {
+    "prohibida": {
+      "titulo": "No",
+      "tono": "no"
+    },
+    "vinculada": {
+      "titulo": "Solo ligada a una explotación",
+      "tono": "condicion"
+    },
+    "segun_plan": {
+      "titulo": "Depende del plan municipal",
+      "tono": "depende"
+    },
+    "solar": {
+      "titulo": "Sí, si la parcela es solar",
+      "tono": "si"
+    },
+    "sin_urbanizar": {
+      "titulo": "Todavía no",
+      "tono": "condicion"
+    },
+    "sin_dato": {
+      "titulo": "Sin dato",
+      "tono": "depende"
+    }
+  },
+  "orden": [
+    "solar",
+    "segun_plan",
+    "vinculada",
+    "sin_urbanizar",
+    "sin_dato",
+    "prohibida"
+  ],
+  "proteccion": [
+    "SG",
+    "SNU-EP",
+    "SNU-AS",
+    "SNU-MA",
+    "SNU-PM",
+    "SNU-EX",
+    "SNU-AE",
+    "SNU-F",
+    "SNU-AVE",
+    "SNU-AG",
+    "SNU-SV",
+    "NR",
+    "SUZNS-AE",
+    "SUZNS",
+    "SUZS-AE",
+    "SUZS",
+    "SUNC-AE",
+    "SUNC",
+    "SUC-AE",
+    "SUC",
+    "SIN-CODIGO"
+  ],
+  "vinculada": {
+    "articulo": "28",
+    "cita": "sin perjuicio de la posibilidad de autorización, previa acreditación de su necesidad, del uso de vivienda ligada funcional y permanentemente a una explotación económica hortícola o ganadera para residencia del titular y gestor de la explotación, así como de su unidad familiar."
+  },
+  "rehabilitar": {
+    "caserio": "Se puede reconstruir un caserío que conserve estructura suficiente para identificarlo, respetando como máximo su volumen original. Convertir en vivienda un edificio que nunca fue residencial cuenta como vivienda nueva."
+  },
+  "sin_datos": "Udalplan, la recopilación de planes municipales del Gobierno Vasco, no clasifica esta parcela. Pregunta en el ayuntamiento qué clasificación tiene.",
+  "categorias": {
+    "SUC": {
+      "nombre": "Suelo urbano consolidado",
+      "articulo": "23",
+      "vivienda": "solar",
+      "explicacion": "En urbano consolidado se edifica la parcela que sea solar (urbanizada según el plan, con alineaciones y rasantes), o a la vez que se completa la urbanización con garantías. Lo que se puede construir lo fija el plan municipal.",
+      "cita": "Edificar en los términos establecidos por el planeamiento urbanístico y, en su caso, ejecutar simultáneamente, debidamente afianzadas, las obras de urbanización precisas para que adquieran la condición de solar."
+    },
+    "SUC-AE": {
+      "nombre": "Suelo urbano consolidado de actividades económicas",
+      "articulo": "34",
+      "vivienda": "segun_plan",
+      "explicacion": "Es suelo urbano destinado a actividades económicas (industria, comercio, oficinas). Cada parcela queda afectada al uso que le da el plan: la vivienda solo cabe si el plan la admite como uso compatible, y en estos ámbitos no suele.",
+      "cita": "produce por ministerio de la ley la afectación de las parcelas y los solares al proceso edificatorio y al destino derivado de su calificación por la ordenación urbanística"
+    },
+    "SUNC": {
+      "nombre": "Suelo urbano no consolidado",
+      "articulo": "32",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "En urbano no consolidado hay que urbanizar o reordenar el ámbito, repartiendo cargas y cesiones entre los propietarios. Hasta que se ejecute la actuación solo caben los usos del no urbanizable, y ni siquiera la vivienda ligada a una explotación.",
+      "cita": "Los usos y las actividades previstos para el suelo no urbanizable, con la excepción de la posibilidad de reconstrucción de caseríos preexistentes y la edificación residencial de nueva planta vinculada a explotación hortícola o ganadera."
+    },
+    "SUNC-AE": {
+      "nombre": "Suelo urbano no consolidado de actividades económicas",
+      "articulo": "32",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "En urbano no consolidado hay que urbanizar o reordenar el ámbito, repartiendo cargas y cesiones entre los propietarios. Hasta que se ejecute la actuación solo caben los usos del no urbanizable, y ni siquiera la vivienda ligada a una explotación. El plan lo destina a actividades económicas (industria, comercio, oficinas): cuando se urbanice, la vivienda solo cabrá si el plan la admite como uso compatible, y en estos ámbitos no suele.",
+      "cita": "Los usos y las actividades previstos para el suelo no urbanizable, con la excepción de la posibilidad de reconstrucción de caseríos preexistentes y la edificación residencial de nueva planta vinculada a explotación hortícola o ganadera."
+    },
+    "SUZS": {
+      "nombre": "Suelo urbanizable sectorizado",
+      "articulo": "32",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Primero hay que aprobar el plan parcial del sector y urbanizarlo. Hasta que se ejecute la actuación solo caben los usos del no urbanizable, y ni siquiera la vivienda ligada a una explotación.",
+      "cita": "Los usos y las actividades previstos para el suelo no urbanizable, con la excepción de la posibilidad de reconstrucción de caseríos preexistentes y la edificación residencial de nueva planta vinculada a explotación hortícola o ganadera."
+    },
+    "SUZS-AE": {
+      "nombre": "Suelo urbanizable sectorizado de actividades económicas",
+      "articulo": "32",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Primero hay que aprobar el plan parcial del sector y urbanizarlo. Hasta que se ejecute la actuación solo caben los usos del no urbanizable, y ni siquiera la vivienda ligada a una explotación. El plan lo destina a actividades económicas (industria, comercio, oficinas): cuando se urbanice, la vivienda solo cabrá si el plan la admite como uso compatible, y en estos ámbitos no suele.",
+      "cita": "Los usos y las actividades previstos para el suelo no urbanizable, con la excepción de la posibilidad de reconstrucción de caseríos preexistentes y la edificación residencial de nueva planta vinculada a explotación hortícola o ganadera."
+    },
+    "SUZNS": {
+      "nombre": "Suelo urbanizable no sectorizado",
+      "articulo": "32",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Antes de urbanizar hace falta un plan de sectorización que lo incluya en un sector, y después su plan parcial. Mientras tanto solo caben los usos del no urbanizable, y ni siquiera la vivienda ligada a una explotación.",
+      "cita": "Los usos y las actividades previstos para el suelo no urbanizable, con la excepción de la posibilidad de reconstrucción de caseríos preexistentes y la edificación residencial de nueva planta vinculada a explotación hortícola o ganadera.",
+      "mas": [
+        {
+          "articulo": "14",
+          "cita": "Tendrán la consideración de suelo urbanizable no sectorizado aquellos terrenos que, aun habiendo sido clasificados como urbanizables, no se encuentren incluidos en ningún sector por el plan general o, en su caso, por el plan de sectorización."
+        }
+      ]
+    },
+    "SUZNS-AE": {
+      "nombre": "Suelo urbanizable no sectorizado de actividades económicas",
+      "articulo": "32",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Antes de urbanizar hace falta un plan de sectorización que lo incluya en un sector, y después su plan parcial. Mientras tanto solo caben los usos del no urbanizable, y ni siquiera la vivienda ligada a una explotación. El plan lo destina a actividades económicas (industria, comercio, oficinas): cuando se urbanice, la vivienda solo cabrá si el plan la admite como uso compatible, y en estos ámbitos no suele.",
+      "cita": "Los usos y las actividades previstos para el suelo no urbanizable, con la excepción de la posibilidad de reconstrucción de caseríos preexistentes y la edificación residencial de nueva planta vinculada a explotación hortícola o ganadera.",
+      "mas": [
+        {
+          "articulo": "14",
+          "cita": "Tendrán la consideración de suelo urbanizable no sectorizado aquellos terrenos que, aun habiendo sido clasificados como urbanizables, no se encuentren incluidos en ningún sector por el plan general o, en su caso, por el plan de sectorización."
+        }
+      ]
+    },
+    "NR": {
+      "nombre": "Núcleo rural",
+      "articulo": "29",
+      "vivienda": "segun_plan",
+      "explicacion": "Es un núcleo rural en suelo no urbanizable. Las fincas edificables, el volumen y las alturas (dos plantas como mucho) los fija el plan general o un plan especial del núcleo, y el número de viviendas no puede crecer más de un 50 % sobre las que ya hay. Pregunta en el ayuntamiento si esta finca es una de las edificables.",
+      "cita": "en desarrollo del mismo el ayuntamiento establecerá mediante plan especial su detallada ordenación, conteniendo al efecto todas las determinaciones necesarias, y en especial la disposición de las fincas vinculadas a la edificación, las fincas susceptibles de ser construidas",
+      "rehabilitar": "caserio",
+      "articulo_rehabilitar": "30",
+      "norma_rehabilitar": null,
+      "cita_rehabilitar": "Sólo será autorizable la reconstrucción de los caseríos que mantengan una estructura edificada que permita identificarlos como tales."
+    },
+    "SG": {
+      "nombre": "Sistema general",
+      "articulo": "186",
+      "vivienda": "prohibida",
+      "explicacion": "El plan reserva este suelo para un sistema general (equipamiento, espacio libre, infraestructura, cauce). La Administración lo obtiene por cesión o expropiación: no se edifica vivienda privada.",
+      "cita": "El suelo y los derechos destinados a dotaciones públicas de la red de sistemas generales y locales que no estén incluidos ni adscritos a actuación integrada alguna se obtendrán por la administración mediante expropiación."
+    },
+    "SNU-EP": {
+      "nombre": "Suelo no urbanizable de especial protección",
+      "norma": "euskadi-dot",
+      "articulo": "anexo II",
+      "vivienda": "prohibida",
+      "explicacion": "En especial protección las Directrices de Ordenación Territorial prohíben todos los usos edificatorios salvo los edificios de utilidad pública e interés social: tampoco cabe la vivienda ligada a una explotación.",
+      "cita": "las escombreras y depósitos de residuos y todos los usos edificatorios salvo los edificios de utilidad pública e interés social.",
+      "mas": [
+        {
+          "articulo": "28",
+          "cita": "Específicamente queda prohibida la construcción de nuevas edificaciones destinadas a vivienda."
+        }
+      ],
+      "rehabilitar": "caserio",
+      "articulo_rehabilitar": "30",
+      "norma_rehabilitar": null,
+      "cita_rehabilitar": "Sólo será autorizable la reconstrucción de los caseríos que mantengan una estructura edificada que permita identificarlos como tales."
+    },
+    "SNU-MA": {
+      "nombre": "Suelo no urbanizable de mejora ambiental",
+      "norma": "euskadi-dot",
+      "articulo": "anexo II",
+      "vivienda": "prohibida",
+      "explicacion": "En mejora ambiental las Directrices de Ordenación Territorial prohíben los usos edificatorios, salvo los crecimientos apoyados en núcleos que ya existen y los edificios de utilidad pública: tampoco cabe la vivienda ligada a una explotación.",
+      "cita": "todos los usos edificatorios salvo los crecimientos apoyados en núcleos preexistentes y los edificios de utilidad pública e interés social.",
+      "mas": [
+        {
+          "articulo": "28",
+          "cita": "Específicamente queda prohibida la construcción de nuevas edificaciones destinadas a vivienda."
+        }
+      ],
+      "rehabilitar": "caserio",
+      "articulo_rehabilitar": "30",
+      "norma_rehabilitar": null,
+      "cita_rehabilitar": "Sólo será autorizable la reconstrucción de los caseríos que mantengan una estructura edificada que permita identificarlos como tales."
+    },
+    "SNU-PM": {
+      "nombre": "Suelo no urbanizable de pastos montanos",
+      "norma": "euskadi-dot",
+      "articulo": "anexo II",
+      "vivienda": "prohibida",
+      "explicacion": "En pastos montanos las Directrices de Ordenación Territorial prohíben todos los usos edificatorios salvo los edificios de utilidad pública e interés social: tampoco cabe la vivienda ligada a una explotación.",
+      "cita": "las escombreras y depósitos de residuos y todos los usos edificatorios salvo los edificios de utilidad pública e interés social.",
+      "mas": [
+        {
+          "articulo": "28",
+          "cita": "Específicamente queda prohibida la construcción de nuevas edificaciones destinadas a vivienda."
+        }
+      ],
+      "rehabilitar": "caserio",
+      "articulo_rehabilitar": "30",
+      "norma_rehabilitar": null,
+      "cita_rehabilitar": "Sólo será autorizable la reconstrucción de los caseríos que mantengan una estructura edificada que permita identificarlos como tales."
+    },
+    "SNU-AS": {
+      "nombre": "Suelo no urbanizable de protección de aguas superficiales",
+      "norma": "euskadi-dot",
+      "articulo": "anexo II",
+      "vivienda": "prohibida",
+      "explicacion": "En la protección de aguas superficiales (cauces y riberas) las Directrices de Ordenación Territorial prohíben todo uso edificatorio.",
+      "cita": "se prohíben las industrias agrarias, las escombreras y depósitos de residuos y todo tipo de uso edificatorios.",
+      "mas": [
+        {
+          "articulo": "28",
+          "cita": "Específicamente queda prohibida la construcción de nuevas edificaciones destinadas a vivienda."
+        }
+      ],
+      "rehabilitar": "caserio",
+      "articulo_rehabilitar": "30",
+      "norma_rehabilitar": null,
+      "cita_rehabilitar": "Sólo será autorizable la reconstrucción de los caseríos que mantengan una estructura edificada que permita identificarlos como tales."
+    },
+    "SNU-F": {
+      "nombre": "Suelo no urbanizable forestal",
+      "articulo": "28",
+      "vivienda": "vinculada",
+      "explicacion": "Una casa nueva solo cabe ligada a una explotación hortícola o ganadera viable, como vivienda habitual de quien la lleva: con autorización previa del departamento de agricultura de la diputación, al menos un año de alta en la Seguridad Social agraria y más de la mitad de los ingresos de la explotación. La vivienda queda atada a la explotación 25 años. Fuera de eso, la vivienda nueva está prohibida en todo el no urbanizable. En forestal las Directrices dejan esa vivienda a lo que diga el planeamiento de desarrollo.",
+      "cita": "Específicamente queda prohibida la construcción de nuevas edificaciones destinadas a vivienda.",
+      "mas": [
+        {
+          "norma": "euskadi-dot",
+          "articulo": "anexo II",
+          "cita": "todos los usos edificatorios (salvo los crecimientos apoyados en núcleos preexistentes, la residencia vinculada a la explotación agraria y los edificios de utilidad pública e interés social)."
+        },
+        {
+          "norma": "euskadi-dot",
+          "articulo": "anexo II",
+          "cita": "Vivienda aislada en Suelo No Urbanizable: se trata de construcción de vivienda aislada de nueva planta en suelo no urbanizable, no vinculada a explotación agraria. Se trata de un uso prohibido para todas las categorías."
+        }
+      ],
+      "rehabilitar": "caserio",
+      "articulo_rehabilitar": "30",
+      "norma_rehabilitar": null,
+      "cita_rehabilitar": "Sólo será autorizable la reconstrucción de los caseríos que mantengan una estructura edificada que permita identificarlos como tales."
+    },
+    "SNU-AG": {
+      "nombre": "Suelo no urbanizable agroganadero y de campiña",
+      "articulo": "28",
+      "vivienda": "vinculada",
+      "explicacion": "Una casa nueva solo cabe ligada a una explotación hortícola o ganadera viable, como vivienda habitual de quien la lleva: con autorización previa del departamento de agricultura de la diputación, al menos un año de alta en la Seguridad Social agraria y más de la mitad de los ingresos de la explotación. La vivienda queda atada a la explotación 25 años. Fuera de eso, la vivienda nueva está prohibida en todo el no urbanizable.",
+      "cita": "Específicamente queda prohibida la construcción de nuevas edificaciones destinadas a vivienda.",
+      "mas": [
+        {
+          "norma": "euskadi-dot",
+          "articulo": "anexo II",
+          "cita": "los crecimientos no apoyados en núcleos preexistentes y la residencia aislada no vinculada a la explotación agraria."
+        },
+        {
+          "norma": "euskadi-dot",
+          "articulo": "anexo II",
+          "cita": "Vivienda aislada en Suelo No Urbanizable: se trata de construcción de vivienda aislada de nueva planta en suelo no urbanizable, no vinculada a explotación agraria. Se trata de un uso prohibido para todas las categorías."
+        }
+      ],
+      "rehabilitar": "caserio",
+      "articulo_rehabilitar": "30",
+      "norma_rehabilitar": null,
+      "cita_rehabilitar": "Sólo será autorizable la reconstrucción de los caseríos que mantengan una estructura edificada que permita identificarlos como tales."
+    },
+    "SNU-AVE": {
+      "nombre": "Suelo no urbanizable agroganadero de alto valor estratégico",
+      "articulo": "28",
+      "vivienda": "vinculada",
+      "explicacion": "Una casa nueva solo cabe ligada a una explotación hortícola o ganadera viable, como vivienda habitual de quien la lleva: con autorización previa del departamento de agricultura de la diputación, al menos un año de alta en la Seguridad Social agraria y más de la mitad de los ingresos de la explotación. La vivienda queda atada a la explotación 25 años. Fuera de eso, la vivienda nueva está prohibida en todo el no urbanizable.",
+      "cita": "Específicamente queda prohibida la construcción de nuevas edificaciones destinadas a vivienda.",
+      "mas": [
+        {
+          "norma": "euskadi-dot",
+          "articulo": "anexo II",
+          "cita": "los crecimientos no apoyados en núcleos preexistentes y la residencia aislada no vinculada a la explotación agraria."
+        },
+        {
+          "norma": "euskadi-dot",
+          "articulo": "anexo II",
+          "cita": "Vivienda aislada en Suelo No Urbanizable: se trata de construcción de vivienda aislada de nueva planta en suelo no urbanizable, no vinculada a explotación agraria. Se trata de un uso prohibido para todas las categorías."
+        }
+      ],
+      "rehabilitar": "caserio",
+      "articulo_rehabilitar": "30",
+      "norma_rehabilitar": null,
+      "cita_rehabilitar": "Sólo será autorizable la reconstrucción de los caseríos que mantengan una estructura edificada que permita identificarlos como tales."
+    },
+    "SNU-SV": {
+      "nombre": "Suelo no urbanizable sin vocación de uso definido",
+      "articulo": "28",
+      "vivienda": "vinculada",
+      "explicacion": "Una casa nueva solo cabe ligada a una explotación hortícola o ganadera viable, como vivienda habitual de quien la lleva: con autorización previa del departamento de agricultura de la diputación, al menos un año de alta en la Seguridad Social agraria y más de la mitad de los ingresos de la explotación. La vivienda queda atada a la explotación 25 años. Fuera de eso, la vivienda nueva está prohibida en todo el no urbanizable. Es una categoría de las Directrices de 1997 que conservan los planes antiguos: el plan municipal puede ser más estricto.",
+      "cita": "Específicamente queda prohibida la construcción de nuevas edificaciones destinadas a vivienda.",
+      "mas": [
+        {
+          "norma": "euskadi-dot",
+          "articulo": "anexo II",
+          "cita": "Vivienda aislada en Suelo No Urbanizable: se trata de construcción de vivienda aislada de nueva planta en suelo no urbanizable, no vinculada a explotación agraria. Se trata de un uso prohibido para todas las categorías."
+        }
+      ],
+      "rehabilitar": "caserio",
+      "articulo_rehabilitar": "30",
+      "norma_rehabilitar": null,
+      "cita_rehabilitar": "Sólo será autorizable la reconstrucción de los caseríos que mantengan una estructura edificada que permita identificarlos como tales."
+    },
+    "SNU-EX": {
+      "nombre": "Suelo no urbanizable de actividades extractivas",
+      "articulo": "28",
+      "vivienda": "prohibida",
+      "explicacion": "El plan destina este suelo a canteras y otras actividades extractivas. En el no urbanizable la vivienda nueva está prohibida, y la excepción de la vivienda ligada a una explotación hortícola o ganadera no encaja en este suelo.",
+      "cita": "Específicamente queda prohibida la construcción de nuevas edificaciones destinadas a vivienda.",
+      "mas": [
+        {
+          "norma": "euskadi-dot",
+          "articulo": "anexo II",
+          "cita": "Vivienda aislada en Suelo No Urbanizable: se trata de construcción de vivienda aislada de nueva planta en suelo no urbanizable, no vinculada a explotación agraria. Se trata de un uso prohibido para todas las categorías."
+        }
+      ],
+      "rehabilitar": "caserio",
+      "articulo_rehabilitar": "30",
+      "norma_rehabilitar": null,
+      "cita_rehabilitar": "Sólo será autorizable la reconstrucción de los caseríos que mantengan una estructura edificada que permita identificarlos como tales."
+    },
+    "SNU-AE": {
+      "nombre": "Suelo no urbanizable de actividades económicas",
+      "articulo": "28",
+      "vivienda": "prohibida",
+      "explicacion": "Es un enclave de actividades económicas dentro del no urbanizable. En el no urbanizable la vivienda nueva está prohibida, y la excepción de la vivienda ligada a una explotación hortícola o ganadera no encaja en este suelo.",
+      "cita": "Específicamente queda prohibida la construcción de nuevas edificaciones destinadas a vivienda.",
+      "mas": [
+        {
+          "norma": "euskadi-dot",
+          "articulo": "anexo II",
+          "cita": "Vivienda aislada en Suelo No Urbanizable: se trata de construcción de vivienda aislada de nueva planta en suelo no urbanizable, no vinculada a explotación agraria. Se trata de un uso prohibido para todas las categorías."
+        }
+      ],
+      "rehabilitar": "caserio",
+      "articulo_rehabilitar": "30",
+      "norma_rehabilitar": null,
+      "cita_rehabilitar": "Sólo será autorizable la reconstrucción de los caseríos que mantengan una estructura edificada que permita identificarlos como tales."
+    }
+  }
+}

@@ -4,6 +4,7 @@ import {
 } from './servicios.js';
 import { caja, reparto, veredicto } from './veredicto.js';
 import { afecciones } from './afecciones.js';
+import { FORALES, enForal, parcelaForal } from './catastro-foral.js';
 import { COMUNIDADES, comunidadDe, normasDe } from './comunidades/index.js';
 
 /* global maplibregl */
@@ -18,8 +19,8 @@ const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v
 const wmts = (servicio, capa, formato) =>
   `https://www.ign.es/wmts/${servicio}?service=WMTS&request=GetTile&version=1.0.0&format=${formato}` +
   `&layer=${capa}&tilematrixset=GoogleMapsCompatible&tilematrix={z}&tilerow={y}&tilecol={x}&style=default`;
-const wms = (base, capa) =>
-  `${base}?service=WMS&version=1.1.1&request=GetMap&layers=${capa}&styles=&format=image/png` +
+const wms = (base, capa, estilo = '') =>
+  `${base}?service=WMS&version=1.1.1&request=GetMap&layers=${capa}&styles=${estilo}&format=image/png` +
   '&transparent=true&srs=EPSG:3857&width=256&height=256&bbox={bbox-epsg-3857}';
 const VACIO = { type: 'FeatureCollection', features: [] };
 
@@ -31,6 +32,11 @@ const fuentesSuelo = Object.fromEntries(conCapa.map((c) => [`suelo-${c.id}`, {
   type: 'raster', tiles: [c.capaSuelo.teselas ?? wms(c.capaSuelo.wms, c.capaSuelo.capa)], tileSize: 256, bounds: c.capaSuelo.limites, attribution: c.capaSuelo.atribucion,
 }]));
 const capasSuelo = conCapa.map((c) => ({ id: `suelo-${c.id}`, type: 'raster', source: `suelo-${c.id}`, minzoom: 11, paint: { 'raster-opacity': 0.5 } }));
+// Parcelas: el WMS del Catastro estatal y, en el País Vasco, el de cada diputación
+const fuentesForales = Object.fromEntries(FORALES.map((t) => [`catastro-${t.id}`, {
+  type: 'raster', tiles: [wms(t.wms, 'CP.CadastralParcel', t.estilo)], tileSize: 256, bounds: t.caja, attribution: t.fuente,
+}]));
+const capasParcelas = ['catastro', ...FORALES.map((t) => `catastro-${t.id}`)];
 
 const mapa = new maplibregl.Map({
   container: 'mapa',
@@ -43,6 +49,7 @@ const mapa = new maplibregl.Map({
       base: { type: 'raster', tiles: [wmts('ign-base', 'IGNBaseTodo', 'image/png')], tileSize: 256, maxzoom: 19, attribution: 'CC BY 4.0 <a href="https://www.ign.es">IGN</a>' },
       orto: { type: 'raster', tiles: [wmts('pnoa-ma', 'OI.OrthoimageCoverage', 'image/jpeg')], tileSize: 256, maxzoom: 20, attribution: 'PNOA CC BY 4.0 <a href="https://www.ign.es">IGN</a>' },
       ...fuentesSuelo,
+      ...fuentesForales,
       catastro: { type: 'raster', tiles: [wms('https://ovc.catastro.meh.es/cartografia/INSPIRE/spadgcwms.aspx', 'CP.CadastralParcel')], tileSize: 256, attribution: 'Dirección General del Catastro' },
       parcela: { type: 'geojson', data: VACIO },
     },
@@ -50,7 +57,7 @@ const mapa = new maplibregl.Map({
       { id: 'base', type: 'raster', source: 'base' },
       { id: 'orto', type: 'raster', source: 'orto', layout: { visibility: 'none' } },
       ...capasSuelo,
-      { id: 'catastro', type: 'raster', source: 'catastro', minzoom: 15 },
+      ...capasParcelas.map((id) => ({ id, type: 'raster', source: id, minzoom: 15 })),
       { id: 'parcela-relleno', type: 'fill', source: 'parcela', paint: { 'fill-color': css('--rojo'), 'fill-opacity': 0.12 } },
       { id: 'parcela-borde', type: 'line', source: 'parcela', paint: { 'line-color': css('--rojo'), 'line-width': 3 } },
     ],
@@ -66,10 +73,11 @@ mapa.on('click', (e) => analizar(e.lngLat.lng, e.lngLat.lat));
 
 // En móvil el panel de capas empieza plegado: abierto tapa un tercio del mapa
 $('#capas').open = !matchMedia('(max-width: 820px)').matches;
-// La casilla «suelo» enciende y apaga las capas de todas las comunidades
+// Las casillas «suelo» y «parcelas» encienden y apagan las capas de todas las comunidades
+const grupos = { suelo: capasSuelo.map((c) => c.id), catastro: capasParcelas };
 document.querySelectorAll('#capas input').forEach((casilla) => {
   casilla.addEventListener('change', () => {
-    const ids = casilla.dataset.capa === 'suelo' ? capasSuelo.map((c) => c.id) : [casilla.dataset.capa];
+    const ids = grupos[casilla.dataset.capa] ?? [casilla.dataset.capa];
     for (const id of ids) mapa.setLayoutProperty(id, 'visibility', casilla.checked ? 'visible' : 'none');
   });
 });
@@ -231,6 +239,16 @@ async function analizar(lon, lat, busqueda = {}) {
   try {
     const punto = await referenciaEnPunto(lon, lat, busqueda);
     if (mio !== turno) return;
+    // En el País Vasco el Catastro estatal no tiene fincas: se pregunta a la diputación. Va después y no a
+    // la vez porque los enclaves de otras provincias (Treviño, Valle de Villaverde) sí son del estatal.
+    if (!punto && enForal(lon, lat)) {
+      const foral = await parcelaForal(lon, lat, busqueda.tolerancia);
+      if (mio !== turno) return;
+      if (foral) {
+        foral.datos.aproximada = foral.aproximada && busqueda.buscado;
+        return await seguir(mio, foral.datos, foral.geo, lon, lat, `@${lon.toFixed(6)},${lat.toFixed(6)}`);
+      }
+    }
     if (!punto) {
       mapa.getSource('parcela').setData(VACIO);
       return pintarAviso('Aquí no hay parcela catastral', 'Pasa en calles, caminos, ríos y fuera de España. Pincha dentro de una finca.');
@@ -275,16 +293,22 @@ async function porReferencia(mio, rc) {
 }
 
 async function completar(mio, rc, lon, lat, aproximada) {
-  const vigente = () => mio === turno;
   const [datos, geo] = await Promise.all([datosParcela(rc), geometriaParcela(rc)]);
   datos.aproximada = aproximada;
+  await seguir(mio, datos, geo, lon, lat, rc);
+}
+
+// Con la finca ya localizada (Catastro estatal o foral): mapa, enlace y veredicto. El enlace es la
+// referencia o, en los catastros forales, el punto (`@lon,lat`)
+async function seguir(mio, datos, geo, lon, lat, enlace) {
+  const vigente = () => mio === turno;
   if (!vigente()) return;
   mapa.getSource('parcela').setData({ type: 'Feature', properties: {}, geometry: { type: 'MultiPolygon', coordinates: geo.lonlat } });
   const limites = caja(geo.lonlat);
   mapa.fitBounds([[limites[0], limites[1]], [limites[2], limites[3]]], { padding: 80, maxZoom: 18, duration: 900 });
-  history.replaceState(null, '', `#${rc}`);
+  history.replaceState(null, '', `#${enlace}`);
   // Buscador y mapa son la misma herramienta: lo que se pincha queda escrito en la caja
-  if (document.activeElement !== entrada) entrada.value = datos.localizacion ?? rc;
+  if (document.activeElement !== entrada) entrada.value = datos.localizacion ?? datos.rc;
 
   const comunidad = comunidadDe(datos.provincia);
   if (datos.publica || !comunidad) return pintarResultado(datos, geo, {});
@@ -299,9 +323,12 @@ async function completar(mio, rc, lon, lat, aproximada) {
   pintarResultado(datos, geo, { v, comunidad, normas, suelo, plan, af, vigente });
 }
 
-// Enlace compartible: #referencia catastral
+// Enlace compartible: #referencia catastral, o #@lon,lat para las fincas de los catastros forales
 function abrirDesdeEnlace() {
-  const rc = normalizarReferencia(decodeURIComponent(location.hash.slice(1)));
+  const hash = decodeURIComponent(location.hash.slice(1));
+  const punto = hash.match(/^@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)$/);
+  if (punto) return analizar(Number(punto[1]), Number(punto[2]));
+  const rc = normalizarReferencia(hash);
   if (rc) analizarReferencia(rc);
 }
 mapa.on('load', abrirDesdeEnlace);
@@ -504,7 +531,7 @@ function pintarResultado(datos, geo, { v, comunidad, normas, suelo, plan, af, vi
   const aviso = el('p', 'aviso', `Esto es un cribado con datos públicos, no un certificado. Antes de comprar, pide la cédula urbanística al Ayuntamiento de ${datos.municipio ?? 'tu municipio'}.`);
   nodos.push(aviso);
 
-  const fuentes = el('p', 'fuentes', `Fuentes: Catastro (Sede Electrónica), ${comunidad.fuentes}, Ministerio para la Transición Ecológica (SNCZI), CartoCiudad e IGN, BOE.`);
+  const fuentes = el('p', 'fuentes', `Fuentes: ${datos.fuenteCatastro ?? 'Catastro (Sede Electrónica)'}, ${comunidad.fuentes}, Ministerio para la Transición Ecológica (SNCZI), CartoCiudad e IGN, BOE.`);
   nodos.push(fuentes);
   mostrar(...nodos);
 }

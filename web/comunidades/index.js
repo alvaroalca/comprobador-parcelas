@@ -13,8 +13,9 @@ import clm from './clm.js';
 import rioja from './rioja.js';
 import canarias from './canarias.js';
 import asturias from './asturias.js';
+import euskadi from './euskadi.js';
 
-export const COMUNIDADES = [cyl, madrid, cantabria, cataluna, baleares, valenciana, murcia, aragon, clm, rioja, canarias, asturias];
+export const COMUNIDADES = [cyl, madrid, cantabria, cataluna, baleares, valenciana, murcia, aragon, clm, rioja, canarias, asturias, euskadi];
 
 export const comunidadDe = (provincia) => COMUNIDADES.find((c) => c.provincias.includes(provincia)) ?? null;
 

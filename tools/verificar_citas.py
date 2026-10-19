@@ -26,6 +26,9 @@ CABECERAS = {k: f['cabecera'] for k, f in FUENTES.items() if f.get('cabecera')}
 # Norma dentro de un código electrónico del BOE, que junta varias (Asturias): `seccion` es su «§ N», que
 # encabeza cada una de sus páginas
 SECCIONES = {k: f['seccion'] for k, f in FUENTES.items() if f.get('seccion')}
+# Dónde acaba lo que se cita, si detrás se repiten encabezados (las DOT del País Vasco: el BOPV trae después
+# un segundo «ANEXO II», el del decreto, y cada anexo se toma de su última aparición)
+FINES = {k: f['fin'] for k, f in FUENTES.items() if f.get('fin')}
 # La caché de antes se llamaba rucyl
 ALIAS = {'cyl': 'rucyl'}
 
@@ -41,6 +44,8 @@ def texto_boe(norma):
             pdf.write_bytes(urllib.request.urlopen(peticion).read())
         subprocess.run(['pdftotext', '-enc', 'UTF-8', str(pdf), str(txt)], check=True)
     texto = txt.read_text(encoding='utf-8')
+    if norma in FINES:
+        texto = texto.split(FINES[norma])[0]
     if norma in SECCIONES:
         marca = re.compile(rf'(?m)^{re.escape(SECCIONES[norma])} ')
         texto = '\f'.join(pagina for pagina in texto.split('\f') if marca.search(pagina))

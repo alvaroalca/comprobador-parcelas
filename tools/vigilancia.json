@@ -194,5 +194,40 @@
     "caso": "q:Calle Uría 10, Oviedo",
     "respuesta": "Sí, si la parcela es solar",
     "categoria": "Suelo urbano consolidado (SU-C)"
+  },
+  {
+    "comunidad": "País Vasco",
+    "nombre": "Garai (agroganadero y campiña)",
+    "caso": "@-2.614600,43.181400",
+    "respuesta": "Solo ligada a una explotación",
+    "categoria": "En la parte de suelo no urbanizable agroganadero y de campiña: 96 % de la parcela"
+  },
+  {
+    "comunidad": "País Vasco",
+    "nombre": "Urnieta (campiña y forestal)",
+    "caso": "@-1.975700,43.218100",
+    "respuesta": "Solo ligada a una explotación",
+    "categoria": "En la parte de suelo no urbanizable agroganadero y de campiña: 74 % de la parcela"
+  },
+  {
+    "comunidad": "País Vasco",
+    "nombre": "San Millán (especial protección)",
+    "caso": "@-2.305500,42.835200",
+    "respuesta": "No",
+    "categoria": "En la parte de suelo no urbanizable de especial protección: 98 % de la parcela"
+  },
+  {
+    "comunidad": "País Vasco",
+    "nombre": "Amorebieta (actividades económicas)",
+    "caso": "@-2.768100,43.234500",
+    "respuesta": "Depende del plan municipal",
+    "categoria": "En la parte de suelo urbano consolidado de actividades económicas: 99 % de la parcela"
+  },
+  {
+    "comunidad": "País Vasco",
+    "nombre": "Gran Vía 1, Bilbao (búsqueda)",
+    "caso": "q:Gran Vía de Don Diego López de Haro 1, Bilbao",
+    "respuesta": "Sí, si la parcela es solar",
+    "categoria": "Suelo urbano consolidado (SUC)"
   }
 ]

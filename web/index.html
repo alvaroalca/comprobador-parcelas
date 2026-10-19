@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Comprobador de parcelas</title>
-<meta name="description" content="Busca o pincha una finca de Castilla y León, Madrid, Cantabria, Cataluña, Baleares, la Comunitat Valenciana, Murcia, Aragón, Castilla-La Mancha, La Rioja, Canarias o Asturias y mira si se puede hacer una casa: clase de suelo, veredicto y el artículo de la norma urbanística que lo decide.">
+<meta name="description" content="Busca o pincha una finca de Castilla y León, Madrid, Cantabria, Cataluña, Baleares, la Comunitat Valenciana, Murcia, Aragón, Castilla-La Mancha, La Rioja, Canarias, Asturias o el País Vasco y mira si se puede hacer una casa: clase de suelo, veredicto y el artículo de la norma urbanística que lo decide.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
 </head>
 <body>
 <header id="barra">
-  <a id="marca" href="./"><b>¿Se puede construir?</b><span>Comprobador de parcelas · ocho comunidades autónomas</span></a>
+  <a id="marca" href="./"><b>¿Se puede construir?</b><span>Comprobador de parcelas · comunidad a comunidad</span></a>
   <form id="buscador" role="search" autocomplete="off">
     <input id="q" type="search" placeholder="Calle, pueblo, ref. catastral o polígono y parcela" aria-label="Buscar dirección, pueblo, referencia catastral o polígono y parcela" role="combobox" aria-controls="lista" aria-expanded="false" aria-autocomplete="list">
     <button type="submit">Comprobar</button>
@@ -69,8 +69,12 @@
         <button data-rc="33051A03100328">Finca en Pravia <small>Asturias, núcleo rural</small></button>
         <button data-rc="33073A15501897">Finca en Tineo <small>Asturias, no urbanizable de interés</small></button>
         <button data-rc="33012A06401304">Monte en Cangas de Onís <small>Asturias, Parque Nacional de Picos de Europa</small></button>
+        <button data-lon="-2.6146" data-lat="43.1814">Finca en Garai <small>Bizkaia, agroganadero y de campiña</small></button>
+        <button data-lon="-1.9757" data-lat="43.2181">Finca en Urnieta <small>Gipuzkoa, partida entre campiña y forestal</small></button>
+        <button data-lon="-2.3055" data-lat="42.8352">Monte en San Millán <small>Álava, especial protección</small></button>
+        <button data-lon="-2.7681" data-lat="43.2345">Parcela en Amorebieta <small>Bizkaia, urbano de actividades económicas</small></button>
       </div>
-      <p class="nota">Cubre los 2.248 municipios de Castilla y León, los 179 de la Comunidad de Madrid, los 102 de Cantabria, los 947 de Cataluña, los 67 de Baleares, los 542 de la Comunitat Valenciana, 33 de los 45 de Murcia, 711 de los 731 de Aragón, los 919 de Castilla-La Mancha, los 174 de La Rioja (124 con su plan publicado) los 88 de Canarias y los 78 de Asturias con los datos públicos del Catastro y de cada comunidad. Es un cribado previo, no un certificado.</p>
+      <p class="nota">Cubre los 2.248 municipios de Castilla y León, los 179 de la Comunidad de Madrid, los 102 de Cantabria, los 947 de Cataluña, los 67 de Baleares, los 542 de la Comunitat Valenciana, 33 de los 45 de Murcia, 711 de los 731 de Aragón, los 919 de Castilla-La Mancha, los 174 de La Rioja (124 con su plan publicado), los 88 de Canarias, los 78 de Asturias y los 252 del País Vasco con los datos públicos del Catastro (en el País Vasco, de las diputaciones forales) y de cada comunidad. Es un cribado previo, no un certificado.</p>
     </section>
     <section id="resultado" hidden></section>
   </aside>

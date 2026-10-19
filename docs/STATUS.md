@@ -128,8 +128,19 @@
 - Smoke test de Álvaro superado (16/10). Al integrar: nada en `connect-src` (todo es del mismo origen), pero sí copiar `web/datos/asturias/`.
 - Abierto: sin capa de suelo en el mapa. Sin afecciones propias (montes, vías pecuarias, Red Natura: la IDE de Asturias no tiene un WFS localizable). El extracto envejece: regenerarlo cuando cambien planes.
 
+## País Vasco (19/10/2026, en local, sin desplegar)
+
+- **Catastro foral** (`web/catastro-foral.js`): los WFS INSPIRE de Araba y Gipuzkoa y, en Bizkaia, la consulta REST del ArcGIS que hay debajo de su WFS (capa 8). Todos con CORS y 0,3-1,5 s por petición. El WFS de Bizkaia pasó una hora contestando con un 200 vacío a 23 de cada 30 peticiones; la consulta REST no falló ninguna. Una respuesta vacía cuenta como error, nunca como «sin parcela». No hay consulta de punto a finca: se pide una caja de 1 m alrededor del punto (22 m con la tolerancia de un portal) y se busca la parcela que lo contiene. Solo se pregunta si el Catastro estatal no tiene finca en el punto, así los enclaves de otras provincias (Treviño) siguen yendo por el estatal. Gipuzkoa devuelve todas las versiones de cada parcela: vale la que no tiene `endLifespanVersion`. El enlace de una finca foral es el punto (`#@lon,lat`). Funcionan el clic, los ejemplos y la búsqueda de portal; la referencia y el «polígono y parcela» forales no (cada diputación tiene su formato). El municipio sale de Udalplan (`COD_IDEN`, código INE) con los nombres del INE de 2026 (`web/datos/municipios-euskadi.json`).
+- **Planeamiento**: Udalplan del Gobierno Vasco (GeoEuskadi, ArcGIS REST en 25830). Nueve capas que forman un mosaico sin solapes (60 puntos al azar): suelo residencial y de actividades económicas con su clase, seis de sistemas generales y el no urbanizable con las categorías de las DOT. 251 de 252 municipios; Usansolo sigue con el plan de Galdakao. Planes de 1986 a 2023.
+- Tabla de la Ley 2/2006 (BOE, consolidada a 29/12/2025) y de las DOT (Decreto 128/2019, anexo II de las normas, del PDF del BOPV): 47 citas, 389/389 en total. El verificador admite `fin` en una fuente (el BOPV repite «ANEXO II» después). En el no urbanizable la vivienda nueva está prohibida salvo la ligada a una explotación hortícola o ganadera (art. 28.1.a, requisitos del art. 31). Según la matriz de las DOT, esa vivienda ligada cabe en forestal y en agroganadera y campiña (también en alto valor estratégico), y está prohibida en especial protección, mejora ambiental, pastos montanos y protección de aguas superficiales. Núcleo rural, «Depende del plan» (art. 29.3). Urbano no consolidado y urbanizables, «Todavía no» (art. 32.1.a; se cita la letra a para no citar el «programa de actuación urbanizadora», que la Ley 6/2025 sustituye). Urbano de actividades económicas, «Depende del plan» (art. 34). Rehabilitación: reconstrucción de caseríos (art. 30).
+- Probado en Chrome: 14 casos dirigidos (las tres capitales, cada categoría, Treviño y un portal de Bilbao) y 36 parcelas al azar por los tres territorios. Sin errores propios; veredicto en 0,5-4,9 s. En el oeste de Álava salen en consola teselas del WMS de Cantabria con 500 y sin CORS: ese servidor falla fuera de su comunidad y su caja (`limites`) llega a -3,1.
+- Mapa: el WMS de parcelas de Bizkaia y Álava, con el estilo `LabelOnReferencePoint` (el de por defecto repetía el número en cada tesela); Gipuzkoa no lo atiende y va con el suyo.
+- Smoke test de Álvaro superado (19/10). Cinco casos en `tools/vigilancia.json`. Al integrar: `https://geo.araba.eus https://geo.bizkaia.eus https://b5m.gipuzkoa.eus https://www.geo.euskadi.eus` en el `connect-src` del portfolio.
+- Abierto: sin afecciones propias (Red Natura, montes de utilidad pública). Navarra: su catastro foral funciona igual (WFS INSPIRE con CORS, `inspire.navarra.es/services/CP/wfs`), pero sigue sin capa de clasificación.
+
 ## Vigilancia de servicios (16/10/2026)
 
+- 19/10: la Junta de CyL movió las vías pecuarias a `viaspecuarias:vvpp_cyl_ejes` y renombró sus campos. Fallaban los cinco casos de CyL; arreglado.
 - `tools/vigilar.mjs` y `tools/vigilancia.json`: 25 casos, de dos a cinco por comunidad, con su veredicto y categoría grabados. 25/25 en 1-7 s por caso. Probado con el fallo real de la Junta de CyL (campo `geom` en lugar de `geometry`): los cinco casos de CyL salen con el 400 y el resto pasa.
 
 ## Pendiente
@@ -158,18 +169,18 @@ No hay fuente nacional: el SIU del Ministerio agrega lo que mandan las comunidad
 | Murcia | `mapas-gis-inter.carm.es/geoserver/SIT_USU_PLA_URB_CARM/wfs` · `clases_plu_ze_37mun` | no | Hecha, por proxy. |
 | Aragón | `idearagon.aragon.es/geoserver/SIUa/wfs` · `SIUa:clasificacion_idearagon` | no | Hecha, por proxy. |
 | Asturias | `visorrpgur.asturias.es:8090/geoserver` · `n03`-`n06` | no | Hecha (16/10), con extracto estático. |
-| País Vasco | ArcGIS REST `www.geo.euskadi.eus/geoeuskadi/rest/services/U11/WMS_PLANGINTZA/MapServer` · Udalplan, capas 802-811 (residencial, actividades económicas, sistemas generales, no urbanizable con `SUBTIPO`) | `*` | Consultable por geometría (sondeo 14/10). Bloqueo: el catastro es foral (tres diputaciones), el punto → finca no funciona. |
+| País Vasco | ArcGIS REST `www.geo.euskadi.eus/geoeuskadi/rest/services/U11/WMS_PLANGINTZA/MapServer` · Udalplan, capas 802-811 (residencial, actividades económicas, sistemas generales, no urbanizable con `SUBTIPO`) | `*` | Hecha (19/10), con los catastros forales de las tres diputaciones. |
 | Canarias | `idecan2.grafcan.es/ServicioWMS/Planeamiento` · `CLA` (código `cod`) | `*` | Hecha (16/10), contando píxeles. |
 | Extremadura | `mapas.ideex.es/CICTEX/planeamientoRefundido` | | Su WFS solo trae la división en hojas de los planos escaneados. Sin clasificación. |
-| Navarra | IDENA (`idena.navarra.es/ogc/wfs`, 1.053 capas) | `*` | Sin capa de clasificación: solo la figura de plan por municipio e indicadores. Además, catastro foral. |
+| Navarra | IDENA (`idena.navarra.es/ogc/wfs`, 1.053 capas) | `*` | Sin capa de clasificación: solo la figura de plan por municipio e indicadores. Su catastro foral sí sirve (19/10). |
 | Galicia | ArcGIS `ideg.xunta.gal/servizos/rest/services/Ordenacion/POL_AD_PlaneamientoUrbanistico/MapServer/29` (IURB_V9) | sí | Clasificación homogeneizada (`SiglaHomog`) solo de los concellos del litoral y de 2011, con planes «no adaptados a la LOUGA». No sirve como fuente vigente. |
 | Andalucía | Solo WMS de algunos municipios y documentos escaneados (Consulta del Planeamiento) | | Sin capa regional (sondeo 14/10). |
 | Castilla-La Mancha | ArcGIS REST `geoservicios.castillalamancha.es/arcgis/rest/services/Vector/Sistema_Informacion_Urbana/MapServer/1` (SIU) | sí | Hecha (16/10). |
 | La Rioja | MapServer `ogc.larioja.org/wfs/request.php` · `urbanismo_planeamiento_urbanistico` | `*` | Hecha (16/10), con la Directriz de suelo no urbanizable. |
 
-Orden propuesto tras el sondeo del 14/10: Castilla-La Mancha, La Rioja y Canarias (hechas el 16/10). País Vasco y Navarra esperan a un adaptador de catastro foral; Galicia, Andalucía y Extremadura no publican la clasificación; Asturias, parada (ver arriba).
+Orden propuesto tras el sondeo del 14/10: Castilla-La Mancha, La Rioja y Canarias (hechas el 16/10). País Vasco (hecho el 19/10, con catastro foral). Galicia, Andalucía y Extremadura no publican la clasificación (el 19/10, una búsqueda rápida tampoco encontró nada nuevo; en la Xunta sigue solo IURB_V9, de 2011).
 
-Falta para toda España (16/10): País Vasco y Navarra (adaptador de catastro foral), Galicia, Andalucía y Extremadura (sin capa regional en el sondeo del 14/10: volver a buscar, también visores provinciales), Ceuta y Melilla (sin sondear).
+Falta para toda España (19/10): Navarra (sin capa de clasificación; el catastro foral ya no es el problema), Galicia, Andalucía y Extremadura (sin capa regional en el sondeo del 14/10: volver a buscar, también visores provinciales), Ceuta y Melilla (sin sondear).
 
 ## Ideas para después (no ahora: primero el resto de España)
 
