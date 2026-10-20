@@ -155,6 +155,16 @@
 - Smoke test de Álvaro superado (20/10). Tres casos en `tools/vigilancia.json`. Al integrar: nada nuevo en `connect-src` (`https://mapas.fomento.gob.es` ya entra con Extremadura).
 - Abierto: sin afecciones propias; la categoría del rústico (común, preservado, protegido) no está en ninguna fuente abierta encontrada; no se mide la distancia a otras viviendas ni a los núcleos.
 
+## Navarra (20/10/2026, en local, sin desplegar)
+
+- IDENA sigue sin clasificación por recintos (WFS y WMS revisados el 20/10: solo indicadores por municipio, el inventario de planes y el ámbito de los POT, sin categorías del no urbanizable). Las clases salen del SIU: 83 de 272 municipios, pero todos los de más de 1.300 habitantes (unos 626.000 de 684.000 habitantes, el 91 %); el mayor sin dato es Mendigorría (1.275). Por territorio la cobertura es mucho menor: en 30 puntos al azar, 9 de 16 parcelas navarras salieron «Sin dato». Las Bardenas Reales no son municipio y tampoco tienen SIU. Sin núcleos rurales marcados en Navarra.
+- Parcela del catastro foral (`inspire.navarra.es/services/CP/wfs`, CORS, 0,2-0,6 s). Municipio, figura de plan y enlace a su ficha del SIUN, de `INFOTU_Pol_PlanUrbMun` de IDENA por geometría (0,1 s). El código de municipio del catastro y de IDENA es el del INE, también en los 9xx.
+- Tabla del texto refundido (DFL 1/2017, BOE consolidado a 12/03/2026): 19 citas, 459/459 en total. En el no urbanizable la vivienda unifamiliar aislada solo cabe en el de preservación, si el plan municipal la prevé expresamente y en las áreas que fijen el reglamento o los POT, con 1 ha como mínimo (art. 115): de 1 ha en adelante, «Depende de la protección y del plan»; por debajo, «No» (salvo barrio rural tradicional delimitado por el plan, 1.500 m², art. 116, que el SIU no marca). No hay vivienda vinculada a explotación en la ley navarra. Urbano por solar (arts. 91 y 95); no consolidado y urbanizables, «Todavía no» (arts. 93, 95 y 97); sistemas generales, «No» (art. 121). Rehabilitar: obras sin cambio de uso permitidas, cambio de uso autorizable (art. 110).
+- Afecciones de IDENA: montes de utilidad pública (`FOREST_Pol_MUP1912`), vías pecuarias (ejes sin anchura más lindes) y Red Natura (ZEC y ZEPA). Probadas: cañada en Tudela, ZEC de Bardenas en Arguedas, montes en Aranguren.
+- Probado en Chrome: 7 casos dirigidos, 5 ejemplos y 30 puntos al azar. Sin errores propios; veredicto en 1-6 s. El IGN falló alguna tesela de zoom 18 y MapLibre la repite en consola como «Failed to fetch» sin URL: `vigilar.mjs` ignora ese eco (la tesela fallida ya sale con su URL como error de red).
+- Smoke test de Álvaro superado (20/10). Tres casos en `tools/vigilancia.json`. Al integrar: `https://inspire.navarra.es https://idena.navarra.es` en el `connect-src`.
+- Abierto: espacios naturales protegidos (IDENA los tiene: `BIODIV_Pol_RENA`). Sin consulta por referencia ni por polígono y parcela forales.
+
 ## Vigilancia de servicios (16/10/2026)
 
 - 20/10: 39 casos con los seis de Extremadura y Andalucía. Ese día GeoEuskadi no respondía (`ERR_CONNECTION_TIMED_OUT`): los cinco casos del País Vasco fallaban y cuatro dejaban la ficha cargando más de 40 s, sin aviso al usuario. Arreglado: toda llamada a un servicio pasa por `traer` (`geo.js`), que la corta a los 20 s sin reintento y la ficha dice qué servidor no respondió. `--grabar` reescribe todos los casos, también los que fallan: grabar solo con la vigilancia limpia o revisar el diff.
@@ -190,7 +200,7 @@ No hay fuente nacional: el SIU del Ministerio agrega lo que mandan las comunidad
 | País Vasco | ArcGIS REST `www.geo.euskadi.eus/geoeuskadi/rest/services/U11/WMS_PLANGINTZA/MapServer` · Udalplan, capas 802-811 (residencial, actividades económicas, sistemas generales, no urbanizable con `SUBTIPO`) | `*` | Hecha (19/10), con los catastros forales de las tres diputaciones. |
 | Canarias | `idecan2.grafcan.es/ServicioWMS/Planeamiento` · `CLA` (código `cod`) | `*` | Hecha (16/10), contando píxeles. |
 | Extremadura | `mapas.ideex.es/CICTEX/planeamientoRefundido` | | Su WFS solo trae la división en hojas de los planos escaneados. Sin clasificación. |
-| Navarra | IDENA (`idena.navarra.es/ogc/wfs`, 1.053 capas) | `*` | Sin capa de clasificación: solo la figura de plan por municipio e indicadores. Su catastro foral sí sirve (19/10). |
+| Navarra | IDENA (`idena.navarra.es/ogc/wfs`, 1.053 capas) | `*` | Hecha (20/10) con el SIU. Sin capa de clasificación: solo la figura de plan por municipio e indicadores. Su catastro foral sí sirve (19/10). |
 | Galicia | ArcGIS `ideg.xunta.gal/servizos/rest/services/Ordenacion/POL_AD_PlaneamientoUrbanistico/MapServer/29` (IURB_V9) | sí | Clasificación homogeneizada (`SiglaHomog`) solo de los concellos del litoral y de 2011, con planes «no adaptados a la LOUGA». No sirve como fuente vigente. |
 | Andalucía | Solo WMS de algunos municipios y documentos escaneados (Consulta del Planeamiento) | | Sin capa regional (sondeo 14/10). |
 | Castilla-La Mancha | ArcGIS REST `geoservicios.castillalamancha.es/arcgis/rest/services/Vector/Sistema_Informacion_Urbana/MapServer/1` (SIU) | sí | Hecha (16/10). |
@@ -198,7 +208,7 @@ No hay fuente nacional: el SIU del Ministerio agrega lo que mandan las comunidad
 
 Orden propuesto tras el sondeo del 14/10: Castilla-La Mancha, La Rioja y Canarias (hechas el 16/10). País Vasco (hecho el 19/10, con catastro foral). Galicia, Andalucía y Extremadura no publican la clasificación (el 19/10, una búsqueda rápida tampoco encontró nada nuevo; en la Xunta sigue solo IURB_V9, de 2011).
 
-Falta para toda España (19/10): Galicia, Ceuta y Melilla con el SIU del Ministerio y la ley de cada una; Navarra, con el SIU (83 de 272 municipios) y su catastro foral.
+Falta para toda España (20/10): Galicia, Ceuta y Melilla con el SIU del Ministerio y la ley de cada una.
 
 ## Ideas para después (no ahora: primero el resto de España)
 

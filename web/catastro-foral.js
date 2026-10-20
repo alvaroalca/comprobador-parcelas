@@ -1,6 +1,7 @@
-// Catastros forales del País Vasco: cada diputación publica sus parcelas en un WFS INSPIRE propio y el
-// Catastro estatal no tiene nada ahí. Sin consulta de punto a finca: se pide una caja pequeña alrededor del
-// punto y se busca la parcela que lo contiene. Medido el 19/10/2026: los tres con CORS, 0,3 s por petición.
+// Catastros forales del País Vasco y Navarra: cada diputación (en Navarra, el Gobierno foral) publica sus
+// parcelas en un WFS INSPIRE propio y el Catastro estatal no tiene nada ahí. Sin consulta de punto a finca:
+// se pide una caja pequeña alrededor del punto y se busca la parcela que lo contiene. Medido el 19/10/2026:
+// los tres vascos con CORS, 0,3 s por petición; Navarra (20/10), igual.
 // Bizkaia va por la consulta REST del ArcGIS que hay debajo de su WFS: el mismo día, durante una hora, el WFS
 // contestó con un 200 vacío a 23 de cada 30 peticiones y la consulta REST, a ninguna de 15.
 
@@ -11,7 +12,8 @@ const BIZKAIA = 'https://geo.bizkaia.eus/arcgisserverinspire/rest/services/Catas
 // `caja` en lon/lat, holgada: donde se pisan se pregunta a las dos y responde la que tenga la finca.
 // `estilo` del WMS: el de por defecto rotula la parcela en cada tesela que toca (una finca grande sale con
 // su número diez veces); con LabelOnReferencePoint, una vez. Gipuzkoa no lo atiende: con el suyo por defecto
-// el campo se lee bien y en los cascos los números se amontonan incluso a zoom 17.
+// el campo se lee bien y en los cascos los números se amontonan incluso a zoom 17. Navarra llama a la capa
+// del WMS `CP:CadastralParcel` y su estilo por defecto ya rotula una vez.
 export const FORALES = [
   {
     id: 'araba', provincia: '01', nombre: 'Araba/Álava', fuente: 'Catastro de Álava (Diputación Foral)',
@@ -32,6 +34,13 @@ export const FORALES = [
     caja: [-2.62, 42.88, -1.72, 43.41],
     wfs: 'https://b5m.gipuzkoa.eus/inspire/wfs/gipuzkoa_wfs_cp',
     wms: 'https://b5m.gipuzkoa.eus/inspire/wms/gipuzkoa_wms',
+  },
+  {
+    id: 'navarra', provincia: '31', nombre: 'Navarra', fuente: 'Registro de la Riqueza Territorial de Navarra',
+    caja: [-2.51, 41.90, -0.72, 43.32],
+    wfs: 'https://inspire.navarra.es/services/CP/wfs',
+    wms: 'https://inspire.navarra.es/services/CP/wms',
+    capa: 'CP:CadastralParcel',
   },
 ];
 

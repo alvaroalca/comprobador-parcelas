@@ -271,5 +271,26 @@
     "caso": "q:Calle Sierpes 10, Sevilla",
     "respuesta": "Sí, si la parcela es solar",
     "categoria": "Suelo urbano"
+  },
+  {
+    "comunidad": "Navarra",
+    "nombre": "Calle Estafeta 10, Pamplona (búsqueda)",
+    "caso": "q:Calle Estafeta 10, Pamplona",
+    "respuesta": "Sí, si la parcela es solar",
+    "categoria": "Suelo urbano"
+  },
+  {
+    "comunidad": "Navarra",
+    "nombre": "Tudela (cañada)",
+    "caso": "@-1.612000,42.070000",
+    "respuesta": "Depende de la protección y del plan",
+    "categoria": "En la parte de suelo no urbanizable: 91 % de la parcela"
+  },
+  {
+    "comunidad": "Navarra",
+    "nombre": "Tafalla (menos de 1 ha)",
+    "caso": "@-1.660000,42.530000",
+    "respuesta": "No",
+    "categoria": "Suelo no urbanizable (SNU-PEQ)"
   }
 ]

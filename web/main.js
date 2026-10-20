@@ -34,7 +34,7 @@ const fuentesSuelo = Object.fromEntries(conCapa.map((c) => [`suelo-${c.id}`, {
 const capasSuelo = conCapa.map((c) => ({ id: `suelo-${c.id}`, type: 'raster', source: `suelo-${c.id}`, minzoom: 11, paint: { 'raster-opacity': 0.5 } }));
 // Parcelas: el WMS del Catastro estatal y, en el País Vasco, el de cada diputación
 const fuentesForales = Object.fromEntries(FORALES.map((t) => [`catastro-${t.id}`, {
-  type: 'raster', tiles: [wms(t.wms, 'CP.CadastralParcel', t.estilo)], tileSize: 256, bounds: t.caja, attribution: t.fuente,
+  type: 'raster', tiles: [wms(t.wms, t.capa ?? 'CP.CadastralParcel', t.estilo)], tileSize: 256, bounds: t.caja, attribution: t.fuente,
 }]));
 const capasParcelas = ['catastro', ...FORALES.map((t) => `catastro-${t.id}`)];
 

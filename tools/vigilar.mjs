@@ -22,6 +22,9 @@ const pausa = (ms) => new Promise((ok) => setTimeout(ok, ms));
 
 // Errores de consola que no son de un servicio del comprobador: teselas del fondo del IGN
 const AJENO = /ign\.es\/wmts|favicon/;
+// MapLibre repite en consola, sin la URL, cada tesela que no carga («Failed to fetch»). La tesela fallida
+// ya sale como error de red con su URL (y se descarta si es del IGN): el eco no aporta nada.
+const ECO_TESELA = /^TypeError: Failed to fetch[\s\S]*maplibre-gl-csp\.js/;
 
 const responde = async (url) => { try { return (await fetch(url)).ok; } catch { return false; } };
 
@@ -60,7 +63,10 @@ async function main() {
     const m = JSON.parse(e.data);
     if (m.id && pendientes.has(m.id)) { pendientes.get(m.id)(m); pendientes.delete(m.id); }
     if (m.method === 'Runtime.exceptionThrown') errores.push(m.params.exceptionDetails.exception?.description ?? m.params.exceptionDetails.text);
-    if (m.method === 'Runtime.consoleAPICalled' && m.params.type === 'error') errores.push(m.params.args.map((a) => a.value ?? a.description).join(' '));
+    if (m.method === 'Runtime.consoleAPICalled' && m.params.type === 'error') {
+      const texto = m.params.args.map((a) => a.value ?? a.description).join(' ');
+      if (!ECO_TESELA.test(texto)) errores.push(texto);
+    }
     if (m.method === 'Log.entryAdded' && m.params.entry.level === 'error' && !AJENO.test(`${m.params.entry.text} ${m.params.entry.url ?? ''}`)) errores.push(`${m.params.entry.text} ${m.params.entry.url ?? ''}`);
   });
   const cmd = (method, params = {}) => new Promise((ok) => { const i = ++id; pendientes.set(i, ok); ws.send(JSON.stringify({ id: i, method, params })); });

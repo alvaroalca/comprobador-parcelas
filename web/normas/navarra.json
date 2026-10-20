@@ -1,0 +1,164 @@
+{
+  "fuente": {
+    "nombre": "Decreto Foral Legislativo 1/2017, de 26 de julio, por el que se aprueba el Texto Refundido de la Ley Foral de Ordenación del Territorio y Urbanismo, texto consolidado",
+    "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2017-12907",
+    "pdf": "https://www.boe.es/buscar/pdf/2017/BOE-A-2017-12907-consolidado.pdf",
+    "de": "del Texto Refundido de la Ley Foral de Ordenación del Territorio y Urbanismo de Navarra"
+  },
+  "niveles": {
+    "prohibida": {
+      "titulo": "No",
+      "tono": "no"
+    },
+    "segun_proteccion": {
+      "titulo": "Depende de la protección y del plan",
+      "tono": "depende"
+    },
+    "solar": {
+      "titulo": "Sí, si la parcela es solar",
+      "tono": "si"
+    },
+    "sin_urbanizar": {
+      "titulo": "Todavía no",
+      "tono": "condicion"
+    },
+    "sin_dato": {
+      "titulo": "Sin dato",
+      "tono": "depende"
+    }
+  },
+  "orden": [
+    "solar",
+    "segun_proteccion",
+    "sin_urbanizar",
+    "sin_dato",
+    "prohibida"
+  ],
+  "proteccion": [
+    "SG",
+    "SNU-PEQ",
+    "SNU",
+    "SUZND",
+    "SUZD",
+    "SUNC",
+    "SU",
+    "SIN-CODIGO"
+  ],
+  "rehabilitar": {
+    "preexistente": "Las obras en edificaciones que ya existen y son legales, sin cambiar su uso ni aumentar su volumen y sin pedir nuevos servicios, están permitidas sin autorización de suelo no urbanizable (sí con licencia). Cambiar el uso de una edificación existente es autorizable: lo resuelve el Gobierno de Navarra con informe del ayuntamiento"
+  },
+  "sin_datos": "El Sistema de Información Urbana del Ministerio no tiene el plan de este municipio. Pregunta en el ayuntamiento qué clasificación tiene la parcela, o consulta su plan en el SIUN del Gobierno de Navarra.",
+  "categorias": {
+    "SU": {
+      "nombre": "Suelo urbano",
+      "articulo": "95",
+      "vivienda": "solar",
+      "explicacion": "En suelo urbano se edifica la parcela que sea solar (acceso rodado, agua, saneamiento, luz y calle pavimentada con aceras, salvo que el plan pida más), o completando a la vez la urbanización que falte. Lo que se puede construir lo fija el plan municipal.",
+      "cita": "Derecho a edificar, materializando el aprovechamiento urbanístico que le corresponda, de acuerdo con el planeamiento y, en su caso, los correspondientes instrumentos de gestión, una vez que el suelo tenga la condición de solar o, en su caso, con carácter simultáneo a las obras de urbanización aún pendientes.",
+      "mas": [
+        {
+          "articulo": "91",
+          "cita": "Que estén urbanizadas con arreglo a las normas mínimas establecidas en cada caso por el planeamiento, y si éste no las concretare, se precisará que cuente, como mínimo, con acceso rodado, abastecimiento de agua, evacuación de aguas y suministro de energía eléctrica, y además que la vía a que la parcela dé frente tenga pavimentada la calzada y encintado de aceras."
+        }
+      ]
+    },
+    "SUNC": {
+      "nombre": "Suelo urbano no consolidado",
+      "articulo": "95",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "El plan prevé reformar o renovar la urbanización de este ámbito. Primero hay que repartir cargas entre los propietarios, ceder suelo y urbanizar; se edifica sobre las parcelas que salgan de la nueva ordenación.",
+      "cita": "en suelo urbano no consolidado, sobre las parcelas que resulten de la nueva ordenación, o mediante compensación económica.",
+      "mas": [
+        {
+          "articulo": "96",
+          "cita": "Proceder a la distribución equitativa de los beneficios y cargas derivados del planeamiento, con anterioridad al inicio de la ejecución material del mismo."
+        }
+      ]
+    },
+    "SUZD": {
+      "nombre": "Suelo urbanizable delimitado o sectorizado",
+      "articulo": "93",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "El plan prevé urbanizarlo. Hasta que termine la urbanización del sector, con el reparto de cargas y las cesiones, la parcela se usa como suelo rústico y no se edifica una vivienda.",
+      "cita": "Tendrán la consideración de suelo urbanizable los terrenos no urbanizados para los que los instrumentos de ordenación urbanística prevean o permitan su paso a la situación de suelo urbano, hasta que termine la correspondiente actuación de nueva urbanización en las condiciones y los términos establecidos en esta ley foral y en el planeamiento aplicable.",
+      "mas": [
+        {
+          "articulo": "97",
+          "cita": "Los propietarios de suelo clasificado como urbanizable tendrán derecho a usar, disfrutar y disponer de los terrenos de su propiedad conforme a la naturaleza rústica de los mismos."
+        }
+      ]
+    },
+    "SUZND": {
+      "nombre": "Suelo urbanizable no delimitado o no sectorizado",
+      "articulo": "93",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "El plan permite urbanizarlo, pero todavía sin ordenación detallada: antes hay que aprobar el planeamiento de desarrollo y después urbanizar. Hasta entonces la parcela se usa como suelo rústico.",
+      "cita": "Tendrán la consideración de suelo urbanizable los terrenos no urbanizados para los que los instrumentos de ordenación urbanística prevean o permitan su paso a la situación de suelo urbano, hasta que termine la correspondiente actuación de nueva urbanización en las condiciones y los términos establecidos en esta ley foral y en el planeamiento aplicable.",
+      "mas": [
+        {
+          "articulo": "97",
+          "cita": "Cuando se trate de suelo urbanizable sin ordenación pormenorizada por el Plan General Municipal, los propietarios del mismo tendrán derecho a promover su ordenación pormenorizada, pudiendo instar y formular el planeamiento de desarrollo preciso para ello."
+        }
+      ]
+    },
+    "SNU": {
+      "nombre": "Suelo no urbanizable",
+      "articulo": "115",
+      "vivienda": "segun_proteccion",
+      "explicacion": "Si es no urbanizable de preservación y el plan municipal prevé expresamente la vivienda, cabe una unifamiliar aislada para residencia habitual y permanente del titular, con autorización del Gobierno de Navarra: parcela de 1 ha como mínimo (el plan puede pedir más), al menos la mitad dedicada a usos agrarios, ganaderos o forestales, sin otra vivienda en ella, indivisible e inscrita así en el Registro, servicios y acceso a cargo del propietario, cesión del 10 % del incremento de valor y sin haber obtenido otra vivienda en no urbanizable en los cinco años anteriores. Si es de protección, no. La fuente no dice qué categoría tiene: pregúntalo en el ayuntamiento.",
+      "cita": "Se podrán autorizar viviendas en suelo no urbanizable de preservación cuando se trate de viviendas unifamiliares aisladas, destinadas a residencia habitual y permanente de su titular, en las condiciones y áreas geográficas que se determinen reglamentariamente o por los instrumentos de ordenación territorial.",
+      "mas": [
+        {
+          "articulo": "115",
+          "cita": "Estos suelos no podrán estar afectados por la categoría de protección definida en el artículo 92 de esta ley foral."
+        },
+        {
+          "articulo": "115",
+          "cita": "Para poder autorizar este uso deberá además estar expresamente previsto en el planeamiento municipal, que podrá desarrollar y concretar en su ámbito territorial las condiciones y áreas a las que se refiere el párrafo anterior."
+        },
+        {
+          "articulo": "115",
+          "cita": "La superficie mínima de la parcela para construir viviendas aisladas en suelo no urbanizable no será inferior a 10.000 metros cuadrados"
+        }
+      ],
+      "rehabilitar": "preexistente",
+      "articulo_rehabilitar": "110",
+      "cita_rehabilitar": "Las intervenciones en edificaciones e instalaciones preexistentes que no impliquen cambio de actividad, uso o aumento de volumen y no requiriesen nueva demanda de servicios.",
+      "mas_rehabilitar": [
+        {
+          "articulo": "110",
+          "cita": "Los cambios de uso o actividad en edificaciones preexistentes."
+        }
+      ]
+    },
+    "SNU-PEQ": {
+      "nombre": "Suelo no urbanizable",
+      "articulo": "115",
+      "vivienda": "prohibida",
+      "explicacion": "La parcela no llega a 1 ha, el mínimo de la ley para una vivienda aislada en no urbanizable. Solo cabría dentro de un barrio rural tradicional delimitado por el plan municipal (1.500 m² como mínimo), y esta fuente no los marca: si la finca está en uno, pregúntalo en el ayuntamiento.",
+      "cita": "La superficie mínima de la parcela para construir viviendas aisladas en suelo no urbanizable no será inferior a 10.000 metros cuadrados",
+      "mas": [
+        {
+          "articulo": "116",
+          "cita": "La superficie mínima de la parcela para construir viviendas en barrios rurales tradicionales no será inferior a 1.500 metros cuadrados."
+        }
+      ],
+      "rehabilitar": "preexistente",
+      "articulo_rehabilitar": "110",
+      "cita_rehabilitar": "Las intervenciones en edificaciones e instalaciones preexistentes que no impliquen cambio de actividad, uso o aumento de volumen y no requiriesen nueva demanda de servicios.",
+      "mas_rehabilitar": [
+        {
+          "articulo": "110",
+          "cita": "Los cambios de uso o actividad en edificaciones preexistentes."
+        }
+      ]
+    },
+    "SG": {
+      "nombre": "Sistema general",
+      "articulo": "121",
+      "vivienda": "prohibida",
+      "explicacion": "El plan reserva este suelo para un sistema general (viario, zona verde, equipamiento, infraestructura). La Administración lo obtiene por cesión o expropiación: no se edifica vivienda privada.",
+      "cita": "Para la adquisición de terrenos para el establecimiento de sistemas generales, equipamientos y dotaciones cuando no deban ser objeto de cesión en la ejecución del planeamiento"
+    }
+  }
+}
