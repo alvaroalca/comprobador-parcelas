@@ -292,5 +292,40 @@
     "caso": "@-1.660000,42.530000",
     "respuesta": "No",
     "categoria": "Suelo no urbanizable (SNU-PEQ)"
+  },
+  {
+    "comunidad": "Galicia",
+    "nombre": "Rúa Real 10, A Coruña (búsqueda)",
+    "caso": "q:Rúa Real 10, A Coruña",
+    "respuesta": "Sí, si la parcela es solar",
+    "categoria": "Suelo urbano"
+  },
+  {
+    "comunidad": "Galicia",
+    "nombre": "O Páramo (núcleo rural)",
+    "caso": "@-7.558000,42.805000",
+    "respuesta": "Sí, con las condiciones del plan",
+    "categoria": "Suelo de núcleo rural (NR)"
+  },
+  {
+    "comunidad": "Galicia",
+    "nombre": "Lalín (menos de 2.000 m²)",
+    "caso": "@-8.120000,42.670000",
+    "respuesta": "No",
+    "categoria": "Suelo rústico (SR-PEQ)"
+  },
+  {
+    "comunidad": "Ceuta",
+    "nombre": "Ceuta (por referencia)",
+    "caso": "55101A00100045",
+    "respuesta": "Depende de la protección y del plan",
+    "categoria": "Suelo no urbanizable (SNU)"
+  },
+  {
+    "comunidad": "Melilla",
+    "nombre": "Melilla (por referencia)",
+    "caso": "56101A00200051",
+    "respuesta": "Depende de la protección y del plan",
+    "categoria": "Suelo no urbanizable (SNU)"
   }
 ]

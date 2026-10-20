@@ -66,9 +66,26 @@ def texto_boe(norma):
 CABECERA = r'Artículo (\d+(?: bis| ter)?)\. |(Disposición (?:adicional|transitoria|final|derogatoria)(?: \w+)?)\. |(ANEXO [IVX]+)\b'
 
 
+# El texto refundido de 1976 numera con letra («Artículo ochenta y cinco.»): se pasa a cifras para que la
+# tabla cite «85». Solo si todas las palabras forman un número («Artículo único.» se queda como está).
+CIFRAS = {p: i + 1 for i, p in enumerate('primero segundo tercero cuarto quinto sexto séptimo octavo noveno'.split())} | {
+    p: i + 1 for i, p in enumerate('uno dos tres cuatro cinco seis siete ocho nueve diez once doce trece catorce quince '
+                                    'dieciséis diecisiete dieciocho diecinueve veinte veintiuno veintidós veintitrés '
+                                    'veinticuatro veinticinco veintiséis veintisiete veintiocho veintinueve'.split())} | {
+    'treinta': 30, 'cuarenta': 40, 'cincuenta': 50, 'sesenta': 60, 'setenta': 70, 'ochenta': 80, 'noventa': 90,
+    'cien': 100, 'ciento': 100, 'doscientos': 200, 'trescientos': 300}
+
+
+def en_cifras(palabras):
+    valores = [CIFRAS.get(p) for p in palabras.split() if p != 'y']
+    return str(sum(valores)) if valores and None not in valores else None
+
+
 def articulos(texto):
     """Mapa 'número' (o 'disposición transitoria primera', o 'anexo i') -> texto, tomado de su última
     aparición (la primera es el índice)."""
+    texto = re.sub(r'Artículo ([a-záéíóúñ]+(?: [a-záéíóúñ]+)*)\. ',
+                   lambda m: f'Artículo {n}. ' if (n := en_cifras(m.group(1))) else m.group(0), texto)
     trozos = re.split(r'(?=Artículo \d+(?: bis| ter)?\. |Disposición (?:adicional|transitoria|final|derogatoria)(?: \w+)?\. |ANEXO [IVX]+\b)', texto)
     mapa = {}
     for t in trozos:

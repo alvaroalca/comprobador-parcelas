@@ -17,8 +17,10 @@ import euskadi from './euskadi.js';
 import extremadura from './extremadura.js';
 import andalucia from './andalucia.js';
 import navarra from './navarra.js';
+import galicia from './galicia.js';
+import { ceuta, melilla } from './ciudades.js';
 
-export const COMUNIDADES = [cyl, madrid, cantabria, cataluna, baleares, valenciana, murcia, aragon, clm, rioja, canarias, asturias, euskadi, extremadura, andalucia, navarra];
+export const COMUNIDADES = [cyl, madrid, cantabria, cataluna, baleares, valenciana, murcia, aragon, clm, rioja, canarias, asturias, euskadi, extremadura, andalucia, navarra, galicia, ceuta, melilla];
 
 export const comunidadDe = (provincia) => COMUNIDADES.find((c) => c.provincias.includes(provincia)) ?? null;
 

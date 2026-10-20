@@ -1,0 +1,118 @@
+{
+  "fuente": {
+    "nombre": "Real Decreto 1346/1976, de 9 de abril, por el que se aprueba el texto refundido de la Ley sobre Régimen del Suelo y Ordenación Urbana, texto consolidado",
+    "url": "https://www.boe.es/buscar/act.php?id=BOE-A-1976-11506",
+    "pdf": "https://www.boe.es/buscar/pdf/1976/BOE-A-1976-11506-consolidado.pdf",
+    "de": "del texto refundido de la Ley sobre Régimen del Suelo y Ordenación Urbana de 1976"
+  },
+  "niveles": {
+    "prohibida": {
+      "titulo": "No",
+      "tono": "no"
+    },
+    "segun_proteccion": {
+      "titulo": "Depende de la protección y del plan",
+      "tono": "depende"
+    },
+    "segun_plan": {
+      "titulo": "Depende del plan municipal",
+      "tono": "depende"
+    },
+    "solar": {
+      "titulo": "Sí, si la parcela es solar",
+      "tono": "si"
+    },
+    "sin_urbanizar": {
+      "titulo": "Todavía no",
+      "tono": "condicion"
+    },
+    "sin_dato": {
+      "titulo": "Sin dato",
+      "tono": "depende"
+    }
+  },
+  "orden": [
+    "solar",
+    "segun_proteccion",
+    "segun_plan",
+    "sin_urbanizar",
+    "sin_dato",
+    "prohibida"
+  ],
+  "proteccion": [
+    "SG",
+    "SNU",
+    "SUZND",
+    "SUZD",
+    "SUNC",
+    "SU",
+    "SIN-CODIGO"
+  ],
+  "sin_datos": "El Sistema de Información Urbana del Ministerio no tiene el plan en este punto. Pregunta en la Consejería de Fomento qué clasificación tiene la parcela.",
+  "categorias": {
+    "SU": {
+      "nombre": "Suelo urbano",
+      "articulo": "83",
+      "vivienda": "solar",
+      "explicacion": "En suelo urbano se edifica la parcela que sea solar (acceso rodado, agua, saneamiento, luz, calle pavimentada con aceras y alineaciones señaladas), o asegurando con garantías que la urbanización se hace a la vez. Lo que se puede construir lo fija el plan general.",
+      "cita": "El suelo urbano, además de las limitaciones específicas que le imponga el planeamiento, estará sujeto a la de no poder ser edificado hasta que la respectiva parcela mereciere la calificación de solar, salvo que se asegure la ejecución simultánea de la urbanización y de la edificación mediante las garantías que reglamentariamente se determinen.",
+      "mas": [
+        {
+          "articulo": "82",
+          "cita": "Que estén urbanizadas con arreglo a las normas mínimas establecidas en cada caso por el Plan, y si éste no existiere o no las concretare, se precisará que además de contar con los servicios señalados en los artículos setenta y ocho u ochenta y uno punto dos, la vía a que la parcela de frente tenga pavimentada la calzada y encintado de aceras."
+        }
+      ]
+    },
+    "SUNC": {
+      "nombre": "Suelo urbano no consolidado",
+      "articulo": "83",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Está en un ámbito que el plan manda urbanizar o reordenar (un polígono o unidad de actuación). Hasta que se repartan las cargas, se cedan los viales y zonas verdes y se urbanice, la parcela no es solar y no se edifica.",
+      "cita": "El suelo urbano, además de las limitaciones específicas que le imponga el planeamiento, estará sujeto a la de no poder ser edificado hasta que la respectiva parcela mereciere la calificación de solar",
+      "mas": [
+        {
+          "articulo": "83",
+          "cita": "Ceder gratuitamente a los Ayuntamientos respectivos los terrenos destinados a viales, parques, jardines públicos y centros de Educación General Básica al servicio del polígono o unidad de actuación correspondiente."
+        }
+      ]
+    },
+    "SUZD": {
+      "nombre": "Suelo urbanizable programado",
+      "articulo": "84",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "El plan prevé urbanizarlo según su programa. Hasta que se apruebe el plan parcial y se urbanice el sector no se puede construir, salvo obras provisionales.",
+      "cita": "El suelo urbanizable programado estará sujeto a la limitación de no poder ser urbanizado hasta que se apruebe el correspondiente Plan Parcial."
+    },
+    "SUZND": {
+      "nombre": "Suelo urbanizable no programado",
+      "articulo": "85",
+      "vivienda": "segun_plan",
+      "explicacion": "Mientras no se apruebe un programa de actuación urbanística, este suelo tiene las mismas limitaciones que el no urbanizable: solo construcciones agrícolas y, de forma excepcional y con autorización, un edificio aislado de vivienda familiar donde no haya posibilidad de que se forme un núcleo de población. Cuándo hay esa posibilidad lo define el plan general: pregúntalo en la Consejería de Fomento.",
+      "cita": "Sin embargo, podrán autorizarse, siguiendo el procedimiento previsto en el artículo cuarenta y tres punto tres, edificaciones e instalaciones de utilidad pública o interés social que hayan de emplazarse en el medio rural, así como edificios aislados destinados a vivienda familiar en lugares en los que no exista posibilidad de formación de un núcleo de población."
+    },
+    "SNU": {
+      "nombre": "Suelo no urbanizable",
+      "articulo": "86",
+      "vivienda": "segun_proteccion",
+      "explicacion": "En no urbanizable común solo caben construcciones agrícolas y, de forma excepcional y con autorización, un edificio aislado de vivienda familiar donde no haya posibilidad de que se forme un núcleo de población, con tipología de casa aislada y nunca urbana. Si el plan lo protege especialmente (montes, valores paisajísticos o naturales), no se admiten usos que cambien su naturaleza. La fuente no dice qué categoría tiene: pregúntalo en la Consejería de Fomento.",
+      "cita": "Los terrenos que se clasifiquen como suelo no urbanizable en el Plan General o por aplicación del artículo ochenta y uno estarán sujetos a las limitaciones que se establecen en el artículo anterior.",
+      "mas": [
+        {
+          "articulo": "85",
+          "cita": "así como edificios aislados destinados a vivienda familiar en lugares en los que no exista posibilidad de formación de un núcleo de población."
+        },
+        {
+          "articulo": "86",
+          "cita": "Los espacios que por sus características según el Plan General deban ser objeto de una especial protección a los efectos de esta Ley, no podrán ser dedicados a utilizaciones que impliquen transformación de su destino o naturaleza o lesionen el valor específico que se quiera proteger."
+        }
+      ]
+    },
+    "SG": {
+      "nombre": "Sistema general",
+      "articulo": "134",
+      "vivienda": "prohibida",
+      "explicacion": "El plan reserva este suelo para un sistema general (viario, zona verde, equipamiento, infraestructura). La Administración lo obtiene por cesión o expropiación: no se edifica vivienda privada.",
+      "cita": "la expropiación forzosa podrá aplicarse para la ejecución de los sistemas generales de la ordenación urbanística del territorio o la de alguno de sus elementos, o para realizar actuaciones aisladas en suelo urbano."
+    }
+  }
+}

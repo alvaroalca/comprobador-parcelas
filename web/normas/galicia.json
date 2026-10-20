@@ -1,0 +1,194 @@
+{
+  "fuente": {
+    "nombre": "Ley 2/2016, de 10 de febrero, del suelo de Galicia, texto consolidado",
+    "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2016-3191",
+    "pdf": "https://www.boe.es/buscar/pdf/2016/BOE-A-2016-3191-consolidado.pdf",
+    "de": "de la Ley 2/2016 del suelo de Galicia"
+  },
+  "niveles": {
+    "prohibida": {
+      "titulo": "No",
+      "tono": "no"
+    },
+    "vinculada": {
+      "titulo": "Solo ligada a una explotación",
+      "tono": "condicion"
+    },
+    "nucleo": {
+      "titulo": "Sí, con las condiciones del plan",
+      "tono": "si"
+    },
+    "solar": {
+      "titulo": "Sí, si la parcela es solar",
+      "tono": "si"
+    },
+    "sin_urbanizar": {
+      "titulo": "Todavía no",
+      "tono": "condicion"
+    },
+    "sin_dato": {
+      "titulo": "Sin dato",
+      "tono": "depende"
+    }
+  },
+  "orden": [
+    "solar",
+    "nucleo",
+    "vinculada",
+    "sin_urbanizar",
+    "sin_dato",
+    "prohibida"
+  ],
+  "proteccion": [
+    "SG",
+    "SR-PEQ",
+    "SR",
+    "SUZND",
+    "SUZD",
+    "SUNC",
+    "NR",
+    "SU",
+    "SIN-CODIGO"
+  ],
+  "rehabilitar": {
+    "tradicional": "Las edificaciones anteriores a la Ley 19/1975 (mayo de 1975), sean del tipo que sean, se pueden reformar, rehabilitar, reconstruir y ampliar hasta un 50 % de su volumen, también en un cuerpo aparte, y destinarse a vivienda u otros usos, con licencia municipal y sin cumplir los parámetros del plan salvo la altura"
+  },
+  "sin_datos": "El Sistema de Información Urbana del Ministerio no tiene el plan de este concello. Pregunta en el ayuntamiento qué clasificación tiene la parcela.",
+  "categorias": {
+    "SU": {
+      "nombre": "Suelo urbano",
+      "articulo": "19",
+      "vivienda": "solar",
+      "explicacion": "En suelo urbano se edifica la parcela que sea solar (acceso por vía pavimentada, agua, saneamiento, luz y alumbrado público), o completando a la vez la urbanización que falte. Lo que se puede construir lo fija el plan municipal.",
+      "cita": "Los propietarios de suelo urbano tienen el derecho de completar la urbanización de los terrenos para que adquieran la condición de solar y a edificar estos en las condiciones establecidas en la presente ley y en el planeamiento aplicable",
+      "mas": [
+        {
+          "articulo": "18",
+          "cita": "Tendrán la condición de solar las superficies de suelo urbano legalmente divididas y aptas para la edificación que cuenten con acceso por vía pública pavimentada y servicios urbanos de abastecimiento de agua potable, evacuación de aguas residuales a la red de saneamiento, suministro de energía eléctrica y alumbrado público, en condiciones de caudal y potencia adecuadas para los usos permitidos."
+        }
+      ]
+    },
+    "NR": {
+      "nombre": "Suelo de núcleo rural",
+      "articulo": "25",
+      "vivienda": "nucleo",
+      "explicacion": "El núcleo rural es el suelo de las aldeas y lugares: su uso característico es la vivienda, con las condiciones que fije el plan (parcela mínima, tipología, volumen parecido al de las casas tradicionales). Hay que ceder el terreno para el vial que haga falta, tener acceso rodado público y conectar a las redes del núcleo a cargo propio.",
+      "cita": "El uso característico de las edificaciones en los núcleos rurales será el residencial.",
+      "mas": [
+        {
+          "articulo": "24",
+          "cita": "Para edificar en el ámbito de los núcleos rurales deberá disponerse de acceso rodado de uso público y ejecutarse la conexión con las redes de servicio existentes en el núcleo rural o en sus cercanías."
+        },
+        {
+          "articulo": "disposición transitoria primera",
+          "cita": "Al suelo de núcleo rural y a sus áreas de expansión, se le aplicará íntegramente lo dispuesto en el planeamiento respectivo, salvo en lo que se refiere a las edificaciones tradicionales existentes, a las cuales será de aplicación lo previsto en el artículo 40 de la presente ley."
+        }
+      ],
+      "rehabilitar": "tradicional",
+      "articulo_rehabilitar": "40",
+      "cita_rehabilitar": "Las edificaciones tradicionales existentes en cualquier categoría de suelo de núcleo o de suelo rústico podrán ser destinadas a usos residenciales, terciarios o productivos, a actividades turísticas o artesanales y a pequeños talleres y equipamientos.",
+      "mas_rehabilitar": [
+        {
+          "articulo": "40",
+          "cita": "se consideran edificaciones tradicionales todas las edificaciones existentes con anterioridad a la entrada en vigor de la Ley 19/1975, de 2 de mayo, de reforma sobre el régimen del suelo y ordenación urbana, con independencia de su tipología."
+        }
+      ]
+    },
+    "SUNC": {
+      "nombre": "Suelo urbano no consolidado",
+      "articulo": "18",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "El plan prevé urbanizar, reformar o renovar este ámbito. Primero hay que ejecutar el planeamiento, repartir cargas, ceder suelo y urbanizar; hasta entonces la parcela no es solar.",
+      "cita": "Los terrenos incluidos en el suelo urbano no consolidado y en el suelo urbanizable sólo podrán alcanzar la condición de solar previa ejecución del correspondiente planeamiento urbanístico, incluyendo las obras de urbanización exigibles para la conexión con los sistemas generales existentes y, en su caso, para su ampliación o refuerzo."
+    },
+    "SUZD": {
+      "nombre": "Suelo urbanizable delimitado",
+      "articulo": "28",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "El plan prevé urbanizarlo. Mientras no se apruebe su ordenación detallada no se puede construir, y después hay que urbanizar el sector repartiendo cargas.",
+      "cita": "En el suelo urbanizable, en tanto no se apruebe la correspondiente ordenación detallada, no podrán realizarse construcciones, salvo las que vayan a ejecutarse mediante la redacción de planes especiales de infraestructuras y las de carácter provisional, en las condiciones establecidas en el artículo 89.",
+      "mas": [
+        {
+          "articulo": "18",
+          "cita": "Los terrenos incluidos en el suelo urbano no consolidado y en el suelo urbanizable sólo podrán alcanzar la condición de solar previa ejecución del correspondiente planeamiento urbanístico"
+        }
+      ]
+    },
+    "SUZND": {
+      "nombre": "Suelo urbanizable no delimitado",
+      "articulo": "28",
+      "vivienda": "sin_urbanizar",
+      "explicacion": "Si el plan está adaptado a la Ley 9/2002, es urbanizable: no se construye hasta que un plan parcial delimite y ordene el sector. Si es anterior, se le aplica el régimen del suelo rústico, donde solo cabe la vivienda ligada a una explotación agrícola o ganadera. En ningún caso cabe hoy una casa sin más.",
+      "cita": "En el suelo urbanizable, en tanto no se apruebe la correspondiente ordenación detallada, no podrán realizarse construcciones, salvo las que vayan a ejecutarse mediante la redacción de planes especiales de infraestructuras y las de carácter provisional, en las condiciones establecidas en el artículo 89.",
+      "mas": [
+        {
+          "articulo": "disposición transitoria primera",
+          "cita": "Al suelo urbanizable no delimitado, apto para urbanizar o rústico apto para el desarrollo urbanístico se le aplicará lo dispuesto en la presente ley para el suelo rústico."
+        }
+      ]
+    },
+    "SR": {
+      "nombre": "Suelo rústico",
+      "articulo": "35",
+      "vivienda": "vinculada",
+      "explicacion": "En suelo rústico la única vivienda nueva que admite la ley es la ligada a una explotación agrícola o ganadera, íntimamente ligada a ella, con autorización de la Xunta antes de la licencia: parcela de 2.000 m² como mínimo, ocupación de hasta el 20 %, dos plantas y 7 m de altura, acceso rodado y servicios a cargo del promotor, y la parcela vinculada e indivisible en el Registro. En rústico de especial protección hace falta además la autorización del órgano sectorial. Una casa sin explotación detrás no cabe. El no urbanizable de los planes antiguos se rige igual.",
+      "cita": "Construcciones destinadas a usos residenciales vinculados a la explotación agrícola o ganadera.",
+      "mas": [
+        {
+          "articulo": "35",
+          "cita": "Los restantes usos en suelo rústico son usos prohibidos."
+        },
+        {
+          "articulo": "36",
+          "cita": "Los usos contemplados en las letras n) y ñ) del artículo anterior habrán de ser objeto de la autorización de la persona titular del órgano autonómico competente en materia de urbanismo con anterioridad a la obtención del título habilitante municipal."
+        },
+        {
+          "articulo": "39",
+          "cita": "La superficie mínima de la parcela sobre la que se situará la edificación será de 2.000 metros cuadrados"
+        },
+        {
+          "articulo": "disposición transitoria primera",
+          "cita": "Al suelo no urbanizable o suelo rústico, se le aplicará lo dispuesto en la presente ley para el suelo rústico."
+        }
+      ],
+      "rehabilitar": "tradicional",
+      "articulo_rehabilitar": "40",
+      "cita_rehabilitar": "Las edificaciones tradicionales existentes en cualquier categoría de suelo de núcleo o de suelo rústico podrán ser destinadas a usos residenciales, terciarios o productivos, a actividades turísticas o artesanales y a pequeños talleres y equipamientos.",
+      "mas_rehabilitar": [
+        {
+          "articulo": "40",
+          "cita": "se consideran edificaciones tradicionales todas las edificaciones existentes con anterioridad a la entrada en vigor de la Ley 19/1975, de 2 de mayo, de reforma sobre el régimen del suelo y ordenación urbana, con independencia de su tipología."
+        }
+      ]
+    },
+    "SR-PEQ": {
+      "nombre": "Suelo rústico",
+      "articulo": "39",
+      "vivienda": "prohibida",
+      "explicacion": "La parcela no llega a 2.000 m², el mínimo de la ley para cualquier edificación en suelo rústico, también la vivienda ligada a una explotación.",
+      "cita": "La superficie mínima de la parcela sobre la que se situará la edificación será de 2.000 metros cuadrados",
+      "mas": [
+        {
+          "articulo": "39",
+          "cita": "A todos estos efectos, no será admisible a adscripción de otras parcelas."
+        }
+      ],
+      "rehabilitar": "tradicional",
+      "articulo_rehabilitar": "40",
+      "cita_rehabilitar": "Las edificaciones tradicionales existentes en cualquier categoría de suelo de núcleo o de suelo rústico podrán ser destinadas a usos residenciales, terciarios o productivos, a actividades turísticas o artesanales y a pequeños talleres y equipamientos.",
+      "mas_rehabilitar": [
+        {
+          "articulo": "40",
+          "cita": "se consideran edificaciones tradicionales todas las edificaciones existentes con anterioridad a la entrada en vigor de la Ley 19/1975, de 2 de mayo, de reforma sobre el régimen del suelo y ordenación urbana, con independencia de su tipología."
+        }
+      ]
+    },
+    "SG": {
+      "nombre": "Sistema general",
+      "articulo": "129",
+      "vivienda": "prohibida",
+      "explicacion": "El plan reserva este suelo para un sistema general (viario, zona verde, equipamiento, infraestructura). La Administración lo obtiene por cesión, expropiación, convenio o permuta: no se edifica vivienda privada.",
+      "cita": "Los terrenos destinados por el planeamiento a sistemas generales que hayan de implantarse sobre suelo urbano consolidado, de núcleo rural o rústico, y a sistemas locales en suelo urbano consolidado y en suelo de núcleo rural se obtendrán mediante expropiación forzosa, por convenio entre la Administración y el propietario o por permuta forzosa con terrenos del patrimonio público municipal del suelo."
+    }
+  }
+}

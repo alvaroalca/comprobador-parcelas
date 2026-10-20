@@ -165,6 +165,21 @@
 - Smoke test de Álvaro superado (20/10). Tres casos en `tools/vigilancia.json`. Al integrar: `https://inspire.navarra.es https://idena.navarra.es` en el `connect-src`.
 - Abierto: espacios naturales protegidos (IDENA los tiene: `BIODIV_Pol_RENA`). Sin consulta por referencia ni por polígono y parcela forales.
 
+## Galicia (20/10/2026, en local, sin desplegar)
+
+- Sin capa autonómica vigente (IURB_V9 es de 2011 y solo del litoral): las clases salen del SIU, 276 de 313 concellos (A Coruña 89/93, Lugo 57/67, Ourense 70/92, Pontevedra 60/61). El SIU marca los núcleos rurales (`NuclRural = '1'`) en urbano y en no urbanizable: se tratan como suelo de núcleo rural, que en la ley gallega es clase propia.
+- Tabla de la Ley 2/2016 del suelo de Galicia (BOE, consolidada a 16/02/2026): 24 citas. En rústico, de cualquier categoría, la única vivienda nueva es la ligada a una explotación agrícola o ganadera, con autorización de la Xunta (arts. 35.1.n y 36.3), y cualquier edificación pide 2.000 m² (art. 39): por encima, «Solo ligada a una explotación»; por debajo, «No». La transitoria primera lleva al rústico el no urbanizable de los planes antiguos y, en los no adaptados a la Ley 9/2002, el urbanizable no delimitado. Núcleo rural, «Sí, con las condiciones del plan» (art. 25, DT 1ª). Urbano por solar (arts. 18 y 19); no consolidado y urbanizable, «Todavía no» (arts. 18.2 y 28.2); sistemas generales, «No» (art. 129). Edificaciones anteriores a 1975: rehabilitación y ampliación del 50 % para vivienda (art. 40).
+- Probado en Chrome: 25 puntos al azar (12 rústico, 2 núcleo rural, 3 sin SIU, el resto mar o calle), 8 dirigidos y la búsqueda en A Coruña. Sin errores; 0,8-5 s.
+- Smoke test de Álvaro superado (20/10). Tres casos en `tools/vigilancia.json`. Nada nuevo en `connect-src`.
+- Abierto: sin afecciones propias (Red Natura, montes vecinales, costas).
+
+## Ceuta y Melilla (20/10/2026, en local, sin desplegar)
+
+- Sin ley urbanística propia: rige la del Estado y, para el régimen de cada clase de suelo, el texto refundido de 1976 (RD 1346/1976, consolidado en el BOE a 10/06/2026, vigente de forma supletoria) con el plan general de cada ciudad. Clases del SIU, que tiene las dos ciudades.
+- Tabla del texto de 1976: 10 citas, 493/493 en total. El texto numera con letra («Artículo ochenta y cinco»): `verificar_citas.py` pasa esos números a cifras; el control negativo (artículo cambiado) falla como debe. No urbanizable y urbanizable no programado: solo construcciones agrícolas y, excepcionalmente, un edificio aislado de vivienda familiar donde no haya posibilidad de formar un núcleo de población (arts. 85 y 86.1); en especial protección, nada que cambie su naturaleza (art. 86.2). Urbano por solar (arts. 82 y 83); programado, «Todavía no» (art. 84); sistemas generales, «No» (art. 134).
+- La referencia catastral empieza por 55 (Ceuta) y 56 (Melilla), pero el Catastro da la provincia del INE (51, 52). Probado por punto y por referencia en las dos.
+- Smoke test de Álvaro superado (20/10). Un caso por ciudad en `tools/vigilancia.json`.
+
 ## Vigilancia de servicios (16/10/2026)
 
 - 20/10: 39 casos con los seis de Extremadura y Andalucía. Ese día GeoEuskadi no respondía (`ERR_CONNECTION_TIMED_OUT`): los cinco casos del País Vasco fallaban y cuatro dejaban la ficha cargando más de 40 s, sin aviso al usuario. Arreglado: toda llamada a un servicio pasa por `traer` (`geo.js`), que la corta a los 20 s sin reintento y la ficha dice qué servidor no respondió. `--grabar` reescribe todos los casos, también los que fallan: grabar solo con la vigilancia limpia o revisar el diff.
@@ -201,14 +216,14 @@ No hay fuente nacional: el SIU del Ministerio agrega lo que mandan las comunidad
 | Canarias | `idecan2.grafcan.es/ServicioWMS/Planeamiento` · `CLA` (código `cod`) | `*` | Hecha (16/10), contando píxeles. |
 | Extremadura | `mapas.ideex.es/CICTEX/planeamientoRefundido` | | Su WFS solo trae la división en hojas de los planos escaneados. Sin clasificación. |
 | Navarra | IDENA (`idena.navarra.es/ogc/wfs`, 1.053 capas) | `*` | Hecha (20/10) con el SIU. Sin capa de clasificación: solo la figura de plan por municipio e indicadores. Su catastro foral sí sirve (19/10). |
-| Galicia | ArcGIS `ideg.xunta.gal/servizos/rest/services/Ordenacion/POL_AD_PlaneamientoUrbanistico/MapServer/29` (IURB_V9) | sí | Clasificación homogeneizada (`SiglaHomog`) solo de los concellos del litoral y de 2011, con planes «no adaptados a la LOUGA». No sirve como fuente vigente. |
+| Galicia | ArcGIS `ideg.xunta.gal/servizos/rest/services/Ordenacion/POL_AD_PlaneamientoUrbanistico/MapServer/29` (IURB_V9) | sí | Clasificación homogeneizada (`SiglaHomog`) solo de los concellos del litoral y de 2011, con planes «no adaptados a la LOUGA». No sirve como fuente vigente. Hecha (20/10) con el SIU. |
 | Andalucía | Solo WMS de algunos municipios y documentos escaneados (Consulta del Planeamiento) | | Sin capa regional (sondeo 14/10). |
 | Castilla-La Mancha | ArcGIS REST `geoservicios.castillalamancha.es/arcgis/rest/services/Vector/Sistema_Informacion_Urbana/MapServer/1` (SIU) | sí | Hecha (16/10). |
 | La Rioja | MapServer `ogc.larioja.org/wfs/request.php` · `urbanismo_planeamiento_urbanistico` | `*` | Hecha (16/10), con la Directriz de suelo no urbanizable. |
 
 Orden propuesto tras el sondeo del 14/10: Castilla-La Mancha, La Rioja y Canarias (hechas el 16/10). País Vasco (hecho el 19/10, con catastro foral). Galicia, Andalucía y Extremadura no publican la clasificación (el 19/10, una búsqueda rápida tampoco encontró nada nuevo; en la Xunta sigue solo IURB_V9, de 2011).
 
-Falta para toda España (20/10): Galicia, Ceuta y Melilla con el SIU del Ministerio y la ley de cada una.
+Toda España cubierta (20/10), con huecos donde solo hay SIU: Navarra 83/272, Galicia 276/313, Andalucía 618/785 municipios.
 
 ## Ideas para después (no ahora: primero el resto de España)
 
