@@ -229,5 +229,47 @@
     "caso": "q:Gran Vía de Don Diego López de Haro 1, Bilbao",
     "respuesta": "Sí, si la parcela es solar",
     "categoria": "Suelo urbano consolidado (SUC)"
+  },
+  {
+    "comunidad": "Extremadura",
+    "nombre": "Benquerencia (no urbanizable común)",
+    "caso": "@-6.100000,39.300000",
+    "respuesta": "Con condiciones: vivienda aislada",
+    "categoria": "Suelo no urbanizable común (SR)"
+  },
+  {
+    "comunidad": "Extremadura",
+    "nombre": "Valhondo (protección ambiental)",
+    "caso": "@-6.179000,39.387000",
+    "respuesta": "Depende de la protección y del plan",
+    "categoria": "Suelo no urbanizable de protección ambiental (SRP-A)"
+  },
+  {
+    "comunidad": "Extremadura",
+    "nombre": "Navalvillar de Pela (común de menos de 1,5 ha)",
+    "caso": "@-5.496000,39.084600",
+    "respuesta": "Solo ligada a una explotación",
+    "categoria": "Suelo no urbanizable común (SR-PEQ)"
+  },
+  {
+    "comunidad": "Andalucía",
+    "nombre": "Córdoba (no urbanizable anterior a la LISTA)",
+    "caso": "@-4.900000,37.800000",
+    "respuesta": "Depende de la protección y del plan",
+    "categoria": "Suelo no urbanizable (SNU)"
+  },
+  {
+    "comunidad": "Andalucía",
+    "nombre": "Iznájar (menos de 2,5 ha)",
+    "caso": "@-4.353900,37.274600",
+    "respuesta": "Solo ligada a una explotación",
+    "categoria": "Suelo no urbanizable (SNU-PEQ)"
+  },
+  {
+    "comunidad": "Andalucía",
+    "nombre": "Calle Sierpes 10, Sevilla (búsqueda)",
+    "caso": "q:Calle Sierpes 10, Sevilla",
+    "respuesta": "Sí, si la parcela es solar",
+    "categoria": "Suelo urbano"
   }
 ]
