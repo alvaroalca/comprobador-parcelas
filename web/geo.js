@@ -133,9 +133,24 @@ export function distancia(multi, lineas) {
 
 const pausa = (ms) => new Promise((ok) => setTimeout(ok, ms));
 
-// Un reintento: algunos servidores públicos cortan conexiones a ráfagas.
+// Un servidor caído puede dejar la conexión abierta más de 40 s sin contestar (GeoEuskadi, 20/10/2026), y
+// la ficha se quedaba cargando sin decir nada. Toda llamada a un servicio se corta a los 20 s.
+const PLAZO = 20000;
+export async function traer(url, opciones = {}) {
+  try {
+    return await fetch(url, { ...opciones, signal: AbortSignal.timeout(PLAZO) });
+  } catch (e) {
+    if (e.name !== 'TimeoutError') throw e;
+    const corte = new Error(`${new URL(url, location.href).host} no respondió en ${PLAZO / 1000} s`);
+    corte.name = 'TimeoutError';
+    throw corte;
+  }
+}
+
+// Un reintento: algunos servidores públicos cortan conexiones a ráfagas. Un corte por plazo no se
+// reintenta: el servidor que no contesta en 20 s no suele contestar a los 40.
 export async function conReintento(f) {
-  try { return await f(); } catch { await pausa(1500); return f(); }
+  try { return await f(); } catch (e) { if (e.name === 'TimeoutError') throw e; await pausa(1500); return f(); }
 }
 
 // Consulta a una capa ArcGIS REST (MapServer/<id>) por caja en EPSG:25830. Devuelve GeoJSON en 25830.
@@ -150,7 +165,7 @@ export function arcgis(capa, [x0, y0, x1, y1], { where = '1=1', campos = '*', ge
     // Un polígono largo no cabe en la URL (IIS corta hacia los 2 kB, y su error llega sin CORS): por POST
     // de formulario, que es petición simple, sin preflight
     const largo = q.toString().length > 1800;
-    const r = await (largo ? fetch(`${capa}/query`, { method: 'POST', body: q }) : fetch(`${capa}/query?${q}`));
+    const r = await (largo ? traer(`${capa}/query`, { method: 'POST', body: q }) : traer(`${capa}/query?${q}`));
     const host = new URL(capa).host;
     if (!r.ok) throw new Error(`${host} respondió ${r.status}`);
     const d = await r.json();
@@ -167,7 +182,7 @@ export function wfs(base, capa, filtro, propiedades, srs) {
       outputFormat: 'application/json', propertyName: propiedades, CQL_FILTER: filtro,
     });
     if (srs) cuerpo.set('srsName', srs);
-    const r = await fetch(base, { method: 'POST', body: cuerpo });
+    const r = await traer(base, { method: 'POST', body: cuerpo });
     if (!r.ok) throw new Error(`${new URL(base, location.href).host} respondió ${r.status}`);
     return (await r.json()).features;
   });
@@ -185,7 +200,7 @@ export function wfsGml(base, capa, [x0, y0, x1, y1]) {
       service: 'WFS', version: '1.1.0', request: 'GetFeature', typeName: capas.join(','), srsName: 'EPSG:25830',
       bbox: `${x0},${y0},${x1},${y1},urn:ogc:def:crs:EPSG::25830`,
     });
-    const r = await fetch(`${base}?${q}`);
+    const r = await traer(`${base}?${q}`);
     if (!r.ok) throw new Error(`${host} respondió ${r.status}`);
     const juego = /charset=([\w-]+)/i.exec(r.headers.get('content-type') ?? '')?.[1] ?? 'utf-8';
     const doc = new DOMParser().parseFromString(new TextDecoder(juego).decode(await r.arrayBuffer()), 'text/xml');

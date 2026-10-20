@@ -1,11 +1,13 @@
 // Llamadas a los servicios públicos de toda España (CartoCiudad y Catastro). Responden con CORS
 // abierto, así que la página habla con ellos directamente. Lo de cada comunidad está en comunidades/.
 
+import { traer } from './geo.js';
+
 const CATASTRO = 'https://ovc.catastro.meh.es';
 const CARTOCIUDAD = 'https://www.cartociudad.es/geocoder/api/geocoder';
 
 async function pedir(url, tipo = 'json') {
-  const r = await fetch(url);
+  const r = await traer(url);
   if (!r.ok) throw new Error(`${new URL(url).host} respondió ${r.status}`);
   if (tipo === 'json') return r.json();
   return new DOMParser().parseFromString(await r.text(), 'text/xml');

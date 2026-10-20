@@ -7,7 +7,7 @@
 // Así que: BBOX sin geometría para sacar candidatos y, por cada candidato, su dibujo WMS recortado a la
 // caja de la parcela (1 px ≈ 1 m, relleno sólido) para contar qué parte de la parcela pinta (~0,2 s).
 
-import { caja, conReintento, wfs } from './geo.js';
+import { caja, conReintento, traer, wfs } from './geo.js';
 
 // El Ministerio manda la cabecera CORS duplicada («*, *») y el navegador rechaza sus respuestas
 // (curl no se queja). Se le llega por un proxy del mismo origen: el Worker del portfolio en
@@ -32,7 +32,7 @@ async function cuotaPintada(capa, fids, utm) {
     format: 'image/png', transparent: 'true', SLD_BODY: relleno(capa),
   });
   const imagen = await conReintento(async () => {
-    const r = await fetch(`${MITECO_WMS}?${q}`);
+    const r = await traer(`${MITECO_WMS}?${q}`);
     if (!r.ok || !r.headers.get('content-type')?.startsWith('image/')) throw new Error('El WMS del Ministerio no devolvió imagen');
     return createImageBitmap(await r.blob());
   });

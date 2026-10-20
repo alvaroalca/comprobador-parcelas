@@ -157,7 +157,7 @@
 
 ## Vigilancia de servicios (16/10/2026)
 
-- 20/10: 39 casos con los seis de Extremadura y Andalucía. Ese día GeoEuskadi no respondía (`ERR_CONNECTION_TIMED_OUT`): los cinco casos del País Vasco fallaban y cuatro dejaban la ficha cargando más de 40 s, sin aviso al usuario. `--grabar` reescribe todos los casos, también los que fallan: grabar solo con la vigilancia limpia o revisar el diff.
+- 20/10: 39 casos con los seis de Extremadura y Andalucía. Ese día GeoEuskadi no respondía (`ERR_CONNECTION_TIMED_OUT`): los cinco casos del País Vasco fallaban y cuatro dejaban la ficha cargando más de 40 s, sin aviso al usuario. Arreglado: toda llamada a un servicio pasa por `traer` (`geo.js`), que la corta a los 20 s sin reintento y la ficha dice qué servidor no respondió. `--grabar` reescribe todos los casos, también los que fallan: grabar solo con la vigilancia limpia o revisar el diff.
 - 19/10: la Junta de CyL movió las vías pecuarias a `viaspecuarias:vvpp_cyl_ejes` y renombró sus campos. Fallaban los cinco casos de CyL; arreglado.
 - `tools/vigilar.mjs` y `tools/vigilancia.json`: 25 casos, de dos a cinco por comunidad, con su veredicto y categoría grabados. 25/25 en 1-7 s por caso. Probado con el fallo real de la Junta de CyL (campo `geom` en lugar de `geometry`): los cinco casos de CyL salen con el 400 y el resto pasa.
 

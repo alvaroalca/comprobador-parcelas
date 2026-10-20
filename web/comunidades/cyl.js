@@ -1,7 +1,7 @@
 // Castilla y León: categorías de suelo e instrumentos de planeamiento de la Junta, montes de utilidad
 // pública y vías pecuarias. La Junta avisa de que su capa no tiene validez jurídica.
 
-import { cuotas, distancia, wfs, wkt } from '../geo.js';
+import { cuotas, distancia, traer, wfs, wkt } from '../geo.js';
 
 const URBANISMO = 'https://idecyl.jcyl.es/geoserver/urbanismo/wfs';
 const MONTES = 'https://idecyl.jcyl.es/geoserver/montes/wfs';
@@ -13,7 +13,7 @@ async function pedirWfs(capa, filtro, propiedades, srs) {
     typeNames: `urbanismo:${capa}`, outputFormat: 'application/json',
     srsName: srs, propertyName: propiedades, CQL_FILTER: filtro,
   });
-  const r = await fetch(`${URBANISMO}?${q}`);
+  const r = await traer(`${URBANISMO}?${q}`);
   if (!r.ok) throw new Error(`idecyl.jcyl.es respondió ${r.status}`);
   return r.json();
 }

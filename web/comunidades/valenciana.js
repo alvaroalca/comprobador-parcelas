@@ -5,7 +5,7 @@
 // ZRC-AG, ZRP-NA-LG...) y, si son dotación pública, su código (`dotacion`: PV, SQE-DO...). Toda la
 // comunidad cabe en 23 combinaciones de clase y zona. MapServer no entiende CQL_FILTER: se pide por caja.
 
-import { area, conReintento } from '../geo.js';
+import { area, conReintento, traer } from '../geo.js';
 
 const WFS = 'https://terramapas.icv.gva.es/0702_Planeamiento';
 const PARCELA_MINIMA = 10000; // art. 211.1.b.1.º: una hectárea por vivienda
@@ -31,7 +31,7 @@ function porCaja([x0, y0, x1, y1]) {
       service: 'WFS', version: '2.0.0', request: 'GetFeature', typeNames: 'ms:Planeamiento.Clasificacion',
       outputFormat: 'application/json; subtype=geojson', bbox: `${x0},${y0},${x1},${y1},urn:ogc:def:crs:EPSG::25830`,
     });
-    const r = await fetch(`${WFS}?${q}`);
+    const r = await traer(`${WFS}?${q}`);
     if (!r.ok) throw new Error(`terramapas.icv.gva.es respondió ${r.status}`);
     return (await r.json()).features;
   });

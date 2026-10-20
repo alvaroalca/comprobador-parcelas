@@ -9,7 +9,7 @@
 // el nombre que le da el plan y el documento del que sale. Red Natura (LIC/ZEC y ZEPA) igual, sin nombres:
 // esas capas no publican atributos.
 
-import { caja, conReintento } from '../geo.js';
+import { caja, conReintento, traer } from '../geo.js';
 
 const IDECAN = 'https://idecan2.grafcan.es/ServicioWMS';
 
@@ -42,7 +42,7 @@ async function pintado(servicio, capa, estilo, lonlat) {
     bbox: [o, s, e, n].join(','), width: w, height: h, format: 'image/png', transparent: 'true', SLD_BODY: estilo,
   });
   const imagen = await conReintento(async () => {
-    const r = await fetch(`${IDECAN}/${servicio}`, { method: 'POST', body: cuerpo });
+    const r = await traer(`${IDECAN}/${servicio}`, { method: 'POST', body: cuerpo });
     if (!r.ok || !r.headers.get('content-type')?.startsWith('image/')) throw new Error('GRAFCAN no devolvió imagen');
     return createImageBitmap(await r.blob());
   });
@@ -90,7 +90,7 @@ async function enPunto(servicio, capa, [lon, lat]) {
     bbox: [lat - d, lon - d, lat + d, lon + d].join(','), width: 11, height: 11, i: 5, j: 5,
     info_format: 'application/vnd.ogc.gml', feature_count: 10, styles: '', format: 'image/png',
   });
-  const r = await conReintento(() => fetch(`${IDECAN}/${servicio}?${q}`));
+  const r = await conReintento(() => traer(`${IDECAN}/${servicio}?${q}`));
   const doc = new DOMParser().parseFromString(await r.text(), 'text/xml');
   return [...doc.getElementsByTagName(`${capa}_feature`)].map((f) => Object.fromEntries([...f.children].map((c) => [c.tagName, c.textContent.trim()])));
 }

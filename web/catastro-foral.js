@@ -4,7 +4,7 @@
 // Bizkaia va por la consulta REST del ArcGIS que hay debajo de su WFS: el mismo día, durante una hora, el WFS
 // contestó con un 200 vacío a 23 de cada 30 peticiones y la consulta REST, a ninguna de 15.
 
-import { comoMulti, conReintento, dentroDe, distanciaPunto } from './geo.js';
+import { comoMulti, conReintento, dentroDe, distanciaPunto, traer } from './geo.js';
 
 const BIZKAIA = 'https://geo.bizkaia.eus/arcgisserverinspire/rest/services/Catastro/Annex1/MapServer';
 
@@ -50,7 +50,7 @@ function parcelasRest(t, [x0, y0, x1, y1], srs) {
       geometry: [x0, y0, x1, y1].join(','), geometryType: 'esriGeometryEnvelope', inSR: '4326', outSR: srs,
       spatialRel: 'esriSpatialRelIntersects', outFields: 'id_localId,areaValue,endLifespanVersion', f: 'geojson',
     });
-    const r = await fetch(`${t.rest}/query?${q}`);
+    const r = await traer(`${t.rest}/query?${q}`);
     const host = new URL(t.rest).host;
     if (!r.ok) throw new Error(`${host} respondió ${r.status}`);
     const d = await r.json();
@@ -70,7 +70,7 @@ function parcelasWfs(t, [x0, y0, x1, y1], srs) {
       service: 'WFS', version: '2.0.0', request: 'GetFeature', typenames: 'cp:CadastralParcel',
       bbox: `${y0},${x0},${y1},${x1},urn:ogc:def:crs:EPSG::4326`, srsName: `urn:ogc:def:crs:EPSG::${srs}`,
     });
-    const r = await fetch(`${t.wfs}?${q}`);
+    const r = await traer(`${t.wfs}?${q}`);
     const host = new URL(t.wfs).host;
     if (!r.ok) throw new Error(`${host} respondió ${r.status}`);
     // Vacío se descarta antes de parsear: el <parsererror> de Chrome lleva estilo inline y la CSP lo denuncia
