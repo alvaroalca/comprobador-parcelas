@@ -180,6 +180,28 @@
 - La referencia catastral empieza por 55 (Ceuta) y 56 (Melilla), pero el Catastro da la provincia del INE (51, 52). Probado por punto y por referencia en las dos.
 - Smoke test de Álvaro superado (20/10). Un caso por ciudad en `tools/vigilancia.json`.
 
+## QA en Chrome sin interfaz (22/10/2026)
+
+- Unas 230 cargas: 37 entradas raras en el buscador, 40 casos límite (enclaves, islas, fronteras, parques, fincas de cientos de hectáreas, servicios bloqueados, 3 s de latencia, clics seguidos, móvil) y 132 puntos al azar. Sin errores propios. Con veredicto (62 de los 132): veredicto en 1,5 s de mediana (p90 2,7 s), ficha completa en 1,8 s (p90 3,2 s).
+- Arreglado:
+  - «polígono 1 parcela 1 Tudela» daba Tudela de Duero sin preguntar: solo se elige sin preguntar el municipio que se llama como lo escrito, y en los forales se avisa de que no se puede buscar así.
+  - Enter con texto ambiguo tomaba la primera sugerencia, aunque fuera de otra provincia: ahora toma la del pueblo escrito (un portal antes que un comercio) o pide elegir. El ejemplo «Rúa Real 10, A Coruña» iba a Oleiros (con «Rúa» CartoCiudad no da calles de A Coruña) y la vigilancia no lo veía porque allí también sale «Suelo urbano»: pasa a «Calle Real 10».
+  - Con varios bienes el Catastro no da `<cn>` y una finca urbana de CyL sin planeamiento iba al régimen del rústico (art. 73 en vez de 67): la clase sale de la forma de la referencia.
+  - Un enlace pegado en la pestaña abierta (`hashchange`) no hacía nada.
+  - Las llamadas al Catastro tienen un reintento: un 404 suelto de su WFS tumbaba la consulta.
+  - `servir.py` rechazaba conexiones (cola de 5) y la página no cargaba en 4 de 132 cargas, y en la vigilancia: cola de 128.
+- Abierto:
+  - Red Natura en las comunidades sin capa propia: una finca de 1.639 ha en Doñana sale «Depende» y «sin afecciones en las capas consultadas». Probar el WMS de Red Natura del Ministerio contado por píxeles, como el agua.
+  - Si cae el servicio de una comunidad, cae el veredicto: el SIU podría hacer de respaldo.
+  - Los errores de red salen en inglés y sin el servidor («Failed to fetch»).
+  - En móvil el veredicto queda bajo el pliegue y el mapa empieza centrado en CyL.
+  - `normasDe` guarda la promesa fallida hasta recargar.
+  - `Map.groupBy` no existe en Safari anterior a 17.4.
+  - La `meta description` no nombra Navarra, Galicia, Ceuta ni Melilla, y a la nota de cobertura le falta una coma tras Andalucía.
+  - Sin `maxlength` en el buscador: 5.000 caracteres tienen colgado CartoCiudad 20 s.
+  - Con muchos bienes, `Consulta_DNPRC` pesa 124 kB y tarda 5,6 s.
+  - La capa de montes de CyL tardó dos veces más de 19 s.
+
 ## Vigilancia de servicios (16/10/2026)
 
 - 20/10: 39 casos con los seis de Extremadura y Andalucía. Ese día GeoEuskadi no respondía (`ERR_CONNECTION_TIMED_OUT`): los cinco casos del País Vasco fallaban y cuatro dejaban la ficha cargando más de 40 s, sin aviso al usuario. Arreglado: toda llamada a un servicio pasa por `traer` (`geo.js`), que la corta a los 20 s sin reintento y la ficha dice qué servidor no respondió. `--grabar` reescribe todos los casos, también los que fallan: grabar solo con la vigilancia limpia o revisar el diff.

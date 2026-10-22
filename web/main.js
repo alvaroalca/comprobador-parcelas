@@ -93,22 +93,37 @@ let espera;
 
 const TIPOS = { portal: 'Portal', callejero: 'Calle', Municipio: 'Municipio', poblacion: 'Población', toponimo: 'Lugar', refcatastral: 'Ref. catastral', carretera: 'Carretera', Codpost: 'Código postal', poligono: 'Rústica' };
 
-// «Polígono 4, parcela 376» en cada municipio que case con el texto y donde el Catastro tenga esa finca
-// (se pregunta a la vez por todos): la lista no ofrece fincas que no existen. Si el Catastro no
-// responde para un municipio, se ofrece igual y se comprueba al elegirlo.
+// «Polígono 4, parcela 376» en cada municipio que case con el texto (se pregunta a la vez por todos).
+// `rc: null` = el Catastro no tiene esa finca ahí: la lista no la ofrece. Si el Catastro no responde para
+// un municipio (`rc: undefined`), se ofrece igual y se comprueba al elegirlo.
 async function opcionesPoligono({ poligono, parcela, municipio }) {
   const munis = await municipios(municipio);
   const rcs = await Promise.all(munis.map((m) => referenciaPorPoligono(m.muniCode, poligono, parcela).catch(() => undefined)));
-  return munis
-    .map((m, i) => ({
-      type: 'poligono', address: `Polígono ${poligono}, parcela ${parcela}`, muni: `${m.muni} (${m.provincia})`,
-      muniCode: m.muniCode, poligono, parcela, rc: rcs[i],
-    }))
-    .filter((o) => o.rc !== null);
+  return munis.map((m, i) => ({
+    type: 'poligono', address: `Polígono ${poligono}, parcela ${parcela}`, muni: `${m.muni} (${m.provincia})`,
+    muniCode: m.muniCode, poligono, parcela, rc: rcs[i],
+  }));
 }
+const existentes = (ops) => ops.filter((o) => o.rc !== null);
+// El País Vasco y Navarra no están en el Catastro estatal y cada catastro foral numera a su manera
+const PROVINCIAS_FORALES = new Set(FORALES.map((t) => t.provincia));
 
 // Lo que se ve en la lista y lo que queda en la caja al elegir es lo mismo
 const etiqueta = (o) => (o.type === 'refcatastral' ? o.address : `${o.address}${o.muni && !o.address.includes(o.muni) ? `, ${o.muni}` : ''}`);
+
+const plano = (t) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+// ¿Nombra el texto el pueblo de una sugerencia? Basta una palabra con entidad de su nombre («Coruña (A)» en
+// «Calle Real 10, A Coruña»; «Donostia/San Sebastián» en «Kale Nagusia 1, Donostia»). Con coma, solo cuenta lo
+// de detrás: «Real» es la calle, no Real de la Jara. Sin coma el pueblo va pegado a la calle y tienen que estar
+// todas sus palabras: «Calle Mayor 5» no es Carbonero el Mayor, ni «Calle de Alcalá 50» Alcalá de Guadaíra
+const VACIAS = new Set(['del', 'las', 'los', 'els', 'les', 'san', 'sant', 'santa']);
+const palabras = (t) => plano(t).split(/[^a-z0-9]+/).filter((w) => w.length > 2 && !VACIAS.has(w));
+const nombraPueblo = (texto, o) => {
+  const coma = texto.lastIndexOf(',');
+  const t = new Set(palabras(texto.slice(coma + 1)));
+  const p = palabras(o.muni ?? '');
+  return p.length > 0 && (coma >= 0 ? p.some((w) => t.has(w)) : p.every((w) => t.has(w)));
+};
 
 function cerrarLista() {
   lista.hidden = true;
@@ -146,7 +161,7 @@ entrada.addEventListener('input', () => {
   if (pp && !pp.municipio) { opciones = []; opcionesDe = ''; cerrarLista(); return; }
   espera = setTimeout(async () => {
     try {
-      const nuevas = pp ? await opcionesPoligono(pp) : await sugerencias(texto);
+      const nuevas = pp ? existentes(await opcionesPoligono(pp)) : await sugerencias(texto);
       // Una respuesta lenta de un texto anterior no pisa la del actual
       if (entrada.value.trim() !== texto) return;
       opciones = nuevas; opcionesDe = texto; activa = -1;
@@ -182,27 +197,43 @@ $('#buscador').addEventListener('submit', async (e) => {
   let o = activa >= 0 ? opciones[activa] : null;
   const frescas = opcionesDe === texto ? opciones : [];
   if (!o && pp) {
-    // Con polígono y parcela, el municipio equivocado es otra finca: si el nombre no casa con uno solo, se pregunta
-    let ops = frescas;
-    if (!ops.length) { try { ops = await opcionesPoligono(pp); } catch (err) { return pintarError(err); } }
+    // Con polígono y parcela, el municipio equivocado es otra finca: solo se elige sin preguntar el que se llama
+    // como lo escrito. «polígono 1 parcela 1 Tudela» daba Tudela de Duero (22/10/2026): la de Navarra no está
+    // en el Catastro estatal y Tudela de Duero se quedaba sola en la lista
+    let todos;
+    try { todos = await opcionesPoligono(pp); } catch (err) { return pintarError(err); }
+    const exactos = todos.filter((x) => plano(x.muni.replace(/ \(.*\)$/, '')) === plano(pp.municipio));
+    if (exactos.length && exactos.every((x) => x.rc === null && PROVINCIAS_FORALES.has(x.muniCode.slice(0, 2)))) {
+      return pintarAviso(`En ${exactos[0].muni} no se puede buscar por polígono y parcela`, 'Sus fincas están en el catastro foral, que numera a su manera. Busca la calle o el pueblo y pincha la finca en el mapa.');
+    }
+    const ops = existentes(todos);
     if (!ops.length) return pintarAviso(`No encuentro el polígono ${pp.poligono}, parcela ${pp.parcela} en «${pp.municipio}»`, 'Revisa el nombre del pueblo (completo, sin abreviar) y los números de la escritura, la nota simple o el anuncio.');
-    const plano = (t) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
-    const exactos = ops.filter((x) => plano(x.muni.replace(/ \(.*\)$/, '')) === plano(pp.municipio));
-    o = exactos.length === 1 ? exactos[0] : ops.length === 1 ? ops[0] : null;
+    const validos = existentes(exactos);
+    o = validos.length === 1 ? validos[0] : null;
     if (!o) {
       opciones = ops; opcionesDe = texto; activa = -1; pintarLista(); entrada.focus();
-      return pintarAviso(`Hay varios municipios «${pp.municipio}»`, 'Elige el tuyo en la lista del buscador. Si no está, escribe el nombre completo.');
+      return pintarAviso(`¿Cuál es tu «${pp.municipio}»?`, 'Elige el municipio en la lista del buscador. Si no está, escribe el nombre completo.');
     }
   }
-  o ??= frescas[0];
-  if (!o) {
+  // Sin nada marcado, Enter toma la primera sugerencia del pueblo escrito, o la única; si no, se pregunta.
+  // Tomaba la primera a secas: «Kale Nagusia 1, Donostia» llevaba a Goizueta, «Calle Mayor 5» a Azofra y
+  // «Rúa Real 10, A Coruña» a Oleiros: con «Rúa» CartoCiudad no da ninguna calle de A Coruña (22/10/2026)
+  let candidatas = frescas;
+  if (!o && !candidatas.length) {
     try {
-      [o] = await sugerencias(texto);
+      candidatas = await sugerencias(texto);
       // Portal desconocido para CartoCiudad: se busca la calle sin el número y se pide pinchar
       const sinNumero = texto.replace(/\s\d+[a-z]?\s*(,|$)/i, '$1').trim();
-      if (!o && sinNumero !== texto) [o] = await sugerencias(sinNumero);
+      if (!candidatas.length && sinNumero !== texto) candidatas = await sugerencias(sinNumero);
     } catch (err) { return pintarError(err); }
   }
+  // Un portal antes que un comercio con esa dirección («GENERAL ÓPTICA [CALLE REAL 10]»), que no es una finca
+  const delPueblo = candidatas.find((c) => c.type === 'portal' && nombraPueblo(texto, c)) ?? candidatas.find((c) => nombraPueblo(texto, c));
+  if (!o && !delPueblo && candidatas.length > 1) {
+    opciones = candidatas; opcionesDe = texto; activa = -1; pintarLista(); entrada.focus();
+    return pintarAviso('¿Cuál de estos?', 'Hay varios sitios que casan con lo escrito. Elige el tuyo en la lista del buscador o añade el pueblo detrás: «Calle Mayor 5, Tordesillas».');
+  }
+  o ??= delPueblo ?? candidatas[0];
   if (o) return elegir(o);
   pintarAviso(`No encuentro «${texto}»`, 'Prueba con la calle sin número, con el nombre del pueblo o con la referencia catastral. También puedes pinchar la finca en el mapa.');
 });
@@ -332,6 +363,8 @@ function abrirDesdeEnlace() {
   if (rc) analizarReferencia(rc);
 }
 mapa.on('load', abrirDesdeEnlace);
+// Un enlace pegado en la pestaña ya abierta solo cambia el # (replaceState, al pintar una finca, no lo dispara)
+addEventListener('hashchange', abrirDesdeEnlace);
 
 // ---------- Ficha ----------
 

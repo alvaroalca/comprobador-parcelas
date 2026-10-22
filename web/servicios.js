@@ -1,7 +1,7 @@
 // Llamadas a los servicios públicos de toda España (CartoCiudad y Catastro). Responden con CORS
 // abierto, así que la página habla con ellos directamente. Lo de cada comunidad está en comunidades/.
 
-import { traer } from './geo.js';
+import { conReintento, traer } from './geo.js';
 
 const CATASTRO = 'https://ovc.catastro.meh.es';
 const CARTOCIUDAD = 'https://www.cartociudad.es/geocoder/api/geocoder';
@@ -12,6 +12,10 @@ async function pedir(url, tipo = 'json') {
   if (tipo === 'json') return r.json();
   return new DOMParser().parseFromString(await r.text(), 'text/xml');
 }
+
+// El Catastro falla a veces de forma suelta (22/10/2026: su WFS redirigió una vez a OVCError.aspx con un 404 y
+// al momento respondía bien): un reintento
+const catastro = (url) => conReintento(() => pedir(url, 'xml'));
 
 const etiqueta = (doc, nombre) => doc.getElementsByTagName(nombre)[0]?.textContent ?? null;
 
@@ -58,7 +62,7 @@ export async function coordenadas(candidato) {
 export async function referenciaEnPunto(lon, lat, { tolerancia = 0, portal = null } = {}) {
   const q = new URLSearchParams({ SRS: 'EPSG:4326', Coordenada_X: lon, Coordenada_Y: lat });
   const consulta = tolerancia ? 'Consulta_RCCOOR_Distancia' : 'Consulta_RCCOOR';
-  const doc = await pedir(`${CATASTRO}/ovcservweb/OVCSWLocalizacionRC/OVCCoordenadas.asmx/${consulta}?${q}`, 'xml');
+  const doc = await catastro(`${CATASTRO}/ovcservweb/OVCSWLocalizacionRC/OVCCoordenadas.asmx/${consulta}?${q}`);
   if (etiqueta(doc, 'cuerr') !== '0') return null;
   if (!tolerancia) return { rc: etiqueta(doc, 'pc1') + etiqueta(doc, 'pc2'), aproximada: false };
 
@@ -84,7 +88,7 @@ export async function referenciaPorPoligono(muniCode, poligono, parcela) {
     CodigoProvincia: muniCode.slice(0, 2), CodigoMunicipio: '', CodigoMunicipioINE: muniCode.slice(2),
     Poligono: poligono, Parcela: parcela,
   });
-  const doc = await pedir(`${CATASTRO}/ovcservweb/OVCSWLocalizacionRC/OVCCallejeroCodigos.asmx/Consulta_DNPPP_Codigos?${q}`, 'xml');
+  const doc = await catastro(`${CATASTRO}/ovcservweb/OVCSWLocalizacionRC/OVCCallejeroCodigos.asmx/Consulta_DNPPP_Codigos?${q}`);
   if (etiqueta(doc, 'cuerr') && etiqueta(doc, 'cuerr') !== '0') return null;
   const rc = (etiqueta(doc, 'pc1') ?? '') + (etiqueta(doc, 'pc2') ?? '');
   return rc.length === 14 ? rc : null;
@@ -93,7 +97,7 @@ export async function referenciaPorPoligono(muniCode, poligono, parcela) {
 // Centroide de una referencia (Catastro). null si la referencia no existe.
 export async function centroDeReferencia(rc) {
   const q = new URLSearchParams({ Provincia: '', Municipio: '', SRS: 'EPSG:4326', RC: rc });
-  const doc = await pedir(`${CATASTRO}/ovcservweb/OVCSWLocalizacionRC/OVCCoordenadas.asmx/Consulta_CPMRC?${q}`, 'xml');
+  const doc = await catastro(`${CATASTRO}/ovcservweb/OVCSWLocalizacionRC/OVCCoordenadas.asmx/Consulta_CPMRC?${q}`);
   if (etiqueta(doc, 'cuerr') !== '0') return null;
   return { lon: Number(etiqueta(doc, 'xcen')), lat: Number(etiqueta(doc, 'ycen')) };
 }
@@ -111,7 +115,7 @@ export function normalizarReferencia(texto) {
 
 export async function datosParcela(rc) {
   const q = new URLSearchParams({ Provincia: '', Municipio: '', RC: rc });
-  const doc = await pedir(`${CATASTRO}/ovcservweb/OVCSWLocalizacionRC/OVCCallejero.asmx/Consulta_DNPRC?${q}`, 'xml');
+  const doc = await catastro(`${CATASTRO}/ovcservweb/OVCSWLocalizacionRC/OVCCallejero.asmx/Consulta_DNPRC?${q}`);
   return {
     rc,
     // En urbana con varios inmuebles no hay <ldt> de parcela: se usa el del primero
@@ -120,7 +124,9 @@ export async function datosParcela(rc) {
     provinciaNombre: etiqueta(doc, 'np'),
     // Provincia en código INE; el de municipio (<cm>) es catastral y no coincide con el del INE
     provincia: etiqueta(doc, 'cp')?.padStart(2, '0'),
-    clase: etiqueta(doc, 'cn'), // RU rústica, UR urbana
+    // RU rústica, UR urbana. Con varios bienes el Catastro no da <cn>: sale de la forma de la referencia (la
+    // rústica es 5 cifras + letra + 8 cifras), o una finca urbana sin planeamiento iba al régimen del rústico
+    clase: etiqueta(doc, 'cn') ?? (/^\d{5}[A-Z]\d{8}$/.test(rc) ? 'RU' : 'UR'),
     uso: etiqueta(doc, 'luso'),
     cultivo: etiqueta(doc, 'dcc'),
     // VT vía de comunicación, HG hidrografía natural: el Catastro las marca como dominio público
@@ -134,7 +140,7 @@ async function poligonoCatastro(rc, srs) {
     service: 'wfs', version: '2.0.0', request: 'GetFeature',
     STOREDQUERIE_ID: 'GetParcel', refcat: rc, srsname: `EPSG::${srs}`,
   });
-  const doc = await pedir(`${CATASTRO}/INSPIRE/wfsCP.aspx?${q}`, 'xml');
+  const doc = await catastro(`${CATASTRO}/INSPIRE/wfsCP.aspx?${q}`);
   const girar = srs === '4326';
   const anillo = (nodo) => {
     const n = nodo.getElementsByTagName('gml:posList')[0].textContent.trim().split(/\s+/).map(Number);

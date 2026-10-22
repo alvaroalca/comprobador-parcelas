@@ -83,6 +83,9 @@ class ConCSP(http.server.SimpleHTTPRequestHandler):
 
 
 ConCSP.extensions_map['.js'] = 'text/javascript'
+# La página pide unos 30 módulos a la vez y la cola por defecto es de 5: en Windows las conexiones de más se
+# rechazaban y la página se quedaba sin cargar (4 de 132 cargas en la batería del 22/10/2026)
+http.server.ThreadingHTTPServer.request_queue_size = 128
 puerto = int(sys.argv[1]) if len(sys.argv) > 1 else 8765
 print(f'Sirviendo en http://localhost:{puerto} (Ctrl+C para parar)', flush=True)
 http.server.ThreadingHTTPServer(('127.0.0.1', puerto), functools.partial(ConCSP, directory=str(WEB))).serve_forever()
