@@ -202,6 +202,14 @@
   - Con muchos bienes, `Consulta_DNPRC` pesa 124 kB y tarda 5,6 s.
   - La capa de montes de CyL tardó dos veces más de 19 s.
 
+## Seguridad (22/10/2026)
+
+- Secretos: gitleaks sobre todo el historial de este repo y del portfolio, sin hallazgos. `.dev.vars` del portfolio tiene una clave, pero está ignorado y nunca se commiteó. En los ficheros, ni rutas locales ni del vault.
+- La página no tiene sumideros de HTML (todo por `textContent`), los filtros CQL solo llevan números y la CSP no admite scripts en línea. Los enlaces que llegan de los servicios solo se pintan si son http(s).
+- Lo único que gasta a nombre del portfolio es el Worker: lo demás lo pide el navegador del visitante directamente a cada servicio. Su proxy al Ministerio dejaba pasar cualquier petición a sus dos rutas (en producción sirvió un mapa de 4096 px de toda España, 1,3 MB y 9 s, y un `GetFeatureInfo` en `text/html` desde alvaroalcaraz.com sin CSP: `_headers` no cubre las respuestas del Worker) y admitía SLD con imágenes externas. Ahora solo pasa lo que pide `afecciones.js`, con el tipo de respuesta fijo, `nosniff` y `Content-Security-Policy: default-src 'none'; sandbox`, y hay un límite por IP: 200/min en el proxy y 30/min en `/api/track`. Probado con `wrangler dev`: las peticiones legítimas pasan y 13 abusos dan 400, 403, 405 o 413. Pendiente de desplegar.
+- Access aguanta una cabecera `cf-access-jwt-assertion` falsificada en `/api/stats` y `/api/trading` (redirige al login).
+- Antes de hacer público este repo: falta la licencia MIT de `polygon-clipping` en `web/vendor/` y una licencia propia.
+
 ## Vigilancia de servicios (16/10/2026)
 
 - 20/10: 39 casos con los seis de Extremadura y Andalucía. Ese día GeoEuskadi no respondía (`ERR_CONNECTION_TIMED_OUT`): los cinco casos del País Vasco fallaban y cuatro dejaban la ficha cargando más de 40 s, sin aviso al usuario. Arreglado: toda llamada a un servicio pasa por `traer` (`geo.js`), que la corta a los 20 s sin reintento y la ficha dice qué servidor no respondió. `--grabar` reescribe todos los casos, también los que fallan: grabar solo con la vigilancia limpia o revisar el diff.

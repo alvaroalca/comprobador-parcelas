@@ -385,8 +385,11 @@ function el(etiqueta, clase, texto) {
   return n;
 }
 
+// Los enlaces a los planes llegan de los servicios de cada comunidad: solo http(s). Un «javascript:» ya lo
+// para la CSP, pero no se deja en manos de una cabecera
 function enlace(href, texto) {
   const a = el('a', null, texto);
+  if (!/^https?:\/\//i.test(href)) return a;
   a.href = href;
   a.target = '_blank';
   a.rel = 'noopener';
