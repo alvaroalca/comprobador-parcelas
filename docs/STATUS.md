@@ -221,7 +221,7 @@
 - [x] Integrado en el portfolio (14/10, sin desplegar): `public/parcelas/` es copia de `web/` (al cambiar `web/`, volver a copiar), CSP en `_headers`, proxy `/api/miteco/` en el Worker y ficha en `public/projects/parcelas/` (05 · Webs, tras el juguete). Smoke test con `wrangler dev` superado.
 - [x] Integración de toda España (22/10, desplegada ese día: `de631e9` y `29b88af` del portfolio): `public/parcelas/` vuelve a ser copia de `web/` (la de producción era la primera, solo CyL), `_headers` con los 20 hosts de `connect-src`, y el Worker con los cuatro proxies desde `src/parcelas-proxies.json`, copia de `tools/proxies.json`. Probado con `wrangler dev`: los 47 casos de la vigilancia bien (dos, al repetir: la IDEIB y el catastro de Navarra fallaban a ratos ese día) y los abusos a los proxies de Murcia, Aragón e IDEEX cortados. El límite del proxy sube a 600/min: las teselas de suelo de esas tres comunidades también pasan por él.
 - En producción, 46 de 47 casos de la vigilancia bien (Santanyí: la IDEIB no respondía) y 1,5 s de mediana hasta el veredicto. Desde Cloudflare, 1 de cada 60 peticiones al Ministerio se colgaba más de 30 s (directo, 0 de 60): el Worker corta a los 8 s con un 504, que la página reintenta. Repo público: github.com/alvaroalca/comprobador-parcelas (MIT).
-- [ ] Reel de la ficha.
+- [x] Reel de la ficha (22/10): 24,7 s grabados contra los servicios en vivo, en `C:\Mis Proyectos\promo-videos\comprobador-parcelas` (`capture.cjs`, `scripts/cortar.mjs`). Publicado en la ficha, y su póster es la imagen de la portada del portfolio.
 
 ## Resto de España (prioridad actual)
 
