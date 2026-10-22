@@ -1,0 +1,8 @@
+La licencia MIT cubre el código. No cubre:
+
+- web/vendor/: MapLibre GL JS y polygon-clipping, cada uno con su licencia al lado.
+- web/datos/: extractos de datos públicos (planeamiento del Principado de Asturias,
+  costa de las Illes Balears, municipios del País Vasco del INE), que conservan las
+  condiciones de reutilización de su fuente.
+- Las citas de web/normas/: texto literal de leyes y reglamentos publicados en el
+  BOE y en los boletines autonómicos.
