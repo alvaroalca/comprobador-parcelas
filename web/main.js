@@ -40,8 +40,8 @@ const capasParcelas = ['catastro', ...FORALES.map((t) => `catastro-${t.id}`)];
 
 const mapa = new maplibregl.Map({
   container: 'mapa',
-  center: [-4.5, 41.3],
-  zoom: 6.2,
+  // La península y Baleares, ajustadas a la pantalla (antes, centrado en Castilla y León)
+  bounds: [[-9.4, 35.9], [4.4, 43.8]],
   attributionControl: false,
   style: {
     version: 8,
@@ -108,8 +108,10 @@ const existentes = (ops) => ops.filter((o) => o.rc !== null);
 // El País Vasco y Navarra no están en el Catastro estatal y cada catastro foral numera a su manera
 const PROVINCIAS_FORALES = new Set(FORALES.map((t) => t.provincia));
 
-// Lo que se ve en la lista y lo que queda en la caja al elegir es lo mismo
-const etiqueta = (o) => (o.type === 'refcatastral' ? o.address : `${o.address}${o.muni && !o.address.includes(o.muni) ? `, ${o.muni}` : ''}`);
+// Lo que se ve en la lista y lo que queda en la caja al elegir es lo mismo. CartoCiudad escribe el apóstrofo
+// como comillas dobles («CALLE L"HOSPITAL»)
+const etiqueta = (o) => (o.type === 'refcatastral' ? o.address
+  : `${o.address}${o.muni && !o.address.includes(o.muni) ? `, ${o.muni}` : ''}`.replaceAll('"', '’'));
 
 const plano = (t) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
 // ¿Nombra el texto el pueblo de una sugerencia? Basta una palabra con entidad de su nombre («Coruña (A)» en

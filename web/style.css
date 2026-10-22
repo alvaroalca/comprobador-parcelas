@@ -185,6 +185,8 @@ main { flex: 1; min-height: 0; display: grid; grid-template-columns: var(--ancho
   #buscador > button { padding: 0 14px; }
   #q { padding: 12px; }
   main { grid-template-columns: 1fr; grid-template-rows: 45vh 1fr; }
+  /* Con una ficha abierta el mapa encoge: con 45vh el veredicto quedaba bajo el pliegue de un móvil */
+  main:has(#resultado:not([hidden])) { grid-template-rows: 28vh 1fr; }
   #mapa { grid-row: 1; }
   #ficha { grid-row: 2; border-right: 0; border-top: 1px solid var(--linea); }
   #ficha > section { padding: 0 16px; }

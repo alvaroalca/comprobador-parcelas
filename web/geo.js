@@ -24,6 +24,17 @@ export function caja(multi) {
 
 export const comoMulti = (g) => (g.type === 'Polygon' ? [g.coordinates] : g.coordinates);
 
+// Map.groupBy sin Map.groupBy, que Safari no tiene hasta la 17.4
+export function agrupar(xs, clave) {
+  const m = new Map();
+  for (const x of xs) {
+    const k = clave(x);
+    if (!m.has(k)) m.set(k, []);
+    m.get(k).push(x);
+  }
+  return m;
+}
+
 // Recorte de un MultiPolygon a una caja (Sutherland-Hodgman por anillo), con coordenadas redondeadas.
 // Medido el 14/10/2026 en Cataluña: un recinto de no urbanizable puede ser la zona entera de un municipio,
 // con miles de vértices, y polygon-clipping tardaba 20 s y acababa fallando («Unable to find segment … in
@@ -140,8 +151,10 @@ export async function traer(url, opciones = {}) {
   try {
     return await fetch(url, { ...opciones, signal: AbortSignal.timeout(PLAZO) });
   } catch (e) {
-    if (e.name !== 'TimeoutError') throw e;
-    const corte = new Error(`${new URL(url, location.href).host} no respondió en ${PLAZO / 1000} s`);
+    const host = new URL(url, location.href).host;
+    // Un fallo de red llega como «Failed to fetch», en inglés y sin decir de quién: la ficha lo enseñaba así
+    if (e.name !== 'TimeoutError') throw new Error(`${host} no responde o rechazó la conexión`, { cause: e });
+    const corte = new Error(`${host} no respondió en ${PLAZO / 1000} s`);
     corte.name = 'TimeoutError';
     throw corte;
   }

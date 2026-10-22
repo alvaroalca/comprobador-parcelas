@@ -66,7 +66,7 @@
 - Tabla del Texto refundido de la LOTUP (Decreto Legislativo 1/2021): 21 citas, 172/172 en total. Zona urbanizada por solar (art. 187; industrial y terciaria, según el plan); nuevo desarrollo, «Todavía no» (art. 28.4); rural común agropecuaria o forestal, vivienda aislada si el plan la prevé, con 1 ha y el 2 % de ocupación (art. 211.1.b); por debajo de 1 ha, solo la ligada a una explotación profesional; explotación de recursos, «No»; rural protegida por el municipio o agrícola, según el plan (art. 26.c); por legislación ambiental, riesgos, patrimonio o franjas de dominio público, «No»; dotaciones, «No».
 - En Valencia «vivienda aislada» se ordena por delante de «depende del plan» para el titular: una finca 60 % rural común y 34 % protegida municipal salía «Depende».
 - Probado en Chrome: 21 parcelas por zona y 20 al azar por las tres provincias. Sin errores de consola; veredicto en 0,5-0,9 s (3 s en dos casos), ficha completa en 0,8-4 s.
-- Falta: smoke test de Álvaro. Al integrar: `https://terramapas.icv.gva.es` en el `connect-src` del portfolio.
+- Smoke test de Álvaro superado (22/10). Al integrar: `https://terramapas.icv.gva.es` en el `connect-src` del portfolio.
 - Abierto: Red Natura 2000, montes de utilidad pública y espacios naturales sin fuente WFS localizada (las protecciones ambientales que recoge el plan sí entran en el veredicto). Sin sección de rehabilitación. Se pide por caja (MapServer no entiende `CQL_FILTER`): una parcela alargada traerá recintos de más.
 
 ## Proxy para servicios sin CORS (14/10/2026)
@@ -79,7 +79,7 @@
 - Clases de suelo del SITMurcia (`clases_plu_ze_37mun`): 9.469 recintos en 33 de los 45 municipios; los demás salen «sin datos» con el aviso de cobertura. Por el proxy `/api/carm/`.
 - Tabla de la Ley 13/2015: 14 citas. Urbano consolidado por solar (art. 89); sin consolidar y urbanizable sectorizado, «Todavía no»; núcleo rural y urbano especial, según el plan (arts. 90 y 91); urbanizable sin sectorizar, vivienda ligada a explotación en parcela de más de 5.000 m² (arts. 101-102; por debajo, «No»); no urbanizable protegido por el planeamiento, explotación de 20.000 m², e inadecuado, 10.000 m² en regadío (art. 95); protección específica, «No» (art. 94); sistemas generales, «No». La DT 5ª equipara las clases de los planes sin adaptar (no programado, apto para urbanizar, no urbanizable a secas) y la tabla lo recoge.
 - Probado en Chrome: 22 parcelas por clase y 10 al azar. Sin errores; veredicto en 0,8-1,8 s.
-- Falta: smoke test de Álvaro. Abierto: Red Natura, montes y vías pecuarias (la capa `plu_prot_vp` da error), espacios naturales.
+- Smoke test de Álvaro superado (22/10). Abierto: Red Natura, montes y vías pecuarias (la capa `plu_prot_vp` da error), espacios naturales.
 
 ## Aragón (14/10/2026, en local, sin desplegar)
 
@@ -88,7 +88,7 @@
 - Tabla del Texto refundido de la Ley de Urbanismo de Aragón (DL 1/2014): 16 citas, 202/202 en total. No urbanizable genérico, vivienda aislada si el plan no la prohíbe: 10.000 m², 300 m² construidos y sin dos viviendas a menos de 150 m (art. 34.2; por debajo de 1 ha, solo ligada a explotación); urbanizable no delimitado, igual (art. 33); no urbanizable especial, «No» (art. 37); sistemas generales, «No». En municipios sin plan general se avisa de la autorización especial (art. 35.1.b) y de la zona de borde (art. 289). Rehabilitación de bordas y edificios rurales tradicionales (art. 35.1.c).
 - Afecciones: montes de utilidad pública, vías pecuarias y Red Natura (LIC y ZEPA) del Gobierno de Aragón.
 - Probado en Chrome: 16 parcelas por clase y 15 al azar. Sin errores; veredicto en 0,8-1,8 s.
-- Falta: smoke test de Álvaro. No se mide la distancia a otras viviendas (núcleo de población): la ficha la explica.
+- Smoke test de Álvaro superado (22/10). No se mide la distancia a otras viviendas (núcleo de población): la ficha la explica.
 
 ## Castilla-La Mancha (16/10/2026, en local, sin desplegar)
 
@@ -190,15 +190,10 @@
   - Un enlace pegado en la pestaña abierta (`hashchange`) no hacía nada.
   - Las llamadas al Catastro tienen un reintento: un 404 suelto de su WFS tumbaba la consulta.
   - `servir.py` rechazaba conexiones (cola de 5) y la página no cargaba en 4 de 132 cargas, y en la vigilancia: cola de 128.
+- Arreglado después, de cara al público (22/10): los errores de red dicen qué servidor no responde (salían en inglés, «Failed to fetch»); en móvil el mapa encoge con una ficha abierta y el veredicto queda en la primera pantalla; el mapa empieza en la península y Baleares (estaba centrado en CyL); `Map.groupBy`, que Safari no tiene hasta la 17.4, sustituido por `agrupar` (`geo.js`: el mínimo queda en Safari 16.4 por `OffscreenCanvas`); `normasDe` ya no guarda una carga fallida; `meta description` sin lista de comunidades, coma en la nota de cobertura, `maxlength` de 200 en el buscador y el apóstrofo que CartoCiudad escribe como comillas dobles.
 - Abierto:
   - Red Natura en las comunidades sin capa propia: una finca de 1.639 ha en Doñana sale «Depende» y «sin afecciones en las capas consultadas». Probar el WMS de Red Natura del Ministerio contado por píxeles, como el agua.
   - Si cae el servicio de una comunidad, cae el veredicto: el SIU podría hacer de respaldo.
-  - Los errores de red salen en inglés y sin el servidor («Failed to fetch»).
-  - En móvil el veredicto queda bajo el pliegue y el mapa empieza centrado en CyL.
-  - `normasDe` guarda la promesa fallida hasta recargar.
-  - `Map.groupBy` no existe en Safari anterior a 17.4.
-  - La `meta description` no nombra Navarra, Galicia, Ceuta ni Melilla, y a la nota de cobertura le falta una coma tras Andalucía.
-  - Sin `maxlength` en el buscador: 5.000 caracteres tienen colgado CartoCiudad 20 s.
   - Con muchos bienes, `Consulta_DNPRC` pesa 124 kB y tarda 5,6 s.
   - La capa de montes de CyL tardó dos veces más de 19 s.
 
@@ -224,6 +219,7 @@
 - [ ] **Red Natura 2000**: buscar una fuente con los límites de los espacios (WFS). La de la Junta son hábitats; la del Ministerio, solo WMS de visualización.
 - [ ] Afecciones aún no miradas: carreteras (zona de afección y línea límite de edificación), patrimonio (BIC y su entorno).
 - [x] Integrado en el portfolio (14/10, sin desplegar): `public/parcelas/` es copia de `web/` (al cambiar `web/`, volver a copiar), CSP en `_headers`, proxy `/api/miteco/` en el Worker y ficha en `public/projects/parcelas/` (05 · Webs, tras el juguete). Smoke test con `wrangler dev` superado.
+- [x] Integración de toda España (22/10, sin desplegar): `public/parcelas/` vuelve a ser copia de `web/` (la de producción era la primera, solo CyL), `_headers` con los 20 hosts de `connect-src`, y el Worker con los cuatro proxies desde `src/parcelas-proxies.json`, copia de `tools/proxies.json`. Probado con `wrangler dev`: los 47 casos de la vigilancia bien (dos, al repetir: la IDEIB y el catastro de Navarra fallaban a ratos ese día) y los abusos a los proxies de Murcia, Aragón e IDEEX cortados. El límite del proxy sube a 600/min: las teselas de suelo de esas tres comunidades también pasan por él.
 - [ ] Reel de la ficha.
 
 ## Resto de España (prioridad actual)

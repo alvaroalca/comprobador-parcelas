@@ -6,7 +6,7 @@
 // Categorías (medido el 16/10/2026): urbano SU-C y SU-NC, urbanizable SUR-S, SUR-NS y SUR-PR, no urbanizable
 // SNU-EP, SNU-I, SNU-C, SNU-IF y núcleo rural (de la capa de no urbanizable y de la de núcleos, 5.401).
 
-import { caja } from '../geo.js';
+import { agrupar, caja } from '../geo.js';
 
 const TESELA = 2000;
 const NOMBRES = {
@@ -63,7 +63,7 @@ export default {
       geometry: { type: 'Polygon', coordinates: anillos.map(anillo) }, codigo, nombre: NOMBRES[codigo] ?? codigo, detalle: propio(detalle) ? null : detalle, municipio,
     }));
     // El plan del concejo que más recintos pone en la parcela
-    const municipio = [...Map.groupBy(recintos, (r) => r.municipio)].sort((a, b) => b[1].length - a[1].length)[0]?.[0];
+    const municipio = [...agrupar(recintos, (r) => r.municipio)].sort((a, b) => b[1].length - a[1].length)[0]?.[0];
     return { recintos, plan: vigentes[municipio] ?? null, notas: {} };
   },
 

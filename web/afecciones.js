@@ -7,7 +7,7 @@
 // Así que: BBOX sin geometría para sacar candidatos y, por cada candidato, su dibujo WMS recortado a la
 // caja de la parcela (1 px ≈ 1 m, relleno sólido) para contar qué parte de la parcela pinta (~0,2 s).
 
-import { caja, conReintento, traer, wfs } from './geo.js';
+import { agrupar, caja, conReintento, traer, wfs } from './geo.js';
 
 // El Ministerio manda la cabecera CORS duplicada («*, *») y el navegador rechaza sus respuestas
 // (curl no se queja). Se le llega por un proxy del mismo origen: el Worker del portfolio en
@@ -108,7 +108,7 @@ export async function afecciones(lonlat, utm, comunidad) {
   // Ríos afectados y parte de la parcela cubierta. Si un tipo son varios recintos (la zona de policía
   // de un río puede venir en dos piezas), se pintan juntos para medir su unión y no solo el mayor.
   const rios = async (xs) => {
-    const porCapa = Map.groupBy(xs, (x) => x.capa);
+    const porCapa = agrupar(xs, (x) => x.capa);
     const cuotas = await Promise.all([...porCapa].map(([capa, ys]) => (ys.length === 1 ? ys[0].cuota
       : enSerie(() => cuotaPintada(capa, ys.map((y) => y.fid).join(','), utm)).catch(() => Math.max(...ys.map((y) => y.cuota))))));
     const pct = Math.max(...cuotas) * 100;

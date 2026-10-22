@@ -26,6 +26,11 @@ export const comunidadDe = (provincia) => COMUNIDADES.find((c) => c.provincias.i
 
 const normas = new Map();
 export function normasDe(comunidad) {
-  if (!normas.has(comunidad.id)) normas.set(comunidad.id, fetch(comunidad.normas).then((r) => r.json()));
+  // Un fallo no se guarda: la siguiente finca de la comunidad lo vuelve a intentar en vez de heredar el error
+  if (!normas.has(comunidad.id)) {
+    normas.set(comunidad.id, fetch(comunidad.normas)
+      .then((r) => { if (!r.ok) throw new Error(`no se pudo cargar ${comunidad.normas} (${r.status})`); return r.json(); })
+      .catch((e) => { normas.delete(comunidad.id); throw e; }));
+  }
   return normas.get(comunidad.id);
 }

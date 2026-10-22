@@ -9,7 +9,7 @@
 // aquí con el contorno de la isla (datos/costa-baleares.json). La zona inundable del Ministerio en Baleares son 4 recintos: se usa
 // la de la IDEIB.
 
-import { area, arcgis, caja, cuotas, dentroDe, distanciaPunto } from '../geo.js';
+import { agrupar, area, arcgis, caja, cuotas, dentroDe, distanciaPunto } from '../geo.js';
 
 const IDEIB = 'https://ideib.caib.es/geoserveis/rest/services/public';
 const MUIB = `${IDEIB}/GOIB_MUIB/MapServer`;
@@ -177,7 +177,7 @@ export default {
           const capas = await Promise.all(NATURA.map(async ([capa, tipo]) => (await arcgis(capa, enCaja, { campos: 'SITE_CODE,SITE_NAME' })).map((f) => ({ ...f, properties: { ...f.properties, tipo } }))));
           const espacios = cuotas(capas.flat(), utm);
           // Un mismo espacio puede ser ZEC y ZEPA: se juntan por nombre
-          const porNombre = Map.groupBy(espacios, (e) => e.SITE_NAME);
+          const porNombre = agrupar(espacios, (e) => e.SITE_NAME);
           const nombres = [...porNombre].map(([nombre, es]) => `${[...new Set(es.map((e) => e.tipo))].join(' y ')} «${nombre}»: ${pct(es[0])}`);
           return nombres.length ? [{ tipo: 'natura', detalle: nombres.join(', ') }] : [];
         },

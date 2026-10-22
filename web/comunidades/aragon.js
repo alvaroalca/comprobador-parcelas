@@ -7,7 +7,7 @@
 // publica figura en `fiab_geom` como «No aprobada/Denegada/Obsoleta»: ahí no se decide. Sin filtro tarda
 // 6 s; con INTERSECTS, 0,1 s.
 
-import { area, cuotas, distancia, wfs, wkt } from '../geo.js';
+import { agrupar, area, cuotas, distancia, wfs, wkt } from '../geo.js';
 
 const SIUA = '/api/aragon/geoserver/SIUa';
 const VISOR = '/api/aragon/geoserver/VISOR2D/wfs';
@@ -102,7 +102,7 @@ export default {
             wfs(VISOR, 'VISOR2D:v108_ps_zepa_es24_s', enParcela, 'shape,sitename', 'EPSG:25830'),
           ]);
           const es = [...cuotas(lic, utm).map((e) => ({ ...e, tipo: 'LIC' })), ...cuotas(zepa, utm).map((e) => ({ ...e, tipo: 'ZEPA' }))];
-          const nombres = [...Map.groupBy(es, (e) => e.sitename)].map(([n, xs]) => `${xs.map((x) => x.tipo).join(' y ')} «${n}»: ${pct(xs[0])}`);
+          const nombres = [...agrupar(es, (e) => e.sitename)].map(([n, xs]) => `${xs.map((x) => x.tipo).join(' y ')} «${n}»: ${pct(xs[0])}`);
           return nombres.length ? [{ tipo: 'natura', detalle: nombres.join(', ') }] : [];
         },
       },
