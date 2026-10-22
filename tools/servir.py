@@ -7,7 +7,7 @@ y el navegador rechaza sus respuestas; Murcia y Aragón no mandan cabecera CORS.
 
 Uso: python -I tools/servir.py [puerto]   (8765 por defecto)
 """
-import http.server, functools, re, sys, urllib.request, urllib.error
+import http.server, functools, json, re, sys, urllib.request, urllib.error
 from pathlib import Path
 from urllib.parse import parse_qsl, urlsplit
 
@@ -30,89 +30,55 @@ CSP = '; '.join([
 ])
 
 
-# Prefijo local -> (servidor, rutas permitidas en él). Lo mismo tiene que estar en el Worker del portfolio.
-PROXIES = {
-    '/api/miteco/': ('https://gis.miteco.gob.es', ('/geoserver/agua/wfs', '/geoserver/agua/wms')),
-    '/api/carm/': ('https://mapas-gis-inter.carm.es', ('/geoserver/SIT_USU_PLA_URB_CARM/wfs', '/geoserver/SIT_USU_PLA_URB_CARM/wms')),
-    '/api/aragon/': ('https://idearagon.aragon.es', ('/geoserver/SIUa/wfs', '/geoserver/SIUa/wms', '/geoserver/VISOR2D/wfs')),
-    '/api/ideex/': ('https://mapas.ideex.es', ('/CICTEX/urbanismo',)),
-}
-
-
-# Del Ministerio solo pasa lo que pide afecciones.js, parámetro a parámetro: las mismas reglas que el Worker del
-# portfolio (src/index.js, MITECO_REGLAS). Antes pasaba cualquier cosa: un mapa de 4096 px de toda España, un
-# GetFeatureInfo en HTML servido desde el dominio del portfolio o un SLD con imágenes externas que el Ministerio
-# iría a buscar (22/10/2026). Están aquí también para que la vigilancia falle si la página cambia sus peticiones.
-NUM = r'-?\d+(?:\.\d+)?'
-CAPAS_MITECO = {'agua:ZI_Laminas_ZFP', 'agua:Zi_laminas_q500', 'agua:DPH_Estimado', 'agua:DPH_Deslindado'}
-
-
-def relleno(capa):
-    return ('<StyledLayerDescriptor version="1.0.0" xmlns="http://www.opengis.net/sld">'
-            f'<NamedLayer><Name>{capa}</Name><UserStyle><FeatureTypeStyle><Rule><PolygonSymbolizer><Fill>'
-            '<CssParameter name="fill">#000000</CssParameter></Fill></PolygonSymbolizer></Rule></FeatureTypeStyle>'
-            '</UserStyle></NamedLayer></StyledLayerDescriptor>')
-
-
-def lado(v, p):
-    return bool(re.fullmatch(r'\d{1,4}', v)) and 1 <= int(v) <= 1024
-
-
-REGLAS_MITECO = {
-    '/geoserver/agua/wfs': ('application/json', {
-        'service': lambda v, p: v == 'WFS', 'version': lambda v, p: v == '2.0.0', 'request': lambda v, p: v == 'GetFeature',
-        'typenames': lambda v, p: v in CAPAS_MITECO, 'outputformat': lambda v, p: v == 'application/json',
-        'propertyname': lambda v, p: v == 'rio,tipo_zona',
-        'cql_filter': lambda v, p: bool(re.fullmatch(rf"BBOX\(shape,{NUM}(?:,{NUM}){{3}},'EPSG:4326'\)", v)),
-    }),
-    '/geoserver/agua/wms': ('image/png', {
-        'service': lambda v, p: v == 'WMS', 'version': lambda v, p: v == '1.1.1', 'request': lambda v, p: v == 'GetMap',
-        'layers': lambda v, p: v in CAPAS_MITECO, 'styles': lambda v, p: v == '',
-        'featureid': lambda v, p: bool(re.fullmatch(r'[\w.]+(?:,[\w.]+)*', v)), 'srs': lambda v, p: v == 'EPSG:25830',
-        'bbox': lambda v, p: bool(re.fullmatch(rf'{NUM}(?:,{NUM}){{3}}', v)), 'width': lado, 'height': lado,
-        'format': lambda v, p: v == 'image/png', 'transparent': lambda v, p: v == 'true',
-        'sld_body': lambda v, p: v == relleno(p.get('layers')),
-    }),
-}
-
-
-def tipo_miteco(destino, cuerpo):
-    """Tipo de respuesta esperado si la petición al Ministerio está permitida; None si no. Los nombres no
-    distinguen mayúsculas en GeoServer: uno repetido es ambiguo y se rechaza, igual que uno fuera de la lista."""
-    partes = urlsplit(destino)
-    tipo, reglas = REGLAS_MITECO[partes.path]
-    p = {}
-    pares = parse_qsl(partes.query, keep_blank_values=True)
-    if cuerpo is not None:
-        if len(cuerpo) > 16384:
-            return None
-        pares += parse_qsl(cuerpo.decode('utf-8', 'replace'), keep_blank_values=True)
-    for k, v in pares:
-        k = k.lower()
-        if k in p or k not in reglas:
-            return None
-        p[k] = v
-    return tipo if all(k in p and ok(p[k], p) for k, ok in reglas.items()) else None
+# Prefijo local -> servidor, rutas y, por ruta, las formas de petición que deja pasar: tools/proxies.json, que el
+# Worker del portfolio lleva copiado (src/parcelas-proxies.json). Hasta el 22/10/2026 pasaba cualquier petición a
+# esas rutas: un mapa de 4096 px de toda España, un GetFeatureInfo en HTML servido desde el dominio del portfolio
+# o un SLD con imágenes externas que el Ministerio iría a buscar. Con las reglas aquí, la vigilancia falla si la
+# página cambia sus peticiones y el Worker las cortaría.
+PROXIES = {k: v for k, v in json.loads((Path(__file__).resolve().parent / 'proxies.json').read_text('utf-8')).items()
+           if k.startswith('/')}
+CUERPO_MAX = 262144  # la geometría de una parcela grande en el filtro CQL ocupa decenas de kB
 
 
 def destino_de(ruta_completa):
-    for prefijo, (servidor, permitidas) in PROXIES.items():
+    """(prefijo, ruta) si la ruta es de un proxy; ('', '') si es de un proxy pero no está permitida; None si no."""
+    for prefijo, proxy in PROXIES.items():
         if ruta_completa.startswith(prefijo):
-            resto = ruta_completa[len(prefijo) - 1:]
-            return servidor + resto if resto.split('?')[0] in permitidas else ''
+            ruta = ruta_completa[len(prefijo) - 1:].split('?')[0]
+            return (prefijo, ruta) if ruta in proxy['rutas'] else ('', '')
+    return None
+
+
+def tipo_permitido(formas, query, cuerpo):
+    """Tipo de respuesta de la forma con la que casa la petición; None si no casa con ninguna. GeoServer no
+    distingue mayúsculas en los nombres: uno repetido es ambiguo y se rechaza, igual que uno de más."""
+    pares = parse_qsl(query, keep_blank_values=True)
+    if cuerpo is not None:
+        if len(cuerpo) > CUERPO_MAX:
+            return None
+        pares += parse_qsl(cuerpo.decode('utf-8', 'replace'), keep_blank_values=True)
+    p = {}
+    for k, v in pares:
+        if k.lower() in p:
+            return None
+        p[k.lower()] = v
+    for forma in formas:
+        reglas = forma['params']
+        if p.keys() == reglas.keys() and all(re.fullmatch(patron, p[k]) for k, patron in reglas.items()):
+            return forma['tipo']
     return None
 
 
 class ConCSP(http.server.SimpleHTTPRequestHandler):
-    def _proxy(self, destino, cuerpo=None):
-        if not destino:
+    def _proxy(self, prefijo, ruta, cuerpo=None):
+        if not prefijo:
             return self.send_error(403, 'Ruta no permitida en el proxy')
-        esperado = None
-        if destino.startswith('https://gis.miteco.gob.es/'):
-            esperado = tipo_miteco(destino, cuerpo)
-            if not esperado:
-                return self.send_error(400, 'Petición no permitida en el proxy')
-        cabeceras = {'Content-Type': self.headers.get('Content-Type', '')} if cuerpo is not None else {}
+        query = urlsplit(self.path).query
+        esperado = tipo_permitido(PROXIES[prefijo]['rutas'][ruta], query, cuerpo)
+        if not esperado:
+            return self.send_error(400, 'Petición no permitida en el proxy')
+        destino = PROXIES[prefijo]['servidor'] + ruta + (f'?{query}' if query else '')
+        cabeceras = {'Content-Type': 'application/x-www-form-urlencoded'} if cuerpo is not None else {}
         try:
             with urllib.request.urlopen(urllib.request.Request(destino, data=cuerpo, headers=cabeceras), timeout=60) as r:
                 estado, tipo, datos = r.status, r.headers.get('Content-Type', ''), r.read()
@@ -120,27 +86,26 @@ class ConCSP(http.server.SimpleHTTPRequestHandler):
             estado, tipo, datos = e.code, e.headers.get('Content-Type', ''), e.read()
         except Exception as e:
             return self.send_error(502, f'{destino.split("/")[2]} inalcanzable: {e}')
-        # Como el Worker: del Ministerio solo se reenvía el tipo esperado (sus errores llegan con 200 y en XML)
-        if esperado and not tipo.startswith(esperado):
-            return self.send_error(502, f'El Ministerio no devolvió {esperado} ({estado})')
+        # Como el Worker: solo se reenvía el tipo esperado (GeoServer da sus errores con 200 y en XML)
+        if not tipo.startswith(esperado):
+            return self.send_error(502, f'{destino.split("/")[2]} no devolvió {esperado} ({estado})')
         self.send_response(estado)
-        self.send_header('Content-Type', esperado or tipo)
-        if esperado:
-            self.send_header('X-Content-Type-Options', 'nosniff')
+        self.send_header('Content-Type', esperado)
+        self.send_header('X-Content-Type-Options', 'nosniff')
         self.send_header('Content-Length', str(len(datos)))
         self.end_headers()
         self.wfile.write(datos)
 
     def do_GET(self):
-        destino = destino_de(self.path)
-        if destino is not None:
-            return self._proxy(destino)
+        proxy = destino_de(self.path)
+        if proxy is not None:
+            return self._proxy(*proxy)
         return super().do_GET()
 
     def do_POST(self):
-        destino = destino_de(self.path)
-        if destino is not None:
-            return self._proxy(destino, self.rfile.read(int(self.headers.get('Content-Length', 0))))
+        proxy = destino_de(self.path)
+        if proxy is not None:
+            return self._proxy(*proxy, self.rfile.read(int(self.headers.get('Content-Length', 0))))
         self.send_error(405)
 
     def end_headers(self):

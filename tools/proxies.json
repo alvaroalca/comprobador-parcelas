@@ -1,0 +1,191 @@
+{
+  "_": "Proxies del mismo origen para los servicios sin CORS válido. Lo leen tools/servir.py y, copiado, el Worker del portfolio (src/parcelas-proxies.json): solo pasa una petición cuyos parámetros (nombres sin mayúsculas, ninguno repetido ni de más) casen enteros con los patrones de una de las formas de su ruta, y su respuesta tiene que ser del tipo de esa forma. Si la página cambia sus peticiones, se cambia aquí y se vuelve a copiar.",
+  "/api/miteco/": {
+    "servidor": "https://gis.miteco.gob.es",
+    "rutas": {
+      "/geoserver/agua/wfs": [
+        {
+          "tipo": "application/json",
+          "params": {
+            "service": "WFS",
+            "version": "2\\.0\\.0",
+            "request": "GetFeature",
+            "typenames": "(?:agua:ZI_Laminas_ZFP|agua:Zi_laminas_q500|agua:DPH_Estimado|agua:DPH_Deslindado)",
+            "outputformat": "application\\/json",
+            "propertyname": "rio,tipo_zona",
+            "cql_filter": "BBOX\\(shape,-?\\d+(?:\\.\\d+)?,-?\\d+(?:\\.\\d+)?,-?\\d+(?:\\.\\d+)?,-?\\d+(?:\\.\\d+)?,'EPSG:4326'\\)"
+          }
+        }
+      ],
+      "/geoserver/agua/wms": [
+        {
+          "tipo": "image/png",
+          "params": {
+            "service": "WMS",
+            "version": "1\\.1\\.1",
+            "request": "GetMap",
+            "layers": "(?:agua:ZI_Laminas_ZFP|agua:Zi_laminas_q500|agua:DPH_Estimado|agua:DPH_Deslindado)",
+            "styles": "",
+            "featureid": "[\\w.]+(?:,[\\w.]+)*",
+            "srs": "EPSG:25830",
+            "bbox": "-?\\d+(?:\\.\\d+)?,-?\\d+(?:\\.\\d+)?,-?\\d+(?:\\.\\d+)?,-?\\d+(?:\\.\\d+)?",
+            "width": "(?:[1-9]\\d{0,2}|10[01]\\d|102[0-4])",
+            "height": "(?:[1-9]\\d{0,2}|10[01]\\d|102[0-4])",
+            "format": "image\\/png",
+            "transparent": "true",
+            "sld_body": "<StyledLayerDescriptor version=\"1\\.0\\.0\" xmlns=\"http:\\/\\/www\\.opengis\\.net\\/sld\"><NamedLayer><Name>(?:agua:ZI_Laminas_ZFP|agua:Zi_laminas_q500|agua:DPH_Estimado|agua:DPH_Deslindado)<\\/Name><UserStyle><FeatureTypeStyle><Rule><PolygonSymbolizer><Fill><CssParameter name=\"fill\">#000000<\\/CssParameter><\\/Fill><\\/PolygonSymbolizer><\\/Rule><\\/FeatureTypeStyle><\\/UserStyle><\\/NamedLayer><\\/StyledLayerDescriptor>"
+          }
+        }
+      ]
+    }
+  },
+  "/api/carm/": {
+    "servidor": "https://mapas-gis-inter.carm.es",
+    "rutas": {
+      "/geoserver/SIT_USU_PLA_URB_CARM/wfs": [
+        {
+          "tipo": "application/json",
+          "params": {
+            "service": "WFS",
+            "version": "2\\.0\\.0",
+            "request": "GetFeature",
+            "typenames": "SIT_USU_PLA_URB_CARM:clases_plu_ze_37mun",
+            "outputformat": "application\\/json",
+            "propertyname": "geom,Clasificacion,Municipio,Ambito,Sistema_general,Area_suspendida,Enlace_ficha",
+            "cql_filter": "INTERSECTS\\(geom,SRID=25830;MULTIPOLYGON\\([0-9 .,()-]+\\)\\)"
+          }
+        }
+      ],
+      "/geoserver/SIT_USU_PLA_URB_CARM/wms": [
+        {
+          "tipo": "image/png",
+          "params": {
+            "service": "WMS",
+            "version": "1\\.1\\.1",
+            "request": "GetMap",
+            "layers": "clases_plu_ze_37mun",
+            "styles": "",
+            "format": "image\\/png",
+            "transparent": "true",
+            "srs": "EPSG:3857",
+            "width": "256",
+            "height": "256",
+            "bbox": "-?\\d+(?:\\.\\d+)?,-?\\d+(?:\\.\\d+)?,-?\\d+(?:\\.\\d+)?,-?\\d+(?:\\.\\d+)?"
+          }
+        }
+      ]
+    }
+  },
+  "/api/aragon/": {
+    "servidor": "https://idearagon.aragon.es",
+    "rutas": {
+      "/geoserver/SIUa/wfs": [
+        {
+          "tipo": "application/json",
+          "params": {
+            "service": "WFS",
+            "version": "2\\.0\\.0",
+            "request": "GetFeature",
+            "typenames": "SIUa:clasificacion_idearagon",
+            "outputformat": "application\\/json",
+            "propertyname": "shape,notepa,clase,dot_sg,fiab_geom,d_muni_ine,cod_plan,n_expedien,date_acu,pdf,web_acu,nombre",
+            "cql_filter": "INTERSECTS\\(shape,SRID=25830;MULTIPOLYGON\\([0-9 .,()-]+\\)\\)"
+          }
+        }
+      ],
+      "/geoserver/SIUa/wms": [
+        {
+          "tipo": "image/png",
+          "params": {
+            "service": "WMS",
+            "version": "1\\.1\\.1",
+            "request": "GetMap",
+            "layers": "SIUa:clasificacion_idearagon",
+            "styles": "",
+            "format": "image\\/png",
+            "transparent": "true",
+            "srs": "EPSG:3857",
+            "width": "256",
+            "height": "256",
+            "bbox": "-?\\d+(?:\\.\\d+)?,-?\\d+(?:\\.\\d+)?,-?\\d+(?:\\.\\d+)?,-?\\d+(?:\\.\\d+)?"
+          }
+        }
+      ],
+      "/geoserver/VISOR2D/wfs": [
+        {
+          "tipo": "application/json",
+          "params": {
+            "service": "WFS",
+            "version": "2\\.0\\.0",
+            "request": "GetFeature",
+            "typenames": "VISOR2D:v_montes",
+            "outputformat": "application\\/json",
+            "propertyname": "shape,denominacion,num_mup",
+            "cql_filter": "INTERSECTS\\(shape,SRID=25830;MULTIPOLYGON\\([0-9 .,()-]+\\)\\) AND mup='True'",
+            "srsname": "EPSG:25830"
+          }
+        },
+        {
+          "tipo": "application/json",
+          "params": {
+            "service": "WFS",
+            "version": "2\\.0\\.0",
+            "request": "GetFeature",
+            "typenames": "VISOR2D:v105_dagma_montes_vvpp",
+            "outputformat": "application\\/json",
+            "propertyname": "shape,nb_via,anchura_ac",
+            "cql_filter": "DWITHIN\\(shape,SRID=25830;MULTIPOLYGON\\([0-9 .,()-]+\\),40,meters\\)",
+            "srsname": "EPSG:25830"
+          }
+        },
+        {
+          "tipo": "application/json",
+          "params": {
+            "service": "WFS",
+            "version": "2\\.0\\.0",
+            "request": "GetFeature",
+            "typenames": "(?:VISOR2D:LIC_ES24|VISOR2D:v108_ps_zepa_es24_s)",
+            "outputformat": "application\\/json",
+            "propertyname": "shape,sitename",
+            "cql_filter": "INTERSECTS\\(shape,SRID=25830;MULTIPOLYGON\\([0-9 .,()-]+\\)\\)",
+            "srsname": "EPSG:25830"
+          }
+        }
+      ]
+    }
+  },
+  "/api/ideex/": {
+    "servidor": "https://mapas.ideex.es",
+    "rutas": {
+      "/CICTEX/urbanismo": [
+        {
+          "tipo": "text/xml",
+          "params": {
+            "service": "WFS",
+            "version": "1\\.1\\.0",
+            "request": "GetFeature",
+            "typename": "CICTEX_URBANISMO_CATEGORIAS_SUELO_URBANO_CONSOLIDADO,CICTEX_URBANISMO_CATEGORIAS_SUELO_URBANO_NO_CONSOLIDADO,CICTEX_URBANISMO_CATEGORIAS_SUELO_URBANIZABLE_CON_ORDENACION_DETALLADA,CICTEX_URBANISMO_CATEGORIAS_SUELO_URBANIZABLE_SIN_ORDENACION_DETALLADA,CICTEX_URBANISMO_CATEGORIAS_SUELO_NO_URBANIZABLE_COMUN,CICTEX_URBANISMO_CATEGORIAS_SUELO_NO_URBANIZABLE_PROTECCION_AMBIENTAL,CICTEX_URBANISMO_CATEGORIAS_SUELO_NO_URBANIZABLE_PROTECCION_ESTRUCTURAL,CICTEX_URBANISMO_CATEGORIAS_SUELO_NO_URBANIZABLE_INFRAESTRUCTURAS_EQUIPAMIENTO,CICTEX_URBANISMO_CATEGORIAS_SUELO_NO_URBANIZABLE_PROTEGIDO",
+            "srsname": "EPSG:25830",
+            "bbox": "-?\\d+(?:\\.\\d+)?,-?\\d+(?:\\.\\d+)?,-?\\d+(?:\\.\\d+)?,-?\\d+(?:\\.\\d+)?,urn:ogc:def:crs:EPSG::25830"
+          }
+        },
+        {
+          "tipo": "image/png",
+          "params": {
+            "service": "WMS",
+            "version": "1\\.1\\.1",
+            "request": "GetMap",
+            "layers": "CICTEX_URBANISMO_CATEGORIAS",
+            "styles": "",
+            "format": "image\\/png",
+            "transparent": "true",
+            "srs": "EPSG:3857",
+            "width": "256",
+            "height": "256",
+            "bbox": "-?\\d+(?:\\.\\d+)?,-?\\d+(?:\\.\\d+)?,-?\\d+(?:\\.\\d+)?,-?\\d+(?:\\.\\d+)?"
+          }
+        }
+      ]
+    }
+  }
+}
